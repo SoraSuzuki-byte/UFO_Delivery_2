@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- フィルタ -->
+  <ItemGroup>
+    <!-- ゲーム -->
+    <Filter Include="Game">
+      <UniqueIdentifier>{2cb470d3-39da-4469-8d29-3b4c1fc1127b}</UniqueIdentifier>
+    </Filter>
+    <!-- ライブラリ -->
+    <Filter Include="Library">
+      <UniqueIdentifier>{b3532405-f2dc-4ee1-af4d-61c8a636a7ae}</UniqueIdentifier>
+    </Filter>
+    <!-- 埋め込みリソース -->
+    <Filter Include="EmbeddedResources">
+      <UniqueIdentifier>{292890c5-e893-4930-b5be-f69a71f521d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EmbeddedResources\Icon">
+      <UniqueIdentifier>{465c4a3b-3249-400b-a5dd-a9619b66ffc0}</UniqueIdentifier>
+    </Filter>
+    <!-- リソース -->
+    <Filter Include="Resources">
+      <UniqueIdentifier>{3138f214-865c-4403-a628-49fbb560444c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sounds">
+      <UniqueIdentifier>{67809dd6-2240-434e-816d-b3aac7016e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures">
+      <UniqueIdentifier>{48aa4fce-5282-4008-afd6-7bfddd934eb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Class">
+      <UniqueIdentifier>{7017ffc5-3f29-489f-801a-1f62310ea7c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Class\Manager">
+      <UniqueIdentifier>{8012498d-afb4-43a4-8ce6-9b9b711a2d0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Class\Scene">
+      <UniqueIdentifier>{c8020431-9973-401d-b377-207df105f507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Class\Scene\Play">
+      <UniqueIdentifier>{0d0da7a0-d53c-493b-8c83-27f4dc294a7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Class\Scene\Select">
+      <UniqueIdentifier>{9a9dd106-fbb7-42d1-bc45-457b291bbcaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Class\Scene\Title">
+      <UniqueIdentifier>{7b5f0068-22eb-4174-a97e-fcb785fa08b4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <!-- ファイル -->
+  <ItemGroup>
+    <!-- プリコンパイル済みヘッダー -->
+    <ClCompile Include="pch.cpp" />
+    <ClInclude Include="pch.h" />
+    <!-- メイン -->
+    <ClCompile Include="WinMain.cpp" />
+    <!-- ゲーム -->
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Screen.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <!-- ライブラリ -->
+    <ClInclude Include="Library\DebugHelper.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\GameLib.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClCompile Include="Library\GameLibTime.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClInclude Include="Library\GameLibTime.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\MemoryLeakDetector.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <!-- 埋め込みリソース -->
+    <ClInclude Include="EmbeddedResources\Resource.h">
+      <Filter>EmbeddedResources</Filter>
+    </ClInclude>
+    <ResourceCompile Include="EmbeddedResources\Resource.rc">
+      <Filter>EmbeddedResources</Filter>
+    </ResourceCompile>
+    <Image Include="EmbeddedResources\Icon\Game.ico">
+      <Filter>EmbeddedResources\Icon</Filter>
+    </Image>
+    <!-- リソースファイル -->
+    <None Include="Resources\Sounds\SE00.ogg">
+      <Filter>Resources\Sounds</Filter>
+    </None>
+    <Image Include="Resources\Textures\TridentLogo.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <ClCompile Include="Game\Class\Manager\InputManager.cpp">
+      <Filter>Game\Class\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Class\Scene\SceneChange.cpp">
+      <Filter>Game\Class\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Class\Manager\SceneManager.cpp">
+      <Filter>Game\Class\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Class\Scene\TitleScene.cpp">
+      <Filter>Game\Class\Scene\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Class\Scene\SelectScene.cpp">
+      <Filter>Game\Class\Scene\Select</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Class\Scene\PlayScene.cpp">
+      <Filter>Game\Class\Scene\Play</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Library\GameMath.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameContext.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Manager\InputManager.h">
+      <Filter>Game\Class\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Scene\SceneChange.h">
+      <Filter>Game\Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Manager\SceneManager.h">
+      <Filter>Game\Class\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Scene\TitleScene.h">
+      <Filter>Game\Class\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Scene\SelectScene.h">
+      <Filter>Game\Class\Scene\Select</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Scene\PlayScene.h">
+      <Filter>Game\Class\Scene\Play</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

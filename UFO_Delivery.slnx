@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="UFO_Delivery.vcxproj" Id="24df63c4-bd17-4605-bf9f-7b0af87c6ca7" />
+</Solution>
