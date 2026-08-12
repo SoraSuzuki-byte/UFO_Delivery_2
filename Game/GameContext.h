@@ -10,12 +10,30 @@
 //#include "Game/GameObject/FlagManager.h"
 
 
-// いろいろなところで使いたいリソースをまとめたクラス（構造体）
+// ステージの番号
+enum class StageId {
+    Stage1, // 0
+    Stage2, // 1
+    Stage3, // 2
+    Max     // 3 (ステージの合計数)
+};
+
+
 struct GameContext
 {
-    // TODO: サウンドとかリソースとか、これから追加する
-
     InputManager& inputManager;
+
+    // セレクトシーンで現在、選択中になっている、ステージ番号を入れる変数
+    int selectedStageIndex = 0;
+
+    // 現在の StageId(ステージ番号) を取得する
+    StageId GetSelectedStageId() const 
+    {
+        return static_cast<StageId>(selectedStageIndex);
+    }
+
+
+
 
     // 画像とSoundをここで管理してみたい
 

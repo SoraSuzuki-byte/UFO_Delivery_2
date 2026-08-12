@@ -65,6 +65,36 @@ void SelectScene::Update()
 
 
 
+
+    // ステージの合計の数を取得
+    const int maxStages = static_cast<int>(StageId::Max);
+
+    // みぎ矢印キーが押されたら
+    if (keyTrigger & PAD_INPUT_RIGHT)
+    {
+        // 選択中のステージ番号を、増加
+        m_gameContext.selectedStageIndex++;
+
+        if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
+        {
+            m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージ番号]に変える
+        }
+    }
+
+    // ひだり矢印キーが押されたら
+    if (keyTrigger & PAD_INPUT_LEFT)
+    {
+        // 選択中のステージ番号を、減少
+        m_gameContext.selectedStageIndex--;
+
+        if (m_gameContext.selectedStageIndex <= 0)// 0より小さいステージを選択することになった場合
+        {
+            m_gameContext.selectedStageIndex = 0; // [一番小さな ステージ番号]に変える
+        }
+    }
+
+
+
 }
 
 //  -----------------------------------------------------------------
@@ -79,6 +109,7 @@ void SelectScene::Render()
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(80);
+    DrawFormatString(300, 300, Colors::GRAY, L"選択中のステージ番号: %d", m_gameContext.selectedStageIndex);
     DrawString(300, 500, L"セレクトシーン", Colors::GRAY);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 }

@@ -13,7 +13,6 @@
 
 // ヘッダファイルの読み込み ===================================================
 #include "GameContext.h"
-#include "InputManager.h"
 #include "Class/Manager/SceneManager.h"
 
 
@@ -34,11 +33,11 @@ public:
 
     // データメンバの宣言 -----------------------------------------------
 private:
+    // ゲームコンテキスト
+    GameContext m_gameContext;
     // 入力関連
     InputManager m_inputManager;
 
-    // ゲームコンテキスト
-    GameContext m_gameContext;
 
     // シーンマネジャー
     SceneManager m_sceneManager;

@@ -21,9 +21,7 @@
  * @param なし
  */
 Game::Game()
-    : m_inputManager{}
-    , m_gameContext{ m_inputManager }
-
+    : m_gameContext{ m_inputManager }
     , m_sceneManager{ m_gameContext }
 {
     // 乱数の初期値を設定
@@ -52,7 +50,7 @@ Game::~Game()
 void Game::Initialize()
 {
     // 入力マネジャーを初期化する
-    m_inputManager.Initialize();
+    m_gameContext.inputManager.Initialize();
 
     // シーンマネジャーを初期化する
     m_sceneManager.Initialize();
@@ -70,7 +68,7 @@ void Game::Initialize()
 void Game::Update(float elapsedTime)
 {
     // 入力マネジャーを更新する
-    m_inputManager.Update();
+    m_gameContext.inputManager.Update();
 
     // シーンマネジャーを更新する
     m_sceneManager.Update();
