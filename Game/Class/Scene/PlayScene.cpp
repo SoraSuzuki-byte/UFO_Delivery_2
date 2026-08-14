@@ -41,7 +41,26 @@ PlayScene::~PlayScene()
 /// -----------------------------------------------------------------
 void PlayScene::Initialize()
 {
-    m_stage.Initialize();
+    //____________________________________________________________________________________________________
+    // StageId(ステージID) → CSVファイル名へ対応
+    static const wchar_t* stageNames[] = {
+        L"stage_01",   // StageId::Stage1 用
+        L"stage_02",   // StageId::Stage2 用
+        L"stage_03",   // StageId::Stage3 用
+    };
+
+    // 現在選択されているステージIDを取得する
+    const StageId selectedStage = m_gameContext.GetSelectedStageId();
+
+    // StageId を配列の添字（int）に変換する
+    const int index = static_cast<int>(selectedStage);
+
+    // 対応するファイル名でステージを初期化する
+    m_stage.Initialize(stageNames[index]);
+//____________________________________________________________________________________________________」
+
+
+
 }
 
 //  -----------------------------------------------------------------

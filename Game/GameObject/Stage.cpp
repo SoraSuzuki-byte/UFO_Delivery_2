@@ -51,10 +51,11 @@ Stage::~Stage()
 
 // ------------------------------------------------------------------
 // 初期化処理
+/// <param name="stageNumber">セレクトシーンで選んだステージID</param>
 // ------------------------------------------------------------------
-void Stage::Initialize()
+void Stage::Initialize(const wchar_t* stageNumber)
 {
-    LoadStageData(L"Map_Test");
+    LoadStageData(stageNumber);
     CreateBoundingBoxArray();
 }
 

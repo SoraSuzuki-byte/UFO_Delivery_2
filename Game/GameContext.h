@@ -23,10 +23,10 @@ struct GameContext
 {
     InputManager& inputManager;
 
-    // セレクトシーンで現在、選択中になっている、ステージ番号を入れる変数
+    // セレクトシーンで現在、選択中になっている、ステージIDを入れる変数
     int selectedStageIndex = 0;
 
-    // 現在の StageId(ステージ番号) を取得する
+    // 現在の StageId(ステージID) を取得する
     StageId GetSelectedStageId() const 
     {
         return static_cast<StageId>(selectedStageIndex);

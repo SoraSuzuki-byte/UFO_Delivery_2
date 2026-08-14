@@ -45,7 +45,7 @@ public:
     Stage();
     ~Stage();
 
-    void Initialize();
+    void Initialize(const wchar_t* stageNumber);
     void Render() const;
     void Finalize();
 

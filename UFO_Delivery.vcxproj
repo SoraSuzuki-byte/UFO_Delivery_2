@@ -179,8 +179,9 @@
     <Image Include="EmbeddedResources\Icon\Game.ico" />
     <!-- リソースファイル -->
     <None Include="packages.config" />
-    <None Include="Resources\MapData\Map_Test.csv" />
+    <None Include="Resources\MapData\stage_01.csv" />
     <None Include="Resources\MapData\stage_02.csv" />
+    <None Include="Resources\MapData\stage_03.csv" />
     <None Include="Resources\Sounds\SE00.ogg" />
     <Image Include="Resources\Textures\TridentLogo.png" />
   </ItemGroup>

@@ -132,10 +132,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\MapData\Map_Test.csv">
+    <None Include="Resources\MapData\stage_01.csv">
       <Filter>Resources\MapDate</Filter>
     </None>
     <None Include="Resources\MapData\stage_02.csv">
+      <Filter>Resources\MapDate</Filter>
+    </None>
+    <None Include="Resources\MapData\stage_03.csv">
       <Filter>Resources\MapDate</Filter>
     </None>
   </ItemGroup>
