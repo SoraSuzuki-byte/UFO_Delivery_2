@@ -145,6 +145,8 @@
     <ClCompile Include="Game\Class\Scene\SceneChange.cpp" />
     <ClCompile Include="Game\Class\Scene\SelectScene.cpp" />
     <ClCompile Include="Game\Class\Scene\TitleScene.cpp" />
+    <ClCompile Include="Game\GameObject\Chest.cpp" />
+    <ClCompile Include="Game\GameObject\Stage.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -155,6 +157,8 @@
     <ClInclude Include="Game\Class\Scene\SelectScene.h" />
     <ClInclude Include="Game\Class\Scene\TitleScene.h" />
     <ClInclude Include="Game\GameContext.h" />
+    <ClInclude Include="Game\GameObject\Chest.h" />
+    <ClInclude Include="Game\GameObject\Stage.h" />
     <ClInclude Include="Library\GameMath.h" />
     <ClInclude Include="pch.h" />
     <!-- メイン -->
@@ -175,6 +179,8 @@
     <Image Include="EmbeddedResources\Icon\Game.ico" />
     <!-- リソースファイル -->
     <None Include="packages.config" />
+    <None Include="Resources\MapData\Map_Test.csv" />
+    <None Include="Resources\MapData\stage_02.csv" />
     <None Include="Resources\Sounds\SE00.ogg" />
     <Image Include="Resources\Textures\TridentLogo.png" />
   </ItemGroup>

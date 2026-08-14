@@ -21,6 +21,7 @@
 PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     : m_sceneManager{ sceneManager }
     , m_gameContext{ gameContext }
+    , m_stage{}
 {
 }
 
@@ -40,6 +41,7 @@ PlayScene::~PlayScene()
 /// -----------------------------------------------------------------
 void PlayScene::Initialize()
 {
+    m_stage.Initialize();
 }
 
 //  -----------------------------------------------------------------
@@ -57,7 +59,7 @@ void PlayScene::Update()
     if (keyTrigger & PAD_INPUT_10)
     {
         // シーンを変更する
-        m_sceneManager.RequestNextSceneID(SceneManager::SceneID::kTitle);
+        m_sceneManager.RequestNextSceneID(SceneManager::SceneID::TitleScene);
     }
 
 
@@ -76,6 +78,9 @@ void PlayScene::Render()
     SetFontSize(80);
     DrawString(300, 500, L"プレイシーン", Colors::GRAY);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
+
+
+    m_stage.Render();
 }
 
 //  -----------------------------------------------------------------

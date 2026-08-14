@@ -60,7 +60,7 @@ void SelectScene::Update()
     if (keyTrigger & PAD_INPUT_10)
     {
         // シーンを変更する
-        m_sceneManager.RequestNextSceneID(SceneManager::SceneID::kPlay);
+        m_sceneManager.RequestNextSceneID(SceneManager::SceneID::PlayScene);
     }
 
 

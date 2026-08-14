@@ -27,9 +27,9 @@ public:
 	enum class SceneID // シーンID
 	{
 		None,
-		kTitle,
-		kSelect,
-		kPlay,
+		TitleScene,
+		SelectScene,
+		PlayScene,
 	};
 
 

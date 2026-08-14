@@ -8,6 +8,7 @@
  * @date   2026年8月6日
  */
 #pragma once
+#include "Game/GameObject/Stage.h"
 
 
  // クラスの前方宣言 ===============================================================
@@ -24,6 +25,9 @@ private:
     GameContext& m_gameContext;
     // シーンマネジャーの、インスタンス
     SceneManager& m_sceneManager;
+    
+    // ステージクラスのインスタンス
+    Stage m_stage;
 
 
 

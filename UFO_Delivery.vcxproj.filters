@@ -45,6 +45,15 @@
     <Filter Include="Game\Class\Scene\Title">
       <UniqueIdentifier>{7b5f0068-22eb-4174-a97e-fcb785fa08b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject">
+      <UniqueIdentifier>{641b307d-ad1f-494d-a84b-40ba845e62c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Stage">
+      <UniqueIdentifier>{3991c9d0-85ba-4301-96b9-c5051f31bb40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\MapDate">
+      <UniqueIdentifier>{98a60b52-6590-40d7-a02c-5e72ced05faf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -114,9 +123,21 @@
     <ClCompile Include="Game\Class\Scene\PlayScene.cpp">
       <Filter>Game\Class\Scene\Play</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameObject\Stage.cpp">
+      <Filter>Game\GameObject\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameObject\Chest.cpp">
+      <Filter>Game\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\MapData\Map_Test.csv">
+      <Filter>Resources\MapDate</Filter>
+    </None>
+    <None Include="Resources\MapData\stage_02.csv">
+      <Filter>Resources\MapDate</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\GameMath.h">
@@ -142,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="Game\Class\Scene\PlayScene.h">
       <Filter>Game\Class\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObject\Stage.h">
+      <Filter>Game\GameObject\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObject\Chest.h">
+      <Filter>Game\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

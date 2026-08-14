@@ -24,7 +24,7 @@ SceneManager::SceneManager(GameContext& gameContext)
 void SceneManager::Initialize()
 {
     // メンバ変数を初期化する
-    m_currentSceneID = SceneID::kTitle;
+    m_currentSceneID = SceneID::TitleScene;
     m_requestedSceneID = SceneID::None;
 
     // 現在シーンを初期化する
@@ -107,9 +107,9 @@ void SceneManager::InitializeCurrentScene()
 {
     switch (m_currentSceneID)
     {
-        case SceneID::kTitle:   m_titleScene.Initialize();  break;
-        case SceneID::kSelect:   m_selectScene.Initialize();  break;
-        case SceneID::kPlay:    m_playScene.Initialize();   break;
+        case SceneID::TitleScene:   m_titleScene.Initialize();  break;
+        case SceneID::SelectScene:   m_selectScene.Initialize();  break;
+        case SceneID::PlayScene:    m_playScene.Initialize();   break;
         default:      assert(!"シーンIDが不正です");
     }
 }
@@ -123,9 +123,9 @@ void SceneManager::UpdateCurrentScene()
 {
     switch (m_currentSceneID)
     {
-        case SceneID::kTitle:   m_titleScene.Update(); break;
-        case SceneID::kSelect:   m_selectScene.Update(); break;
-        case SceneID::kPlay:    m_playScene.Update();  break;
+        case SceneID::TitleScene:   m_titleScene.Update(); break;
+        case SceneID::SelectScene:   m_selectScene.Update(); break;
+        case SceneID::PlayScene:    m_playScene.Update();  break;
         default:      assert(!"シーンIDが不正です");
     }
 }
@@ -139,9 +139,9 @@ void SceneManager::RenderCurrentScene()
 {
     switch (m_currentSceneID)
     {
-        case SceneID::kTitle:   m_titleScene.Render();  break;
-        case SceneID::kSelect:   m_selectScene.Render();  break;
-        case SceneID::kPlay:    m_playScene.Render();   break;
+        case SceneID::TitleScene:   m_titleScene.Render();  break;
+        case SceneID::SelectScene:   m_selectScene.Render();  break;
+        case SceneID::PlayScene:    m_playScene.Render();   break;
         default:      assert(!"シーンIDが不正です");
     }
 }
@@ -155,9 +155,9 @@ void SceneManager::FinalizeCurrentScene()
 {
     switch (m_currentSceneID)
     {
-        case SceneID::kTitle:   m_titleScene.Finalize();  break;
-        case SceneID::kSelect:   m_selectScene.Finalize();  break;
-        case SceneID::kPlay:    m_playScene.Finalize();   break;
+        case SceneID::TitleScene:   m_titleScene.Finalize();  break;
+        case SceneID::SelectScene:   m_selectScene.Finalize();  break;
+        case SceneID::PlayScene:    m_playScene.Finalize();   break;
         default:      assert(!"シーンIDが不正です");
     }
 }
