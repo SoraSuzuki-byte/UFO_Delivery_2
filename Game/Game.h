@@ -37,6 +37,8 @@ private:
     GameContext m_gameContext;
     // 入力関連
     InputManager m_inputManager;
+    // グラフィックマネージャー
+    GhManager m_ghManager;
 
 
     // シーンマネジャー

@@ -6,6 +6,8 @@
 */
 #include "pch.h"
 #include "Stage.h"
+#include "Game/GameContext.h"
+
 #include "Game/Screen.h"
 #include <fstream>
 #include <sstream>
@@ -14,8 +16,9 @@
 // ------------------------------------------------------------------
 // コンストラクター
 // ------------------------------------------------------------------
-Stage::Stage()
-    : m_mapWidth{}
+Stage::Stage(GameContext& gameContext)
+    : m_gameContext{ gameContext }
+    , m_mapWidth{}
     , m_mapHeight{}
     , m_mapArray{}
     , m_boundingBoxArray{}
@@ -56,6 +59,8 @@ Stage::~Stage()
 void Stage::Initialize(const wchar_t* stageNumber)
 {
     LoadStageData(stageNumber);
+    m_gameContext.ghManager.Initialize();
+
     CreateBoundingBoxArray();
 }
 
@@ -239,12 +244,18 @@ void Stage::StageRender() const
             // 壁・足場（Type::Wall）を描画
             if (m_mapArray[y][x] == Type::Wall)
             {
-                DrawBox(
+                //DrawBox(
+                //    x * CHIP_SIZE,
+                //    y * CHIP_SIZE,
+                //    x * CHIP_SIZE + CHIP_SIZE,
+                //    y * CHIP_SIZE + CHIP_SIZE,
+                //    GetColor(255, 255, 255), TRUE); // ★白の塗りつぶしで描画
+
+                DrawGraph(
                     x * CHIP_SIZE,
                     y * CHIP_SIZE,
-                    x * CHIP_SIZE + CHIP_SIZE,
-                    y * CHIP_SIZE + CHIP_SIZE,
-                    GetColor(255, 255, 255), TRUE); // ★白の塗りつぶしで描画
+                    m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Grass),
+                    TRUE);
             }
         }
     }

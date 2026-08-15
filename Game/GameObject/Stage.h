@@ -4,6 +4,12 @@
     @author 制作者
     @date   2026/07/03
 */
+// 前方宣言 ===============================================================
+struct GameContext;
+
+
+
+
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
@@ -27,6 +33,10 @@ private:
     const std::wstring CSV = L".csv";
 
 private:
+    // ゲームコンテキストのインスタンス
+    GameContext& m_gameContext;
+
+
     // マップの幅と高さ
     int m_mapWidth;
     int m_mapHeight;
@@ -42,7 +52,7 @@ private:
 
 
 public:
-    Stage();
+    Stage(GameContext& gameContext);
     ~Stage();
 
     void Initialize(const wchar_t* stageNumber);

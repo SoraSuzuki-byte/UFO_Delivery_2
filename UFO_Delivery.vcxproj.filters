@@ -54,6 +54,9 @@
     <Filter Include="Resources\MapDate">
       <UniqueIdentifier>{98a60b52-6590-40d7-a02c-5e72ced05faf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Textures\Map_Chip">
+      <UniqueIdentifier>{98c41834-f60d-4cbd-bbad-4d854e7ed31e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -105,9 +108,6 @@
     <Image Include="Resources\Textures\TridentLogo.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <ClCompile Include="Game\Class\Manager\InputManager.cpp">
-      <Filter>Game\Class\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Class\Scene\SceneChange.cpp">
       <Filter>Game\Class\Scene</Filter>
     </ClCompile>
@@ -129,6 +129,12 @@
     <ClCompile Include="Game\GameObject\Chest.cpp">
       <Filter>Game\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Class\Manager\GhManager.cpp">
+      <Filter>Game\Class\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Class\Manager\InputManager.cpp">
+      <Filter>Game\Class\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -148,9 +154,6 @@
     </ClInclude>
     <ClInclude Include="Game\GameContext.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Class\Manager\InputManager.h">
-      <Filter>Game\Class\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Game\Class\Scene\SceneChange.h">
       <Filter>Game\Class\Scene</Filter>
@@ -173,5 +176,16 @@
     <ClInclude Include="Game\GameObject\Chest.h">
       <Filter>Game\GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Class\Manager\GhManager.h">
+      <Filter>Game\Class\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Manager\InputManager.h">
+      <Filter>Game\Class\Manager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Textures\Grass.png">
+      <Filter>Resources\Textures\Map_Chip</Filter>
+    </Image>
   </ItemGroup>
 </Project>

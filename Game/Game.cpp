@@ -21,7 +21,7 @@
  * @param なし
  */
 Game::Game()
-    : m_gameContext{ m_inputManager }
+    : m_gameContext{ m_inputManager ,m_ghManager }
     , m_sceneManager{ m_gameContext }
 {
     // 乱数の初期値を設定

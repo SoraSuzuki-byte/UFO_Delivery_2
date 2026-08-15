@@ -5,7 +5,8 @@
     @date   2026/02/02
 */
 #pragma once
-#include "InputManager.h"
+#include "Game/Class/Manager/InputManager.h"
+#include "Game/Class/Manager/GhManager.h"
 //#include "Game/GameObject/KillCount.h"
 //#include "Game/GameObject/FlagManager.h"
 
@@ -21,18 +22,10 @@ enum class StageId {
 
 struct GameContext
 {
+    // インプットマネージャー
     InputManager& inputManager;
-
-    // セレクトシーンで現在、選択中になっている、ステージIDを入れる変数
-    int selectedStageIndex = 0;
-
-    // 現在の StageId(ステージID) を取得する
-    StageId GetSelectedStageId() const 
-    {
-        return static_cast<StageId>(selectedStageIndex);
-    }
-
-
+    // グラフィックマネージャー
+    GhManager& ghManager;
 
 
     // 画像とSoundをここで管理してみたい
@@ -42,5 +35,32 @@ struct GameContext
     //KillCount& killCount;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //---------------------------------------------------------------------------------------------
+    // セレクトシーンで現在、選択中になっている、ステージIDを入れる変数
+    int selectedStageIndex = 0;
+
+    // 現在の StageId(ステージID) を取得する
+    StageId GetSelectedStageId() const
+    {
+        return static_cast<StageId>(selectedStageIndex);
+    }
+    //---------------------------------------------------------------------------------------------
 
 };

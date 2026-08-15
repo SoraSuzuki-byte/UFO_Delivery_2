@@ -21,7 +21,7 @@
 PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     : m_sceneManager{ sceneManager }
     , m_gameContext{ gameContext }
-    , m_stage{}
+    , m_stage{ gameContext }
 {
 }
 

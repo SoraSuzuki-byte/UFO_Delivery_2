@@ -139,6 +139,7 @@
   <!-- ファイル -->
   <ItemGroup>
     <!-- プリコンパイル済みヘッダー -->
+    <ClCompile Include="Game\Class\Manager\GhManager.cpp" />
     <ClCompile Include="Game\Class\Manager\InputManager.cpp" />
     <ClCompile Include="Game\Class\Manager\SceneManager.cpp" />
     <ClCompile Include="Game\Class\Scene\PlayScene.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClInclude Include="Game\Class\Manager\GhManager.h" />
     <ClInclude Include="Game\Class\Manager\InputManager.h" />
     <ClInclude Include="Game\Class\Manager\SceneManager.h" />
     <ClInclude Include="Game\Class\Scene\PlayScene.h" />
@@ -183,6 +185,7 @@
     <None Include="Resources\MapData\stage_02.csv" />
     <None Include="Resources\MapData\stage_03.csv" />
     <None Include="Resources\Sounds\SE00.ogg" />
+    <Image Include="Resources\Textures\Grass.png" />
     <Image Include="Resources\Textures\TridentLogo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
