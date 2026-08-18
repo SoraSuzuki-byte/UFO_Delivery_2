@@ -32,7 +32,12 @@ void GhManager::Initialize()//--------------------------------------------------
 {
     // 画像のパスを配列で管理（enum の順番と合わせることに注意）
     const wchar_t* paths[] = {
-        L"Resources/Textures/Grass.png"
+        L"Resources/Textures/Grass.png",
+        L"Resources/Textures/UFO_Bass.png",
+        L"Resources/Textures/UFO_Damage_Overlay.png",
+        L"Resources/Textures/UFO_Orange_Left.png",
+        L"Resources/Textures/UFO_Orange_Middle.png,",
+        L"Resources/Textures/UFO_Orange_Right.png"
         //  L"Resources/Textures/
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };

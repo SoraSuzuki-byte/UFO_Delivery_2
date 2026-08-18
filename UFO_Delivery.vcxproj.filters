@@ -57,6 +57,12 @@
     <Filter Include="Resources\Textures\Map_Chip">
       <UniqueIdentifier>{98c41834-f60d-4cbd-bbad-4d854e7ed31e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject\Player">
+      <UniqueIdentifier>{af3e54f0-5547-40a5-acf0-280ca1b80df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures\UFO">
+      <UniqueIdentifier>{37b2c7ce-fdb6-410f-b974-8dc47c628307}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -135,6 +141,9 @@
     <ClCompile Include="Game\Class\Manager\InputManager.cpp">
       <Filter>Game\Class\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameObject\Player.cpp">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -182,10 +191,28 @@
     <ClInclude Include="Game\Class\Manager\InputManager.h">
       <Filter>Game\Class\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameObject\Player.h">
+      <Filter>Game\GameObject\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Textures\Grass.png">
       <Filter>Resources\Textures\Map_Chip</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UFO_Bass.png">
+      <Filter>Resources\Textures\UFO</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UFO_Damage_Overlay.png">
+      <Filter>Resources\Textures\UFO</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UFO_Orange_Left.png">
+      <Filter>Resources\Textures\UFO</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UFO_Orange_Middle.png">
+      <Filter>Resources\Textures\UFO</Filter>
+    </Image>
+    <Image Include="Resources\Textures\UFO_Orange_Right.png">
+      <Filter>Resources\Textures\UFO</Filter>
     </Image>
   </ItemGroup>
 </Project>

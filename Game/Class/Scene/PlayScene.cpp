@@ -22,6 +22,7 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     : m_sceneManager{ sceneManager }
     , m_gameContext{ gameContext }
     , m_stage{ gameContext }
+    , m_player{ gameContext,*this }
 {
 }
 
@@ -59,8 +60,7 @@ void PlayScene::Initialize()
     m_stage.Initialize(stageNames[index]);
 //____________________________________________________________________________________________________」
 
-
-
+    m_player.Initialize();
 }
 
 //  -----------------------------------------------------------------
@@ -81,7 +81,7 @@ void PlayScene::Update()
         m_sceneManager.RequestNextSceneID(SceneManager::SceneID::TitleScene);
     }
 
-
+    m_player.Update();
 }    
 //  -----------------------------------------------------------------
 /// <summary>
@@ -100,6 +100,7 @@ void PlayScene::Render()
 
 
     m_stage.Render();
+    m_player.Render();
 }
 
 //  -----------------------------------------------------------------

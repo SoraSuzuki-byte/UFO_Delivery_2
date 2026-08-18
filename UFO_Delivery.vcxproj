@@ -147,6 +147,7 @@
     <ClCompile Include="Game\Class\Scene\SelectScene.cpp" />
     <ClCompile Include="Game\Class\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\GameObject\Chest.cpp" />
+    <ClCompile Include="Game\GameObject\Player.cpp" />
     <ClCompile Include="Game\GameObject\Stage.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -160,6 +161,7 @@
     <ClInclude Include="Game\Class\Scene\TitleScene.h" />
     <ClInclude Include="Game\GameContext.h" />
     <ClInclude Include="Game\GameObject\Chest.h" />
+    <ClInclude Include="Game\GameObject\Player.h" />
     <ClInclude Include="Game\GameObject\Stage.h" />
     <ClInclude Include="Library\GameMath.h" />
     <ClInclude Include="pch.h" />
@@ -177,6 +179,11 @@
     <ClInclude Include="Library\MemoryLeakDetector.h" />
     <!-- 埋め込みリソース -->
     <ClInclude Include="EmbeddedResources\Resource.h" />
+    <Image Include="Resources\Textures\UFO_Bass.png" />
+    <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
+    <Image Include="Resources\Textures\UFO_Orange_Left.png" />
+    <Image Include="Resources\Textures\UFO_Orange_Middle.png" />
+    <Image Include="Resources\Textures\UFO_Orange_Right.png" />
     <ResourceCompile Include="EmbeddedResources\Resource.rc" />
     <Image Include="EmbeddedResources\Icon\Game.ico" />
     <!-- リソースファイル -->

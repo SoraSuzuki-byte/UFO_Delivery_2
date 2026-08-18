@@ -9,6 +9,7 @@
  */
 #pragma once
 #include "Game/GameObject/Stage.h"
+#include "Game/GameObject/Player.h"
 
 
  // クラスの前方宣言 ===============================================================
@@ -21,13 +22,16 @@ class SceneManager;
 class PlayScene
 {
 private:
-    // ゲームコンテキストの、インスタンス
+    // ゲームコンテキストの、リファレンス
     GameContext& m_gameContext;
-    // シーンマネジャーの、インスタンス
+    // シーンマネジャーの、リファレンス
     SceneManager& m_sceneManager;
     
     // ステージクラスのインスタンス
     Stage m_stage;
+
+    // プレイヤークラスのインスタンス
+    Player m_player;
 
 
 
@@ -40,4 +44,6 @@ public:
     void Render();
     void Finalize();
 
+
+    Stage& GetStage() { return m_stage; }
 };

@@ -12,6 +12,12 @@ class GhManager
 public:
     enum class Textures {
         Grass, // 草(0)
+        UFO_Bass, // UFOの素体（1）
+        UFO_Damage_Overlay,   // UFOのHPに合わせて透明度が変わるやつ（2）
+        UFO_Orange_Left,   // オレンジのひだり
+        UFO_Orange_Middle, // オレンジの中央
+        UFO_Orange_Right,  // オレンジのみぎ
+
 
         Max    // テクスチャの合計数
     };
