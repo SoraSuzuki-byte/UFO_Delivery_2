@@ -21,6 +21,7 @@ Player::Player(GameContext& gameContext, PlayScene& scene)
     , m_position{}
 	, m_velocity{}
 	, m_acceleration{}
+	, m_animationTimer{}
 {
 }
 
@@ -37,24 +38,34 @@ void Player::Initialize()
 	// 加速度を初期化
 	m_acceleration = Vector2D{ 0.0f, 0.0f };
 
+	m_animationTimer = 0;
+
 }
 
 void Player::Update()
 {
-	Move();
+	// キー入力情報を取得する
+	const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
+	const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
+
+	// 移動
+	Move(keyCondition);
+	
 }
 
 void Player::Render()
 {
-    // UFOの素体
-    DrawGraph(m_position.x, m_position.y,
-              m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass),
-              TRUE);
+    // 素体の画像
+    DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
+
+	// 移動時のアニメーション
+	MoveAnimation();
 
     // UFOのHPがわかるようにオーバーレイ
     DrawGraph(m_position.x, m_position.y,
         m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Damage_Overlay),
         TRUE);
+
 
 }
    
@@ -63,14 +74,18 @@ void Player::Finalize()
 {
 }
 
-// UFOを動かす
-void Player::Move()
+
+
+
+
+
+
+
+
+
+// UFOを移動させる
+void Player::Move(int keyCondition)
 {
-	// キー入力情報を取得する
-	const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
-	const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
-
-
 	Vector2D input = { 0.0f,0.0f };//キー入力用の「入力方向ベクトル」を作成
 
 	if (keyCondition & PAD_INPUT_UP)    input.y -= 1.0f;
@@ -101,4 +116,97 @@ void Player::Move()
 	if (m_position.x + WIDTH > Screen::WIDTH) { m_position.x = Screen::WIDTH - WIDTH; }
 	if (m_position.y < 0.0f) { m_position.y = 0.0f; }
 	if (m_position.y + HEIGHT > Screen::HEIGHT) { m_position.y = Screen::HEIGHT - HEIGHT; }
+}
+
+
+// 移動時のアニメーション
+void Player::MoveAnimation()
+{
+	// キー入力情報を取得する
+	const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
+
+	// 指定のカウント時間
+	const int VERTICAL_MOVE_ANIM_INTERVAL = 30; // たて移動
+	const int HORIZONTAL_MOVE_ANIM_INTERVAL = 15;//よこ移動
+	// 差分の画像を映す時間
+	const int UFO_VARIANT_HOLD_TIME = 30;
+
+	// いずれかの移動キーが押されているか確認
+	const bool isMoving = (keyCondition & (PAD_INPUT_UP | PAD_INPUT_DOWN | PAD_INPUT_LEFT | PAD_INPUT_RIGHT)) != 0;
+
+	// 1. キーを押していなければタイマーリセットして終了
+	if (!isMoving)
+	{
+		m_animationTimer = 0;
+		return;
+	}
+
+	// 2. タイマー加算
+	m_animationTimer++;
+
+	// 3. アニメーションの描画処理
+	if (keyCondition & (PAD_INPUT_UP | PAD_INPUT_DOWN))
+	{
+		// 上下入力時の処理
+		if (m_animationTimer >= VERTICAL_MOVE_ANIM_INTERVAL + UFO_VARIANT_HOLD_TIME)
+		{
+			m_animationTimer = 0;
+		}
+
+		if (m_animationTimer >= VERTICAL_MOVE_ANIM_INTERVAL)
+		{
+			// 全部の窓がオレンジになる
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_All), TRUE);
+		}
+	}
+	// 左入力時の処理
+	else if (keyCondition & PAD_INPUT_LEFT)
+	{		
+		const int MAX_LEFT_TIME = HORIZONTAL_MOVE_ANIM_INTERVAL * 3 + UFO_VARIANT_HOLD_TIME;
+
+		// カウントを0に
+		if (m_animationTimer >= MAX_LEFT_TIME) m_animationTimer = 0;
+
+
+		if (m_animationTimer >= HORIZONTAL_MOVE_ANIM_INTERVAL * 3)
+		{
+			// ひだりが点灯
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Left), TRUE);
+		}
+		else if (m_animationTimer >= HORIZONTAL_MOVE_ANIM_INTERVAL * 2)
+		{
+			// 中央が点灯
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Middle), TRUE);
+		}
+		else if (m_animationTimer >= HORIZONTAL_MOVE_ANIM_INTERVAL)
+		{
+			// みぎが点灯
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Right), TRUE);
+		}
+	}
+	// 右入力時の処理
+	else if (keyCondition & PAD_INPUT_RIGHT)
+	{
+		const int MAX_RIGHT_TIME = HORIZONTAL_MOVE_ANIM_INTERVAL * 3 + UFO_VARIANT_HOLD_TIME;
+
+		// カウントを0に
+		if (m_animationTimer >= MAX_RIGHT_TIME) m_animationTimer = 0; 
+			
+
+		if (m_animationTimer >= HORIZONTAL_MOVE_ANIM_INTERVAL * 3)
+		{
+			// みぎが点灯
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Right), TRUE);
+		}
+		else if (m_animationTimer >= HORIZONTAL_MOVE_ANIM_INTERVAL * 2)
+		{
+			// 中央が点灯
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Middle), TRUE);
+		}
+		else if (m_animationTimer >= HORIZONTAL_MOVE_ANIM_INTERVAL)
+		{
+			// ひだりが点灯
+			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Left), TRUE);
+		}
+	}
 }

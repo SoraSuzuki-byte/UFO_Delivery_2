@@ -214,5 +214,8 @@
     <Image Include="Resources\Textures\UFO_Orange_Right.png">
       <Filter>Resources\Textures\UFO</Filter>
     </Image>
+    <Image Include="Resources\Textures\UFO_Orange_All.png">
+      <Filter>Resources\Textures\UFO</Filter>
+    </Image>
   </ItemGroup>
 </Project>

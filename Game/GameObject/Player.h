@@ -43,6 +43,9 @@ private:
     // 現在の加速度
     Vector2D m_acceleration;
 
+    // 移動のアニメーションに使うTimer
+    int m_animationTimer;
+
 
 
 public:
@@ -54,8 +57,10 @@ public:
     void Render();
     void Finalize();
 
-    // UFOを動かす
-    void Move();
+    // UFOを移動させる
+    void Move(int keyCondition);
 
+    // 移動時のアニメーション
+    void MoveAnimation();
 };
 

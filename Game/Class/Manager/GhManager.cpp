@@ -35,11 +35,12 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Grass.png",
         L"Resources/Textures/UFO_Bass.png",
         L"Resources/Textures/UFO_Damage_Overlay.png",
+        L"Resources/Textures/UFO_Orange_All.png",
         L"Resources/Textures/UFO_Orange_Left.png",
-        L"Resources/Textures/UFO_Orange_Middle.png,",
+        L"Resources/Textures/UFO_Orange_Middle.png",
         L"Resources/Textures/UFO_Orange_Right.png"
         //  L"Resources/Textures/
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 
     // 【安全チェック】enumの登録数 と パス文字列の数 が一致しているかビルド時に確認→パスの追加忘れや enum の書き換えミスによるメモリクラッシュを未然に防げる
