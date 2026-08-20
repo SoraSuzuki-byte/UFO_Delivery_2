@@ -181,6 +181,7 @@
     <ClInclude Include="Library\MemoryLeakDetector.h" />
     <!-- 埋め込みリソース -->
     <ClInclude Include="EmbeddedResources\Resource.h" />
+    <Image Include="Resources\Textures\Grass.png" />
     <Image Include="Resources\Textures\Item_Food_1.png" />
     <Image Include="Resources\Textures\UFO_Bass.png" />
     <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
@@ -196,7 +197,6 @@
     <None Include="Resources\MapData\stage_02.csv" />
     <None Include="Resources\MapData\stage_03.csv" />
     <None Include="Resources\Sounds\SE00.ogg" />
-    <Image Include="Resources\Textures\Grass.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

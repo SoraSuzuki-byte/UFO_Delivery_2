@@ -82,6 +82,7 @@ void PlayScene::Update()
     // プレイ中のときのみ、プレイヤーや敵を 更新
     if (m_gameState == GameState::Play)
     {
+        m_stage.Update();
         m_player.Update();
         // m_enemy.Update();
         

@@ -28,7 +28,7 @@ public:
 
 private:
     // マップチップの大きさ
-    static constexpr int CHIP_SIZE = 40;
+    static constexpr int CHIP_SIZE = 20;
 
     // CSVのパスを作るための文字列データ
     const std::wstring PATH = L"Resources/MapData/";
@@ -61,6 +61,7 @@ public:
     ~Stage();
 
     void Initialize(const wchar_t* stageNumber);
+    void Update(); 
     void Render() const;
     void Finalize();
 

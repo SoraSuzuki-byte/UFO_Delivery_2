@@ -205,9 +205,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\Textures\Grass.png">
-      <Filter>Resources\Textures\Map_Chip</Filter>
-    </Image>
     <Image Include="Resources\Textures\UFO_Bass.png">
       <Filter>Resources\Textures\UFO</Filter>
     </Image>
@@ -228,6 +225,9 @@
     </Image>
     <Image Include="Resources\Textures\Item_Food_1.png">
       <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Grass.png">
+      <Filter>Resources\Textures\Map_Chip</Filter>
     </Image>
   </ItemGroup>
 </Project>

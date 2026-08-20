@@ -66,12 +66,23 @@ void Stage::Initialize(const wchar_t* stageNumber)
 }
 
 // ------------------------------------------------------------------
+// 更新処理
+// ------------------------------------------------------------------
+void Stage::Update()
+{
+    for (auto& item : m_itemFood_1)
+    {
+        item.Update();
+    }
+}
+
+// ------------------------------------------------------------------
 // 描画処理
 // ------------------------------------------------------------------
 void Stage::Render() const
 {
-    StageRender();
     ItemFood_1Render();
+    StageRender();
 }
 
 // ------------------------------------------------------------------
@@ -88,6 +99,13 @@ Stage::Type Stage::GetChipType(const Vector2D& worldPosition) const
 {
     const int x = static_cast<int>(worldPosition.x) / CHIP_SIZE;
     const int y = static_cast<int>(worldPosition.y) / CHIP_SIZE;
+
+    // マップ範囲外なら安全に None を返す
+    if (x < 0 || x >= m_mapWidth || y < 0 || y >= m_mapHeight)
+    {
+        return Type::None;
+    }
+
     return m_mapArray[y][x];
 }
 
@@ -201,7 +219,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, bb)); // bbは、配置場所
+                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, *this, bb)); // bbは、配置場所
                     break;
                 }
                 default:
@@ -374,11 +392,10 @@ void Stage::StageRender() const
 // ------------------------------------------------------------------
 void Stage::ItemFood_1Render() const
 {
-    for (const auto& item : m_itemFood_1)
+  for (const auto& item : m_itemFood_1)   // ★ Item_Food_1 → item に変更
     {
         if (item.GetActiveFlag())
         {
             item.Render();
         }
-    }
-}
+    }}
