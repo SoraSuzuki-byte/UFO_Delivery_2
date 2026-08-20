@@ -22,6 +22,8 @@ Player::Player(GameContext& gameContext, PlayScene& scene)
 	, m_velocity{}
 	, m_acceleration{}
 	, m_animationTimer{}
+	, m_hp{}
+	, m_invincibleTimer{}
 {
 }
 
@@ -39,7 +41,8 @@ void Player::Initialize()
 	m_acceleration = Vector2D{ 0.0f, 0.0f };
 
 	m_animationTimer = 0;
-
+	m_hp = MAX_HP;
+	m_invincibleTimer = 0;
 }
 
 void Player::Update()
@@ -61,11 +64,13 @@ void Player::Render()
 	// 移動時のアニメーション
 	MoveAnimation();
 
-    // UFOのHPがわかるようにオーバーレイ
-    DrawGraph(m_position.x, m_position.y,
-        m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Damage_Overlay),
-        TRUE);
+	// ダメージ表現のオーバーレイ
+	DrawDamageOverlay();
 
+
+
+	// ★追加：HPを画面に文字で表示する（動作確認用）
+	DrawFormatString(10, 40, GetColor(255, 255, 0), L"HP: %d / %d", m_hp, MAX_HP);
 
 }
    
@@ -109,6 +114,40 @@ void Player::Move(int keyCondition)
 
 	// 座標の更新
 	m_position += m_velocity;
+
+
+	// ステージの草との当たり判定
+	{
+		// プレイヤーの境界ボックスを作成する
+		BoundingBox playerBox{
+			Vector2D{ m_position.x, m_position.y },
+			Vector2D{ m_position.x + WIDTH, m_position.y + HEIGHT }
+		};
+
+		// 壁にめり込んでいたら、押し戻し量を計算する
+		const Vector2D correction = m_scene.GetStage().ResolveWallCollision(playerBox);
+
+		// 押し戻し量をプレイヤーの座標に反映する
+		m_position += correction;
+
+		// 壁に当たった方向の速度を反転させる（跳ね返り）
+		if (correction.x != 0.0f) { m_velocity.x *= -BOUNCE_FACTOR; }
+		if (correction.y != 0.0f) { m_velocity.y *= -BOUNCE_FACTOR; }
+
+		// 壁に当たっていて、かつ無敵時間中でなければダメージを受ける
+		const bool isHit = (correction.x != 0.0f) || (correction.y != 0.0f);
+		if (isHit && m_invincibleTimer <= 0)
+		{
+			m_hp--;
+			m_invincibleTimer = INVINCIBLE_TIME;
+		}
+
+		// 無敵タイマーを減らす
+		if (m_invincibleTimer > 0)
+		{
+			m_invincibleTimer--;
+		}
+	}
 
 
 	// 自機が画面外へ出ないように位置を修正する
@@ -209,4 +248,25 @@ void Player::MoveAnimation()
 			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Orange_Left), TRUE);
 		}
 	}
+}
+
+
+// ダメージ表現のオーバーレイ
+void Player::DrawDamageOverlay()
+{
+	// HPが満タンなら 255（完全に見える）、HPが0なら 0（完全に透明）
+	const float hpRatio = static_cast<float>(m_hp) / static_cast<float>(MAX_HP);
+	const int alpha = static_cast<int>(255 * hpRatio);
+
+	// 透明度を設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+
+	// UFOのHPがわかるようにオーバーレイ
+	DrawGraph(m_position.x, m_position.y,
+		m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Damage_Overlay),
+		TRUE);
+
+	// 透明度を元に戻す
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
 }

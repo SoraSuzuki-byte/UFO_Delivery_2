@@ -70,6 +70,8 @@ public:
 
     // getter
     const Vector2D& GetPlayerStartPosition() const { return m_playerStartPosition; }
+    // プレイヤーの境界ボックスと壁チップとの当たり判定を行い、押し戻し量を計算する
+    Vector2D ResolveWallCollision(const BoundingBox& playerBox) const;
 
 
     int GetMapWidth()  const { return m_mapWidth; }
@@ -77,6 +79,7 @@ public:
     int GetChipSize()  const { return CHIP_SIZE; }
 
 
+    // 内部処理-----------------------------------------------------------------------------------------------
 private:
     // ステージデータをロードする
     void LoadStageData(const wchar_t* stageName);

@@ -22,6 +22,16 @@ class SceneManager;
 class PlayScene
 {
 private:
+
+    // ゲームの状態
+    enum class GameState
+    {
+        Play,    // プレイ中
+        Result,  // リザルト表示中
+    };
+    GameState m_gameState;   // 現在のゲーム状態
+
+
     // ゲームコンテキストの、リファレンス
     GameContext& m_gameContext;
     // シーンマネジャーの、リファレンス
@@ -32,6 +42,10 @@ private:
 
     // プレイヤークラスのインスタンス
     Player m_player;
+
+
+    static constexpr int TITLE_RETURN_HOLD_TIME = 60;  // タイトルに戻るまでの長押し時間（フレーム数）
+    int m_titleReturnTimer;   // スペースキーを押し続けている時間
 
 
 
@@ -46,4 +60,11 @@ public:
 
 
     Stage& GetStage() { return m_stage; }
+
+
+
+    // 内部処理--------------------------------------------------------------------
+private:
+    // タイトルへ戻る長押しゲージの描画
+    void DrawTitleReturnGauge() const;
 };

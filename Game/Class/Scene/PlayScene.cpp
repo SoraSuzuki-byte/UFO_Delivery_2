@@ -23,6 +23,8 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_gameContext{ gameContext }
     , m_stage{ gameContext }
     , m_player{ gameContext,*this }
+    , m_gameState{ GameState::Play }
+    , m_titleReturnTimer{}
 {
 }
 
@@ -42,6 +44,8 @@ PlayScene::~PlayScene()
 /// -----------------------------------------------------------------
 void PlayScene::Initialize()
 {
+    m_gameState = GameState::Play;
+    m_titleReturnTimer = 0;
     //____________________________________________________________________________________________________
     // StageId(ステージID) → CSVファイル名へ対応
     static const wchar_t* stageNames[] = {
@@ -74,14 +78,33 @@ void PlayScene::Update()
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
-    // スペースキーが押されたら
-    if (keyTrigger & PAD_INPUT_10)
-    {
-        // シーンを変更する
-        m_sceneManager.RequestNextSceneID(SceneManager::SceneID::TitleScene);
-    }
 
-    m_player.Update();
+    // プレイ中のときのみ、プレイヤーや敵を 更新
+    if (m_gameState == GameState::Play)
+    {
+        m_player.Update();
+        // m_enemy.Update();
+        
+        // HPが0になったら、リザルト状態に切り替える
+        if (m_player.GetHp() <= 0)
+        {
+            m_gameState = GameState::Result;
+        }
+    }
+    else if (m_gameState == GameState::Result)
+    {
+        // リザルト中：スペースキーの長押しでタイトルへ戻る
+        if (keyCondition & PAD_INPUT_10)
+        {
+            m_titleReturnTimer++;
+
+            if (m_titleReturnTimer >= TITLE_RETURN_HOLD_TIME)
+            {
+                m_sceneManager.RequestNextSceneID(SceneManager::SceneID::TitleScene);
+            }
+        }
+        else { m_titleReturnTimer = 0; }// キーを離したらタイマーをリセットする
+    }
 }    
 //  -----------------------------------------------------------------
 /// <summary>
@@ -101,6 +124,20 @@ void PlayScene::Render()
 
     m_stage.Render();
     m_player.Render();
+
+
+
+    // リザルト中なら、画面に重ねて表示する
+    if (m_gameState == GameState::Result)
+    {
+        SetFontSize(100);
+        DrawString(280, 300, L"GAME OVER", GetColor(255, 0, 0));
+        SetFontSize(defaultFontSize);
+
+        // 長押しの進捗を 描画
+        DrawTitleReturnGauge();
+    }
+
 }
 
 //  -----------------------------------------------------------------
@@ -110,4 +147,35 @@ void PlayScene::Render()
 /// -----------------------------------------------------------------
 void PlayScene::Finalize()
 {
+}
+
+
+
+// ------------------------------------------------------------------
+// タイトルへ戻る長押しゲージの描画
+// ------------------------------------------------------------------
+void PlayScene::DrawTitleReturnGauge() const
+{
+    // ゲージの最大長
+    const int MAX_WIDTH = 400;
+
+    // 現在の長押し割合（0.0〜1.0）を計算する
+    const float ratio = static_cast<float>(m_titleReturnTimer) / static_cast<float>(TITLE_RETURN_HOLD_TIME);
+
+    // ゲージの左上座標（画面中央下寄りに配置）
+    POINT offset{ Screen::CENTER_X - MAX_WIDTH / 2, 420 };
+
+    // 案内テキスト
+    DrawString(offset.x, offset.y - 30, L"スペースキー長押しでタイトルへ", Colors::WHITE);
+
+    // ゲージの色（黄色で表現）
+    const int color = GetColor(255, 255, 0);
+
+    // 棒ゲージ（進捗ぶんだけ塗りつぶす）
+    DrawBox(offset.x, offset.y,
+        offset.x + static_cast<int>(MAX_WIDTH * ratio), offset.y + 30,
+        color, TRUE);
+
+    // 棒ゲージの枠
+    DrawBox(offset.x, offset.y, offset.x + MAX_WIDTH, offset.y + 30, Colors::WHITE, FALSE);
 }

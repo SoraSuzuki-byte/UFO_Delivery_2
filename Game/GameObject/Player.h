@@ -26,8 +26,10 @@ private:
     static constexpr float FRICTION = 0.94f; // 摩擦係数（1に近いほどよく滑る。0.85〜0.95あたりがおすすめ）
     static constexpr float MAX_SPEED = 10.0f;  // 最高速度
 
+    static constexpr float BOUNCE_FACTOR = 1.2f;  // 跳ね返りの強さ（1.0で等倍、大きくすると強く跳ね返る）
 
-
+    static constexpr int INVINCIBLE_TIME = 60;  // 無敵時間
+    static constexpr int MAX_HP = 10;  // 最大HP
 
     // ゲームコンテキストのリファレンス　（インスタンス・実体ではない
     GameContext& m_gameContext;
@@ -45,6 +47,10 @@ private:
 
     // 移動のアニメーションに使うTimer
     int m_animationTimer;
+    // 現在のHP
+    int m_hp;
+     // 無敵タイマー（0より大きい間は無敵）
+    int m_invincibleTimer;    
 
 
 
@@ -57,10 +63,16 @@ public:
     void Render();
     void Finalize();
 
+    // HPのゲッター　プレイシーンで「HPが0になったらリザルト表示」をするため
+    int GetHp() const { return m_hp; }
+
     // UFOを移動させる
     void Move(int keyCondition);
 
     // 移動時のアニメーション
     void MoveAnimation();
+
+    // ダメージ表現のオーバーレイ
+    void DrawDamageOverlay();
 };
 
