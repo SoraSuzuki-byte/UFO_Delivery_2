@@ -116,14 +116,17 @@ void Player::Move(int keyCondition)
 	m_position += m_velocity;
 
 
+	// プレイヤーの境界ボックスを作成する
+	BoundingBox playerBox{
+		Vector2D{ m_position.x, m_position.y },
+		Vector2D{ m_position.x + WIDTH, m_position.y + HEIGHT }
+	};
+
+	// ItemFood_1と当たると
+	CheckItemFood_1Collision(playerBox);
+
 	// ステージの草との当たり判定
 	{
-		// プレイヤーの境界ボックスを作成する
-		BoundingBox playerBox{
-			Vector2D{ m_position.x, m_position.y },
-			Vector2D{ m_position.x + WIDTH, m_position.y + HEIGHT }
-		};
-
 		// 壁にめり込んでいたら、押し戻し量を計算する
 		const Vector2D correction = m_scene.GetStage().ResolveWallCollision(playerBox);
 
@@ -269,4 +272,20 @@ void Player::DrawDamageOverlay()
 	// 透明度を元に戻す
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
+}
+
+
+// ItemFood_1と当たると
+void Player::CheckItemFood_1Collision(BoundingBox playerBox)
+{
+	for (auto& item : m_scene.GetStage().GetItems())
+	{
+		if (!item.GetActiveFlag()) { continue; }
+
+		if (CheckHitAABB(playerBox, item.GetBoundingBox()))
+		{
+			item.SetActiveFlag(false);   // 取得済みにする（消える）
+			// TODO: ここに取得時の効果（HP回復など）を後で追加
+		}
+	}
 }

@@ -63,6 +63,12 @@
     <Filter Include="Resources\Textures\UFO">
       <UniqueIdentifier>{37b2c7ce-fdb6-410f-b974-8dc47c628307}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Textures\Item">
+      <UniqueIdentifier>{9c1d59d1-4fdf-416d-81d3-0f0f28de0a0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameObject\Item">
+      <UniqueIdentifier>{26c22596-2434-4d47-8ab1-036bc2f06922}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -111,9 +117,6 @@
     <None Include="Resources\Sounds\SE00.ogg">
       <Filter>Resources\Sounds</Filter>
     </None>
-    <Image Include="Resources\Textures\TridentLogo.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
     <ClCompile Include="Game\Class\Scene\SceneChange.cpp">
       <Filter>Game\Class\Scene</Filter>
     </ClCompile>
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="Game\GameObject\Player.cpp">
       <Filter>Game\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameObject\Item_Food_1.cpp">
+      <Filter>Game\GameObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +200,9 @@
     <ClInclude Include="Game\GameObject\Player.h">
       <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameObject\Item_Food_1.h">
+      <Filter>Game\GameObject\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Textures\Grass.png">
@@ -216,6 +225,9 @@
     </Image>
     <Image Include="Resources\Textures\UFO_Orange_All.png">
       <Filter>Resources\Textures\UFO</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_1.png">
+      <Filter>Resources\Textures\Item</Filter>
     </Image>
   </ItemGroup>
 </Project>

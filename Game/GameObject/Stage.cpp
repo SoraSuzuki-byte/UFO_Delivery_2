@@ -71,6 +71,7 @@ void Stage::Initialize(const wchar_t* stageNumber)
 void Stage::Render() const
 {
     StageRender();
+    ItemFood_1Render();
 }
 
 // ------------------------------------------------------------------
@@ -114,6 +115,8 @@ POINT Stage::ConvertWorldPositionToMapPosition(const Vector2D& worldPosition)
 // ------------------------------------------------------------------
 void Stage::LoadStageData(const wchar_t* stageName)
 {
+
+
     std::ifstream ifs;      // ファイルストリーム
     std::string line;       // １行分のデータ
     std::istringstream iss; // 文字列ストリーム
@@ -160,7 +163,11 @@ void Stage::LoadStageData(const wchar_t* stageName)
     int playerCount;
     iss >> playerCount;
 
+    
 
+    // CSVを読み込む前に、以前のステージのアイテム情報を空（0個）にする
+    m_itemFood_1.clear();
+    
     // CSV３行目以降：マップデータの取得
     for (int y = 0; y < m_mapHeight; y++)
     {
@@ -184,6 +191,17 @@ void Stage::LoadStageData(const wchar_t* stageName)
                 {
                     m_mapArray[y][x] = Type::Player;
                     m_playerStartPosition = Vector2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    break;
+                }
+                case 3:  
+                {
+                    m_mapArray[y][x] = Type::ItemFood_1;
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, bb)); // bbは、配置場所
                     break;
                 }
                 default:
@@ -349,16 +367,18 @@ void Stage::StageRender() const
     }
 }
 
+
+
 // ------------------------------------------------------------------
-// 宝箱を描画する
+// ItemFood_1
 // ------------------------------------------------------------------
-//void Stage::ChestRender(int scroll) const
-//{
-//    for (const auto& chest : m_chests)
-//    {
-//        if (chest.GetActiveFlag())
-//        {
-//            chest.Render(scroll);
-//        }
-//    }
-//}
+void Stage::ItemFood_1Render() const
+{
+    for (const auto& item : m_itemFood_1)
+    {
+        if (item.GetActiveFlag())
+        {
+            item.Render();
+        }
+    }
+}

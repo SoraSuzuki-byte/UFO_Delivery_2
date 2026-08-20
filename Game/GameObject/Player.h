@@ -6,6 +6,7 @@
 */
 #pragma once
 #include "Library/GameMath.h"
+#include "Game/CollisionAABB.h"
 
 
 
@@ -74,5 +75,8 @@ public:
 
     // ダメージ表現のオーバーレイ
     void DrawDamageOverlay();
+
+    // ItemFood_1と当たると
+    void CheckItemFood_1Collision(BoundingBox playerBox);
 };
 

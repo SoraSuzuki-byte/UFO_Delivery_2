@@ -18,6 +18,7 @@ public:
         UFO_Orange_Left,   // オレンジのひだり（4）
         UFO_Orange_Middle, // オレンジの中央（5）
         UFO_Orange_Right,  // オレンジのみぎ（6）
+        Item_Food_1, // (7)
 
 
         Max    // テクスチャの合計数

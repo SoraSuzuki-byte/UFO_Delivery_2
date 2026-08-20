@@ -13,6 +13,8 @@ struct GameContext;
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
+#include "Game/GameObject/Item_Food_1.h"  
+#include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
 
 class Stage
 {
@@ -21,7 +23,7 @@ public:
     enum class Type
     {
         None = -1,
-        Floor, Wall, Player
+        Floor, Wall, Player, ItemFood_1
     };
 
 private:
@@ -49,6 +51,9 @@ private:
 
     // プレイヤー初期位置（ワールド座標で管理）
     Vector2D m_playerStartPosition;
+
+    // Item_Food_1の配列
+    std::vector<Item_Food_1> m_itemFood_1;   
 
 
 public:
@@ -79,6 +84,10 @@ public:
     int GetChipSize()  const { return CHIP_SIZE; }
 
 
+    // m_itemFood_1の配列を取得する
+    std::vector<Item_Food_1>& GetItems() { return m_itemFood_1; }
+
+
     // 内部処理-----------------------------------------------------------------------------------------------
 private:
     // ステージデータをロードする
@@ -89,5 +98,5 @@ private:
 
     // 描画のサブ関数
     void StageRender() const;
-    void ChestRender() const;
+    void ItemFood_1Render() const;
 };
