@@ -15,6 +15,9 @@ struct GameContext;
 #include "Game/CollisionAABB.h"
 #include "Game/GameObject/Item_Food_1.h"  
 #include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
+class Player;
+
+
 
 class Stage
 {
@@ -37,6 +40,8 @@ private:
 private:
     // ゲームコンテキストのインスタンス
     GameContext& m_gameContext;
+
+    Player* m_player;   //（ポインタで持つ。まだ存在しない可能性があるため）
 
 
     // マップの幅と高さ
@@ -74,8 +79,17 @@ public:
     // ワールド座標をマップ座標に変換する
     POINT ConvertWorldPositionToMapPosition(const Vector2D& worldPosition);
 
-    // getter
+    // Playerの参照を後から設定する
+    void SetPlayer(Player& player) { m_player = &player; }
+
+    // プレイヤーの初期位置のゲッター 
     const Vector2D& GetPlayerStartPosition() const { return m_playerStartPosition; }
+
+    // アイテム配列を取得する（外部から位置変更などを行うため）
+    std::vector<Item_Food_1>& GetItemFood_1() { return m_itemFood_1; }
+    // m_itemFood_1の配列を取得するゲッター
+    std::vector<Item_Food_1>& GetItems() { return m_itemFood_1; }
+
     // プレイヤーの境界ボックスと壁チップとの当たり判定を行い、押し戻し量を計算する
     Vector2D ResolveWallCollision(const BoundingBox& playerBox) const;
 
@@ -85,8 +99,6 @@ public:
     int GetChipSize()  const { return CHIP_SIZE; }
 
 
-    // m_itemFood_1の配列を取得する
-    std::vector<Item_Food_1>& GetItems() { return m_itemFood_1; }
 
 
     // 内部処理-----------------------------------------------------------------------------------------------

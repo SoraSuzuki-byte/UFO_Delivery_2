@@ -219,7 +219,8 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, *this, bb)); // bbは、配置場所
+                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, *this, m_player, bb)); // bbは BoundingBox
+                    m_itemFood_1.back().Initialize();
                     break;
                 }
                 default:

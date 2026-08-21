@@ -66,6 +66,8 @@ public:
 
     // HPのゲッター　プレイシーンで「HPが0になったらリザルト表示」をするため
     int GetHp() const { return m_hp; }
+    // m_positionのゲッター
+    Vector2D GetPosition() const { return m_position; }
 
     // UFOを移動させる
     void Move(int keyCondition);

@@ -46,6 +46,9 @@ void PlayScene::Initialize()
 {
     m_gameState = GameState::Play;
     m_titleReturnTimer = 0;
+
+    // ★追加：Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
+    m_stage.SetPlayer(m_player);
     //____________________________________________________________________________________________________
     // StageId(ステージID) → CSVファイル名へ対応
     static const wchar_t* stageNames[] = {
