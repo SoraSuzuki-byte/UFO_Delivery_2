@@ -395,7 +395,8 @@ void Stage::ItemFood_1Render() const
 {
   for (const auto& item : m_itemFood_1)   // ★ Item_Food_1 → item に変更
     {
-        if (item.GetActiveFlag())
+      // ★保有中でなく、かつ取得済みでもない場合のみ、マップ上に描画する
+         if (item.GetActiveFlag() && !item.GetIsHeld())
         {
             item.Render();
         }

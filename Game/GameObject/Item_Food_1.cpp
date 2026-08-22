@@ -16,6 +16,8 @@ Item_Food_1::Item_Food_1(GameContext& gameContext, Stage& stage, Player* player,
     , m_restitution{}
     , m_friction{}
     , m_isPulled{ false }
+    , m_isHeld{ false }
+    , m_pickupCooldownTimer{}
     , m_width{ boundingBox.maxPosition.x - boundingBox.minPosition.x }
     , m_height{ boundingBox.maxPosition.y - boundingBox.minPosition.y }
 
@@ -46,10 +48,19 @@ void Item_Food_1::Initialize()
 void Item_Food_1::Update()
 {
     if (!m_isActive) { return; }
+    if (m_isHeld)
+    {
+        return;   // 座標更新は Player 側（PlayScene::Render）で行うので、ここでは何もしない
+    }
+    // 落とした後のクールダウン中はタイマーを減らし、吸引判定を行わない
+    if (m_pickupCooldownTimer > 0)
+    {
+        m_pickupCooldownTimer--;
+    }
     //----------------------------------------------------------------------------------
     // プレイヤーが自分の真上にいるかどうかを調べ、吸引フラグを更新
     //----------------------------------------------------------------------------------
-    if (m_player != nullptr)// ★安全対策：Playerがまだ設定されていない場合は elseへ
+    if (m_player != nullptr && m_pickupCooldownTimer <= 0)// ★安全対策：Playerがまだ設定されていない場合かつ、吸引クールダウン中でない時 → elseへ
     {
         const Vector2D playerPos = m_player->GetPosition();
         const bool isAboveY = (playerPos.y < m_position.y); // 右側の比較が true か false なのか
@@ -71,6 +82,20 @@ void Item_Food_1::Update()
     {
         const Vector2D playerPos = m_player->GetPosition();
         const Vector2D diff = playerPos - m_position;
+        const float distance = Length(diff);
+
+        // 十分近づいたら、保有状態に切り替える
+        const float HOLD_DISTANCE = 20.0f;
+        if (distance < HOLD_DISTANCE)
+        {
+            if (m_player->TryHoldItem(this))
+            {
+                m_isHeld = true;
+                m_isPulled = false;
+            }
+            return;   // 保有した場合は、これ以降の移動処理をスキップ
+        }
+
         const Vector2D direction = Normalize(diff);
 
         const float ATTRACT_SPEED = 3.0f;
@@ -126,6 +151,8 @@ void Item_Food_1::Render() const//----------------------------------------------
 {
 
     if (!m_isActive) { return; }
+    if (m_isHeld) { return; }   // 保有中はマップ上に描画しない（左上UIは別途PlayScene側で描画）
+
 
     DrawGraph(
         static_cast<int>(m_boundingBox.minPosition.x),

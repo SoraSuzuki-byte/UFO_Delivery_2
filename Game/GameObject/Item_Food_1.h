@@ -21,8 +21,14 @@ private:
     static constexpr const float GRAVITY = 9.8f;
     // プレイヤーに引き寄せられる速さ
     static constexpr const float ATTRACT_SPEED = 3.0f;
+
     //「真上にいる」とみなすX座標の許容範囲（左右何ピクセルまでOKか）
     static constexpr const float ABOVE_X_RANGE = 30.0f;
+
+    // 落とした直後、再吸引を無効にする時間（フレーム数）
+    static constexpr const int PICKUP_COOLDOWN_TIME = 30;   // 約0.5秒
+    // 落とした後の、再吸引禁止のタイマー
+    int m_pickupCooldownTimer;
 
     // 壁（草）への めり込み割合
     static constexpr const float OVERLAP_RATIO = 0.5f;
@@ -51,6 +57,9 @@ private:
     // 吸引されているか
     bool m_isPulled;
 
+    bool m_isHeld;   // 保有中かどうか
+
+
 
     float m_width;
     float m_height;
@@ -66,6 +75,25 @@ public:
     // 取得済みかどうか
     bool GetActiveFlag() const { return m_isActive; }
     void SetActiveFlag(bool isActive) { m_isActive = isActive; }
+
+    // 保有中かどうか
+    bool GetIsHeld() const { return m_isHeld; }
+
+
+    // 落とされた時の処理
+    void Drop(const Vector2D& dropPosition)
+    {
+        m_isHeld = false;
+        m_isPulled = false;
+        m_position = dropPosition;
+        m_velocity = Vector2D{ 0.0f, 0.0f };
+
+        m_boundingBox.minPosition = m_position;
+        m_boundingBox.maxPosition = Vector2D{ m_position.x + m_width, m_position.y + m_height };
+
+        // 落とした直後は、しばらく再吸引を禁止する
+        m_pickupCooldownTimer = PICKUP_COOLDOWN_TIME;
+    }
 
     const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
 };

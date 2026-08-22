@@ -129,6 +129,9 @@ void PlayScene::Render()
     m_stage.Render();
     m_player.Render();
 
+    // 保有アイテムを表示
+    DrawHeldItemsUI();
+
 
 
     // リザルト中なら、画面に重ねて表示する
@@ -182,4 +185,33 @@ void PlayScene::DrawTitleReturnGauge() const
 
     // 棒ゲージの枠
     DrawBox(offset.x, offset.y, offset.x + MAX_WIDTH, offset.y + 30, Colors::WHITE, FALSE);
+}
+
+
+
+
+// 保有アイテムを表示
+void PlayScene::DrawHeldItemsUI() const
+{
+    const auto& items = m_player.GetHeldItems();
+    const int selectedIndex = m_player.GetSelectedItemIndex();
+
+    const int iconSize = 40;
+    const int spacing = 10;
+    const int startX = 10;
+    const int startY = 80;   // HP表示などと被らない位置に調整
+
+    for (int i = 0; i < static_cast<int>(items.size()); i++)
+    {
+        const int x = startX + i * (iconSize + spacing);
+
+        // アイコン（アイテムのテクスチャを使う）
+        DrawGraph(x, startY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Item_Food_1), TRUE);
+
+        // 選択中のものだけ枠を描く
+        if (i == selectedIndex)
+        {
+            DrawBox(x, startY, x + iconSize, startY + iconSize, GetColor(255, 255, 0), FALSE);
+        }
+    }
 }

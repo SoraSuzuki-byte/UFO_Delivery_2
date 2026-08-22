@@ -67,4 +67,7 @@ public:
 private:
     // タイトルへ戻る長押しゲージの描画
     void DrawTitleReturnGauge() const;
+
+    // 保有しているアイテムを表示
+    void DrawHeldItemsUI() const;
 };

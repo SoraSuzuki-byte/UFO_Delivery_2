@@ -24,6 +24,8 @@ Player::Player(GameContext& gameContext, PlayScene& scene)
 	, m_animationTimer{}
 	, m_hp{}
 	, m_invincibleTimer{}
+	, m_heldItems{}
+	, m_selectedItemIndex{}
 {
 }
 
@@ -53,6 +55,9 @@ void Player::Update()
 
 	// 移動
 	Move(keyCondition);
+
+	// ★アイテムの選択切り替え・ドロップ操作
+	UpdateItemHolding(keyCondition, keyTrigger);
 	
 }
 
@@ -84,6 +89,7 @@ void Player::Finalize()
 
 
 
+//item.SetActiveFlag(false);   // 目的地に運んで、加点されると（消える）
 
 
 
@@ -284,8 +290,52 @@ void Player::CheckItemFood_1Collision(BoundingBox playerBox)
 
 		if (CheckHitAABB(playerBox, item.GetBoundingBox()))
 		{
-			item.SetActiveFlag(false);   // 取得済みにする（消える）
 			// TODO: ここに取得時の効果（HP回復など）を後で追加
+		}
+	}
+}
+
+
+// ------------------------------------------------------------------
+// 保有アイテムの選択切り替え・ドロップ操作
+// ------------------------------------------------------------------
+void Player::UpdateItemHolding(int keyCondition, int keyTrigger)
+{
+	// 左SHIFTキーの判定は、DXライブラリのCheckHitKeyで直接行う
+	const bool isShiftPressed = (CheckHitKey(KEY_INPUT_LSHIFT) != 0);
+
+	// 左SHIFTキーを押しながら、左右矢印で選択を切り替える
+	if (isShiftPressed)
+	{
+		if (keyTrigger & PAD_INPUT_LEFT)
+		{
+			m_selectedItemIndex--;
+			if (m_selectedItemIndex < 0) { m_selectedItemIndex = 0; }
+		}
+		if (keyTrigger & PAD_INPUT_RIGHT)
+		{
+			m_selectedItemIndex++;
+			const int maxIndex = static_cast<int>(m_heldItems.size()) - 1;
+			if (m_selectedItemIndex > maxIndex) { m_selectedItemIndex = maxIndex < 0 ? 0 : maxIndex; }
+		}
+	}
+
+	// スペースキーで、選択中のアイテムを落とす
+	if (keyTrigger & PAD_INPUT_10)   // これまでスペースキーとして使ってきた定数
+	{
+		if (!m_heldItems.empty() && m_selectedItemIndex < static_cast<int>(m_heldItems.size()))
+		{
+			Item_Food_1* dropItem = m_heldItems[m_selectedItemIndex];
+			dropItem->Drop(m_position);
+
+			m_heldItems.erase(m_heldItems.begin() + m_selectedItemIndex);
+
+			// 選択インデックスが範囲外にならないよう調整
+			if (m_selectedItemIndex >= static_cast<int>(m_heldItems.size()))
+			{
+				m_selectedItemIndex = static_cast<int>(m_heldItems.size()) - 1;
+				if (m_selectedItemIndex < 0) { m_selectedItemIndex = 0; }
+			}
 		}
 	}
 }
