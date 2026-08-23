@@ -92,15 +92,15 @@ void PlayScene::Update()
         m_player.Update();
         // m_enemy.Update();
         
-        // HPが0になったら、リザルト状態に切り替える
-        if (m_player.GetHp() <= 0)
-        {
-            m_gameState = GameState::Result;
-        }
+        // HPが0になったら、ゲームオーバー状態に切り替える
+        if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; }
+
+        // すべての家に届け終わったら、クリア状態に切り替える
+        if (m_stage.IsAllHousesFulfilled()) { m_gameState = GameState::Clear; }
     }
-    else if (m_gameState == GameState::Result)
+    else if (m_gameState == GameState::GameOver || m_gameState == GameState::Clear)
     {
-        // リザルト中：スペースキーの長押しでタイトルへ戻る
+        // スペースキーの長押しでタイトルへ戻る
         if (keyCondition & PAD_INPUT_10)
         {
             m_titleReturnTimer++;
@@ -135,16 +135,25 @@ void PlayScene::Render()
     // 保有アイテムを表示
     DrawHeldItemsUI();
 
+   
 
-
-    // リザルト中なら、画面に重ねて表示する
-    if (m_gameState == GameState::Result)
+    // ゲームオーバー中なら、画面に重ねて表示する
+    if (m_gameState == GameState::GameOver)
     {
         SetFontSize(100);
         DrawString(280, 300, L"GAME OVER", GetColor(255, 0, 0));
         SetFontSize(defaultFontSize);
 
         // 長押しの進捗を 描画
+        DrawTitleReturnGauge();
+    }
+    //　クリア中の表示
+    else if (m_gameState == GameState::Clear)
+    {
+        SetFontSize(100);
+        DrawString(320, 300, L"CLEAR!", GetColor(0, 255, 0));
+        SetFontSize(defaultFontSize);
+
         DrawTitleReturnGauge();
     }
 
@@ -237,12 +246,12 @@ void PlayScene::PlaceHouses(StageId stageId)
     switch (stageId)
     {
         case StageId::Stage1:
-            m_stage.AddHouse(Vector2D{ 500.0f, 600.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 200.0f, 680.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
             m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food2);
             break;
 
         case StageId::Stage2:
-            m_stage.AddHouse(Vector2D{ 300.0f, 700.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 100.0f, 600.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
             break;
 
         case StageId::Stage3:

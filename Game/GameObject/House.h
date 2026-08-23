@@ -1,4 +1,4 @@
-/*
+﻿/*
     @file   House.h
     @brief  ハウスクラス（このオブジェクトへ食べ物を届ける）
     @author 鈴木蒼良
@@ -8,7 +8,8 @@
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
 #include "Game/GameObject/Item_Food_1.h"
-class GameContext;
+// 前方宣言 ===============================================================
+struct GameContext;
 
 
 class House

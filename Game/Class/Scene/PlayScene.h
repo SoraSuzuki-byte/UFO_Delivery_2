@@ -27,7 +27,8 @@ private:
     enum class GameState
     {
         Play,    // プレイ中
-        Result,  // リザルト表示中
+        GameOver,// ゲームオーバー
+        Clear,   // クリア
     };
     GameState m_gameState;   // 現在のゲーム状態
 

@@ -8,7 +8,7 @@
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
 
-class GameContext;
+struct GameContext;
 class Stage;
 class Player;
 

@@ -4,8 +4,6 @@
     @author 制作者
     @date   2026/07/03
 */
-// 前方宣言 ===============================================================
-struct GameContext;
 
 
 
@@ -16,6 +14,8 @@ struct GameContext;
 #include "Game/GameObject/Item_Food_1.h"  
 #include "Game/GameObject/House.h"
 #include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
+// 前方宣言 ===============================================================
+struct GameContext;
 class Player;
 
 
@@ -104,6 +104,19 @@ public:
 
     // プレイヤーの境界ボックスと壁チップとの当たり判定を行い、押し戻し量を計算する
     Vector2D ResolveWallCollision(const BoundingBox& playerBox) const;
+
+    // すべての家に届け終わったかどうかを判定する
+    bool IsAllHousesFulfilled() const
+    {
+        for (const auto& house : m_houses)
+        {
+            if (!house.GetIsFulfilled())
+            {
+                return false;   // 1つでも未達成の家があれば false
+            }
+        }
+        return true;   // 全部届いていれば true
+    }
 
 
     int GetMapWidth()  const { return m_mapWidth; }

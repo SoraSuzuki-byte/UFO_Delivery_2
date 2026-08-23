@@ -24,6 +24,7 @@ Stage::Stage(GameContext& gameContext)
     , m_mapArray{}
     , m_boundingBoxArray{}
     , m_playerStartPosition{}
+    , m_player{ nullptr }
 {
 }
 
