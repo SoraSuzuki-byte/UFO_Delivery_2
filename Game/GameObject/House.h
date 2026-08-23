@@ -32,7 +32,7 @@ public:
 
     void Render() const;
 
-    // 欲しがっている食べ物を小さく表示
+    // 欲しがっている食べ物を、家の横に表示
     void RenderWantedItemIcon() const;
 
 

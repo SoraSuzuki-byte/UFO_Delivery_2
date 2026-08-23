@@ -32,36 +32,43 @@ void House::Render() const
         m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::House),
         TRUE);
 
-    // 届け終わっていない時だけ、欲しいアイテムのアイコンを表示する
+    // 届け終わっていない時だけ、欲しがっている食べ物のアイコンを表示する
     if (!m_isFulfilled) { RenderWantedItemIcon(); }
 
 }
 
 
 
-// 欲しがっている食べ物を小さく表示
+// 欲しがっている食べ物を、家の横に表示
 void House::RenderWantedItemIcon() const
 {
-    // 1. if文の手前で変数を宣言する
+    // if文の手前で変数を宣言する
     GhManager::Textures texture;
-    // 2. if文で画像の種類を分岐して、代入する
+    // if文で画像の種類を分岐して、代入する
     if (m_wantedFoodType == Item_Food_1::FoodType::Food1)
     {
         texture = GhManager::Textures::Item_Food_1;
     }
-    else
+    else if (m_wantedFoodType == Item_Food_1::FoodType::Food2)
     {
         texture = GhManager::Textures::Item_Food_2;
     }
 
-    // 3. 表示位置を計算してアイコンを描画する
-    const int iconX = static_cast<int>(m_boundingBox.maxPosition.x) + 5; // 家の右横に少し余白
+    // 表示位置を計算してアイコンを描画する
+    const int iconX = static_cast<int>(m_boundingBox.maxPosition.x) + 4; // 家の右横に少し余白
     const int iconY = static_cast<int>(m_boundingBox.minPosition.y);
+    const int iconSize = 24;
 
-    DrawGraph(
-        iconX,
-        iconY,
-        m_gameContext.ghManager.GetGraphicHandle(texture),
-        TRUE
-    );
+   
+    // 看板風の背景（半透明の黒い四角）
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
+    DrawBox(iconX - 4, iconY - 4, iconX + iconSize + 4, iconY + iconSize + 4, GetColor(0, 0, 0), TRUE);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+    // 看板の枠線
+    DrawBox(iconX - 4, iconY - 4, iconX + iconSize + 4, iconY + iconSize + 4, GetColor(255, 255, 255), FALSE);
+
+    // アイコン本体（サイズを縮小して描画）
+    DrawExtendGraph(iconX, iconY, iconX + iconSize, iconY + iconSize,
+        m_gameContext.ghManager.GetGraphicHandle(texture), TRUE);
 }
