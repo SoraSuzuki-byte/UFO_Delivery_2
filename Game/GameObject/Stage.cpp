@@ -83,6 +83,7 @@ void Stage::Render() const
 {
     ItemFood_1Render();
     StageRender();
+    HouseRender();
 }
 
 // ------------------------------------------------------------------
@@ -133,7 +134,8 @@ POINT Stage::ConvertWorldPositionToMapPosition(const Vector2D& worldPosition)
 // ------------------------------------------------------------------
 void Stage::LoadStageData(const wchar_t* stageName)
 {
-
+    // CSVを読み込む前に、以前のステージの「House」の情報を空にする
+    m_houses.clear();
 
     std::ifstream ifs;      // ファイルストリーム
     std::string line;       // １行分のデータ
@@ -211,7 +213,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_playerStartPosition = Vector2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
                     break;
                 }
-                case 3:  
+                case 3:  // 食べ物_1
                 {
                     m_mapArray[y][x] = Type::ItemFood_1;
 
@@ -219,7 +221,19 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, *this, m_player, bb)); // bbは BoundingBox
+                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, *this, m_player, bb, Item_Food_1::FoodType::Food1)); // bbは BoundingBox
+                    m_itemFood_1.back().Initialize();
+                    break;
+                }
+                case 4:   // 食べ物_2
+                {
+                    m_mapArray[y][x] = Type::ItemFood_1;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemFood_1.emplace_back(m_gameContext, *this, m_player, bb, Item_Food_1::FoodType::Food2);
                     m_itemFood_1.back().Initialize();
                     break;
                 }
@@ -389,7 +403,7 @@ void Stage::StageRender() const
 
 
 // ------------------------------------------------------------------
-// ItemFood_1
+// ItemFood_1を描画する
 // ------------------------------------------------------------------
 void Stage::ItemFood_1Render() const
 {
@@ -401,3 +415,16 @@ void Stage::ItemFood_1Render() const
             item.Render();
         }
     }}
+
+
+
+// ------------------------------------------------------------------
+// Houseを描画する
+// ------------------------------------------------------------------
+void Stage::HouseRender() const
+{
+    for (const auto& house : m_houses)
+    {
+            house.Render();
+    }
+}

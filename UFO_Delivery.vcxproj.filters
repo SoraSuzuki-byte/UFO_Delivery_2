@@ -135,9 +135,6 @@
     <ClCompile Include="Game\GameObject\Stage.cpp">
       <Filter>Game\GameObject\Stage</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameObject\Chest.cpp">
-      <Filter>Game\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Class\Manager\GhManager.cpp">
       <Filter>Game\Class\Manager</Filter>
     </ClCompile>
@@ -149,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="Game\GameObject\Item_Food_1.cpp">
       <Filter>Game\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameObject\House.cpp">
+      <Filter>Game\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +188,6 @@
     <ClInclude Include="Game\GameObject\Stage.h">
       <Filter>Game\GameObject\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameObject\Chest.h">
-      <Filter>Game\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Class\Manager\GhManager.h">
       <Filter>Game\Class\Manager</Filter>
     </ClInclude>
@@ -202,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="Game\GameObject\Item_Food_1.h">
       <Filter>Game\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObject\House.h">
+      <Filter>Game\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +228,12 @@
     </Image>
     <Image Include="Resources\Textures\Grass.png">
       <Filter>Resources\Textures\Map_Chip</Filter>
+    </Image>
+    <Image Include="Resources\Textures\House.png">
+      <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_2.png">
+      <Filter>Resources\Textures\Item</Filter>
     </Image>
   </ItemGroup>
 </Project>

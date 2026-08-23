@@ -10,7 +10,7 @@
 #pragma once
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
-
+#include "Game/GameContext.h"
 
  // クラスの前方宣言 ===============================================================
 // 前方宣言
@@ -70,4 +70,7 @@ private:
 
     // 保有しているアイテムを表示
     void DrawHeldItemsUI() const;
+
+    // ステージごとに家を配置する
+    void PlaceHouses(StageId stageId);
 };

@@ -4,7 +4,7 @@
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
-Item_Food_1::Item_Food_1(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox)
+Item_Food_1::Item_Food_1(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
     : m_gameContext{ gameContext }
     , m_stage{ stage }
     , m_player{ player }
@@ -18,6 +18,7 @@ Item_Food_1::Item_Food_1(GameContext& gameContext, Stage& stage, Player* player,
     , m_isPulled{ false }
     , m_isHeld{ false }
     , m_pickupCooldownTimer{}
+    , m_foodType{ foodType }
     , m_width{ boundingBox.maxPosition.x - boundingBox.minPosition.x }
     , m_height{ boundingBox.maxPosition.y - boundingBox.minPosition.y }
 
@@ -106,8 +107,26 @@ void Item_Food_1::Update()
     else // 吸引されていないとき：重力の影響を受ける
     {
         m_velocity.y += m_gravity;
-
         m_position += m_velocity;
+
+        // 家との当たり判定
+        for (auto& house : m_stage.GetHouses())
+        {
+            if (CheckHitAABB(m_boundingBox, house.GetBoundingBox()))
+            {
+                if (house.GetIsFulfilled()) { continue; }   // 届け済みの家はもう判定しない
+
+                // 食べ物の種類が、家と一致した時だけ命中とする
+                if (house.GetWantedFoodType() == m_foodType)
+                {
+                    m_isActive = false;       // 食べ物は消える
+                    house.SetIsFulfilled(true);   // 家の付近にある、欲しい食べ物のアイコンを消す
+                    return;
+
+                }
+                // 種類が違う場合は何もしない（すり抜けてそのまま落下し続ける）
+            }
+        }
 
         // 足元が壁（草）かどうかを調べる
         const float centerX = m_position.x + m_width * 0.5f;
@@ -154,9 +173,21 @@ void Item_Food_1::Render() const//----------------------------------------------
     if (m_isHeld) { return; }   // 保有中はマップ上に描画しない（左上UIは別途PlayScene側で描画）
 
 
+    GhManager::Textures texture{}; //  GhManager::Textures型の、空のオブジェクトを宣言
+
+    // タイプに合わせて、空のオブジェクトに代入
+    if (m_foodType == FoodType::Food1) 
+    {
+        texture = GhManager::Textures::Item_Food_1;
+    }
+    else 
+    {
+        texture = GhManager::Textures::Item_Food_2;
+    }
+
     DrawGraph(
         static_cast<int>(m_boundingBox.minPosition.x),
         static_cast<int>(m_boundingBox.minPosition.y),
-        m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Item_Food_1),
+        m_gameContext.ghManager.GetGraphicHandle(texture),
         TRUE);
 }

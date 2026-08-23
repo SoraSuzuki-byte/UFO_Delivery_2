@@ -14,6 +14,7 @@ struct GameContext;
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
 #include "Game/GameObject/Item_Food_1.h"  
+#include "Game/GameObject/House.h"
 #include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
 class Player;
 
@@ -59,6 +60,8 @@ private:
 
     // Item_Food_1の配列
     std::vector<Item_Food_1> m_itemFood_1;   
+    // Houseの配列
+    std::vector<House> m_houses;
 
 
 public:
@@ -90,6 +93,15 @@ public:
     // m_itemFood_1の配列を取得するゲッター
     std::vector<Item_Food_1>& GetItems() { return m_itemFood_1; }
 
+    // 家の配列を取得する（アイテムとの当たり判定用）
+    std::vector<House>& GetHouses() { return m_houses; }
+    // 家を配置する（ステージごとにコードで指定するため）
+    void AddHouse(const Vector2D& position, float width, float height, Item_Food_1::FoodType wantedFoodType)
+    {
+        BoundingBox bb{ position, Vector2D{ position.x + width, position.y + height } };
+        m_houses.emplace_back(m_gameContext, bb, wantedFoodType);
+    }
+
     // プレイヤーの境界ボックスと壁チップとの当たり判定を行い、押し戻し量を計算する
     Vector2D ResolveWallCollision(const BoundingBox& playerBox) const;
 
@@ -112,4 +124,5 @@ private:
     // 描画のサブ関数
     void StageRender() const;
     void ItemFood_1Render() const;
+    void HouseRender() const;
 };

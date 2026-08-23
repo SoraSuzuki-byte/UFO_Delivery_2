@@ -5,7 +5,6 @@
     @date   2026年8月15日
 */
 
-
 #pragma once
 class GhManager
 {
@@ -18,7 +17,9 @@ public:
         UFO_Orange_Left,   // オレンジのひだり（4）
         UFO_Orange_Middle, // オレンジの中央（5）
         UFO_Orange_Right,  // オレンジのみぎ（6）
-        Item_Food_1, // (7)
+        House, // (7)
+        Item_Food_1, // (8)
+        Item_Food_2, // (9)
 
 
         Max    // テクスチャの合計数

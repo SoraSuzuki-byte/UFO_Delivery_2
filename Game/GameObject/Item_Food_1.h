@@ -15,6 +15,13 @@ class Player;
 
 class Item_Food_1
 {
+public:
+    // 食べ物の種類
+    enum class FoodType
+    {
+        Food1,
+        Food2,
+    };
 private:
 
     // 重力
@@ -64,8 +71,11 @@ private:
     float m_width;
     float m_height;
 
+    // このインスタンスの、食べ物の種類
+    FoodType m_foodType;
+
 public:
-    Item_Food_1(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox);
+    Item_Food_1(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType);
     ~Item_Food_1();
 
     void Initialize();
@@ -78,6 +88,10 @@ public:
 
     // 保有中かどうか
     bool GetIsHeld() const { return m_isHeld; }
+
+    // 種類を取得する
+    FoodType GetFoodType() const { return m_foodType; }
+
 
 
     // 落とされた時の処理

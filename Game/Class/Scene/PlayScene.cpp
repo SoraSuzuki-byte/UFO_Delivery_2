@@ -47,7 +47,7 @@ void PlayScene::Initialize()
     m_gameState = GameState::Play;
     m_titleReturnTimer = 0;
 
-    // ★追加：Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
+    // Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
     m_stage.SetPlayer(m_player);
     //____________________________________________________________________________________________________
     // StageId(ステージID) → CSVファイル名へ対応
@@ -66,6 +66,9 @@ void PlayScene::Initialize()
     // 対応するファイル名でステージを初期化する
     m_stage.Initialize(stageNames[index]);
 //____________________________________________________________________________________________________」
+
+    // ステージごとに家を配置する
+    PlaceHouses(selectedStage);
 
     m_player.Initialize();
 }
@@ -190,7 +193,7 @@ void PlayScene::DrawTitleReturnGauge() const
 
 
 
-// 保有アイテムを表示
+// 保有中のアイテムを表示
 void PlayScene::DrawHeldItemsUI() const
 {
     const auto& items = m_player.GetHeldItems();
@@ -205,13 +208,49 @@ void PlayScene::DrawHeldItemsUI() const
     {
         const int x = startX + i * (iconSize + spacing);
 
-        // アイコン（アイテムのテクスチャを使う）
-        DrawGraph(x, startY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Item_Food_1), TRUE);
+        // 保有中のアイコン（食べ物のテクスチャを使う）
+        GhManager::Textures texture;
+        if (items[i]->GetFoodType() == Item_Food_1::FoodType::Food1)
+        {
+            texture = GhManager::Textures::Item_Food_1;
+        }
+        else
+        {
+            texture = GhManager::Textures::Item_Food_2;
+        }
+
+        DrawGraph(x, startY, m_gameContext.ghManager.GetGraphicHandle(texture), TRUE);
+
 
         // 選択中のものだけ枠を描く
         if (i == selectedIndex)
         {
             DrawBox(x, startY, x + iconSize, startY + iconSize, GetColor(255, 255, 0), FALSE);
         }
+    }
+}
+
+
+// ステージごとに家を配置する
+void PlayScene::PlaceHouses(StageId stageId)
+{
+    switch (stageId)
+    {
+        case StageId::Stage1:
+            m_stage.AddHouse(Vector2D{ 500.0f, 600.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 900.0f, 600.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food2);
+            break;
+
+        case StageId::Stage2:
+            m_stage.AddHouse(Vector2D{ 300.0f, 700.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
+            break;
+
+        case StageId::Stage3:
+            m_stage.AddHouse(Vector2D{ 400.0f, 500.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 800.0f, 500.0f }, 80.0f, 80.0f, Item_Food_1::FoodType::Food1);
+            break;
+
+        default:
+            break;
     }
 }
