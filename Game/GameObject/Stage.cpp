@@ -82,6 +82,7 @@ void Stage::Update()
 // ------------------------------------------------------------------
 void Stage::Render() const
 {
+    BackgroundRender();
     ItemFood_1Render();
     StageRender();
     HouseRender();
@@ -370,6 +371,15 @@ Vector2D Stage::ResolveWallCollision(const BoundingBox& playerBox) const
 
 
 
+
+void Stage::BackgroundRender() const
+{
+    // 選ばれているステージIDが、Stage1であれば
+    if (m_gameContext.GetSelectedStageId() == StageId::Stage1)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_1), TRUE);
+    }
+}
 
 // ------------------------------------------------------------------
 // ステージを描画する

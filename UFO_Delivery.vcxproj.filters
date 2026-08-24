@@ -69,6 +69,9 @@
     <Filter Include="Game\GameObject\Item">
       <UniqueIdentifier>{26c22596-2434-4d47-8ab1-036bc2f06922}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Textures\Background">
+      <UniqueIdentifier>{c1be41c8-1e2b-4cd3-9fda-b6932d538d12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -234,6 +237,9 @@
     </Image>
     <Image Include="Resources\Textures\Item_Food_2.png">
       <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_1.png">
+      <Filter>Resources\Textures\Background</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -181,6 +181,7 @@
     <ClInclude Include="Library\MemoryLeakDetector.h" />
     <!-- 埋め込みリソース -->
     <ClInclude Include="EmbeddedResources\Resource.h" />
+    <Image Include="Resources\Textures\Background_1.png" />
     <Image Include="Resources\Textures\Grass.png" />
     <Image Include="Resources\Textures\House.png" />
     <Image Include="Resources\Textures\Item_Food_1.png" />

@@ -120,8 +120,7 @@ void PlayScene::Update()
 /// -----------------------------------------------------------------
 void PlayScene::Render()
 {
-    int x = 150;
-    int y = 300;
+
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(80);

@@ -41,7 +41,8 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/UFO_Orange_Right.png", // (6)
         L"Resources/Textures/House.png", // (7)
         L"Resources/Textures/Item_Food_1.png", // (8)
-        L"Resources/Textures/Item_Food_2.png" // (9)
+        L"Resources/Textures/Item_Food_2.png", // (9)
+        L"Resources/Textures/Background_1.png" // (10)
 
         //  L"Resources/Textures/
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
