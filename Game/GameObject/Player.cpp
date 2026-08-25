@@ -62,16 +62,22 @@ void Player::Update()
 }
 
 void Player::Render()
-{
-    // 素体の画像
-    DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
+{																										
+	// m_invincibleTimerが0より大きいときは「無敵時間中」// 点滅させる間隔を、bool値で切り替える	
+																										//「BLINK_INTERVALの数値のフレームごとに1段階進む」ゆっくりとした周期を作ります
+	const bool isBlinking = (m_invincibleTimer > 0) && ((m_invincibleTimer / BLINK_INTERVAL) % 2 == 0);	// % 2 == 0：その値が偶数か奇数かで、true / falseを交互に繰り返します
 
-	// 移動時のアニメーション
-	MoveAnimation();
+	if (!isBlinking)
+	{
+		// 素体の画像
+		DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
 
-	// ダメージ表現のオーバーレイ
-	DrawDamageOverlay();
+		// 移動時のアニメーション
+		MoveAnimation();
 
+		// ダメージ表現のオーバーレイ
+		DrawDamageOverlay();
+	}
 
 
 	// ★追加：HPを画面に文字で表示する（動作確認用）

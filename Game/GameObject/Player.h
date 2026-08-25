@@ -31,6 +31,7 @@ private:
     static constexpr float BOUNCE_FACTOR = 1.2f;  // 跳ね返りの強さ（1.0で等倍、大きくすると強く跳ね返る）
 
     static constexpr int INVINCIBLE_TIME = 60;  // 無敵時間
+    static constexpr int BLINK_INTERVAL = 2; // 点滅の速さ(間隔）
     static constexpr int MAX_HP = 5;  // 最大HP
 
     static constexpr const int MAX_HOLD_COUNT = 5;   // 保有できる最大数
