@@ -32,7 +32,7 @@ void GhManager::Initialize()//--------------------------------------------------
 {
     // 画像のパスを配列で管理（enum の順番と合わせることに注意）
     const wchar_t* paths[] = {
-        L"Resources/Textures/Grass.png", // (0)
+        L"Resources/Textures/Wall.png", // (0)
         L"Resources/Textures/UFO_Bass.png", // (1) 
         L"Resources/Textures/UFO_Damage_Overlay.png", // (2)
         L"Resources/Textures/UFO_Orange_All.png", // (3)
@@ -40,17 +40,13 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/UFO_Orange_Middle.png", // (5)
         L"Resources/Textures/UFO_Orange_Right.png", // (6)
         L"Resources/Textures/House.png", // (7)
-        L"Resources/Textures/Item_Food_1.png", // (8)
-        L"Resources/Textures/Item_Food_2.png", // (9)
-        L"Resources/Textures/Item_Food_3.png", // (10)
-        L"Resources/Textures/Item_Food_4.png", // (11)
-        L"Resources/Textures/Item_Food_5.png", // (12)
-        L"Resources/Textures/Item_Food_6.png", // (13)
-        L"Resources/Textures/Item_Food_7.png", // (14)
-        L"Resources/Textures/Item_Food_8.png", // (15)
-        L"Resources/Textures/Item_Food_9.png", // (16)
-        L"Resources/Textures/Item_Food_10.png", // (17)
-        L"Resources/Textures/Background_1.png" // (18)
+        L"Resources/Textures/Background_1.png", // (8)
+        L"Resources/Textures/Item_Food_1.png", // (9)
+        L"Resources/Textures/Item_Food_2.png", // (10)
+        L"Resources/Textures/Item_Food_3.png", // (11)
+        L"Resources/Textures/Item_Food_4.png", // (12)
+        L"Resources/Textures/Item_Food_5.png", // (13)
+        L"Resources/Textures/Enemy_1.png" // (14)
 
         //  L"Resources/Textures/
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

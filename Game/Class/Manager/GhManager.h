@@ -10,7 +10,7 @@ class GhManager
 {
 public:
     enum class Textures {
-        Grass, // 草(0)
+        Wall, // 草(0)
         UFO_Bass, // UFOの素体（1）
         UFO_Damage_Overlay,   // UFOのHPに合わせて透明度が変わるやつ（2）
         UFO_Orange_All,    // オレンジの全部（3）
@@ -18,17 +18,13 @@ public:
         UFO_Orange_Middle, // オレンジの中央（5）
         UFO_Orange_Right,  // オレンジのみぎ（6）
         House, // (7)
-        Item_Food_1, // (8)
-        Item_Food_2, // (9)
-        Item_Food_3, // (10)
-        Item_Food_4, // (11)
-        Item_Food_5, // (12)
-        Item_Food_6, // (13)
-        Item_Food_7, // (14)
-        Item_Food_8, // (15)
-        Item_Food_9, // (16)
-        Item_Food_10, // (17)
-        Background_1, // (18)
+        Background_1, // (8)
+        Item_Food_1, // (9)
+        Item_Food_2, // (10)
+        Item_Food_3, // (12)
+        Item_Food_4, // (12)
+        Item_Food_5, // (13)
+        Enemy_1, // (14)
 
 
         Max    // テクスチャの合計数

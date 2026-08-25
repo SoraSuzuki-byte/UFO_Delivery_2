@@ -146,6 +146,7 @@
     <ClCompile Include="Game\Class\Scene\SceneChange.cpp" />
     <ClCompile Include="Game\Class\Scene\SelectScene.cpp" />
     <ClCompile Include="Game\Class\Scene\TitleScene.cpp" />
+    <ClCompile Include="Game\GameObject\Enemy.cpp" />
     <ClCompile Include="Game\GameObject\House.cpp" />
     <ClCompile Include="Game\GameObject\Item_Food.cpp" />
     <ClCompile Include="Game\GameObject\Player.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="Game\Class\Scene\SelectScene.h" />
     <ClInclude Include="Game\Class\Scene\TitleScene.h" />
     <ClInclude Include="Game\GameContext.h" />
+    <ClInclude Include="Game\GameObject\Enemy.h" />
     <ClInclude Include="Game\GameObject\House.h" />
     <ClInclude Include="Game\GameObject\Item_Food.h" />
     <ClInclude Include="Game\GameObject\Player.h" />
@@ -182,24 +184,20 @@
     <!-- 埋め込みリソース -->
     <ClInclude Include="EmbeddedResources\Resource.h" />
     <Image Include="Resources\Textures\Background_1.png" />
-    <Image Include="Resources\Textures\Grass.png" />
+    <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\House.png" />
     <Image Include="Resources\Textures\Item_Food_1.png" />
-    <Image Include="Resources\Textures\Item_Food_10.png" />
     <Image Include="Resources\Textures\Item_Food_2.png" />
     <Image Include="Resources\Textures\Item_Food_3.png" />
     <Image Include="Resources\Textures\Item_Food_4.png" />
     <Image Include="Resources\Textures\Item_Food_5.png" />
-    <Image Include="Resources\Textures\Item_Food_6.png" />
-    <Image Include="Resources\Textures\Item_Food_7.png" />
-    <Image Include="Resources\Textures\Item_Food_8.png" />
-    <Image Include="Resources\Textures\Item_Food_9.png" />
     <Image Include="Resources\Textures\UFO_Bass.png" />
     <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
     <Image Include="Resources\Textures\UFO_Orange_All.png" />
     <Image Include="Resources\Textures\UFO_Orange_Left.png" />
     <Image Include="Resources\Textures\UFO_Orange_Middle.png" />
     <Image Include="Resources\Textures\UFO_Orange_Right.png" />
+    <Image Include="Resources\Textures\Wall.png" />
     <ResourceCompile Include="EmbeddedResources\Resource.rc" />
     <Image Include="EmbeddedResources\Icon\Game.ico" />
     <!-- リソースファイル -->

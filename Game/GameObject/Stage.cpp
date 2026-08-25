@@ -71,9 +71,15 @@ void Stage::Initialize(const wchar_t* stageNumber)
 // ------------------------------------------------------------------
 void Stage::Update()
 {
+    // 食べ物
     for (auto& item : m_itemFood)
     {
         item.Update();
+    }
+    // Enemy
+    for (auto& enemy : m_enemies)
+    {
+        enemy.Update();
     }
 }
 
@@ -83,9 +89,10 @@ void Stage::Update()
 void Stage::Render() const
 {
     BackgroundRender();
-    ItemFood_1Render();
+    ItemFoodRender();
     StageRender();
     HouseRender();
+    EnemyRender();
 }
 
 // ------------------------------------------------------------------
@@ -138,6 +145,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
 {
     // CSVを読み込む前に、以前のステージの「House」の情報を空にする
     m_houses.clear();
+    m_enemies.clear();
 
     std::ifstream ifs;      // ファイルストリーム
     std::string line;       // １行分のデータ
@@ -209,13 +217,15 @@ void Stage::LoadStageData(const wchar_t* stageName)
             {
                 case 0: m_mapArray[y][x] = Type::Floor;  break;
                 case 1: m_mapArray[y][x] = Type::Wall;   break;
-                case 2:
+                // Player
+                case 2: 
                 {
                     m_mapArray[y][x] = Type::Player;
                     m_playerStartPosition = Vector2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
                     break;
                 }
-                case 3:  // 食べ物_1
+                // 食べ物_1
+                case 3:  
                 {
                     m_mapArray[y][x] = Type::ItemFood;
 
@@ -227,7 +237,8 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_itemFood.back().Initialize();
                     break;
                 }
-                case 4:   // 食べ物_2
+                // 食べ物_2
+                case 4:   
                 {
                     m_mapArray[y][x] = Type::ItemFood;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
 
@@ -239,6 +250,46 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_itemFood.back().Initialize();
                     break;
                 }
+                // 食べ物_3
+                case 5:
+                {
+                    m_mapArray[y][x] = Type::ItemFood;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food3);
+                    m_itemFood.back().Initialize();
+                    break;
+                }
+                // 食べ物_4
+                case 6:
+                {
+                    m_mapArray[y][x] = Type::ItemFood;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food4);
+                    m_itemFood.back().Initialize();
+                    break;
+                }
+                // 食べ物_5
+                case 7:
+                {
+                    m_mapArray[y][x] = Type::ItemFood;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food5);
+                    m_itemFood.back().Initialize();
+                    break;
+                }
+
                 default:
                     assert(!"不正なタイル番号が検知されました");
             }
@@ -371,7 +422,9 @@ Vector2D Stage::ResolveWallCollision(const BoundingBox& playerBox) const
 
 
 
-
+// ------------------------------------------------------------------
+// 背景を描画
+// ------------------------------------------------------------------
 void Stage::BackgroundRender() const
 {
     // 選ばれているステージIDが、Stage1であれば
@@ -381,8 +434,9 @@ void Stage::BackgroundRender() const
     }
 }
 
+
 // ------------------------------------------------------------------
-// ステージを描画する
+// ステージを描画
 // ------------------------------------------------------------------
 void Stage::StageRender() const
 {
@@ -404,7 +458,7 @@ void Stage::StageRender() const
                 DrawGraph(
                     x * CHIP_SIZE,
                     y * CHIP_SIZE,
-                    m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Grass),
+                    m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Wall),
                     TRUE);
             }
         }
@@ -414,14 +468,14 @@ void Stage::StageRender() const
 
 
 // ------------------------------------------------------------------
-// ItemFood_1を描画する
+// ItemFoodを描画
 // ------------------------------------------------------------------
-void Stage::ItemFood_1Render() const
+void Stage::ItemFoodRender() const
 {
   for (const auto& item : m_itemFood)   // ★ Item_Food → item に変更
     {
-      // ★保有中でなく、かつ取得済みでもない場合のみ、マップ上に描画する
-         if (item.GetActiveFlag() && !item.GetIsHeld())
+      // 取得済みでもない場合のみ、マップ上に描画する
+         if (item.GetActiveFlag())
         {
             item.Render();
         }
@@ -430,12 +484,28 @@ void Stage::ItemFood_1Render() const
 
 
 // ------------------------------------------------------------------
-// Houseを描画する
+// Houseを描画
 // ------------------------------------------------------------------
 void Stage::HouseRender() const
 {
     for (const auto& house : m_houses)
     {
             house.Render();
+    }
+}
+
+
+
+// ------------------------------------------------------------------
+// Enemyを描画
+// ------------------------------------------------------------------
+void Stage::EnemyRender() const
+{
+    for (const auto& enemy : m_enemies)
+    {
+        if (enemy.GetActiveFlag())
+        {
+            enemy.Render();
+        }
     }
 }

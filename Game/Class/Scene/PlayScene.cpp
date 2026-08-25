@@ -47,6 +47,8 @@ void PlayScene::Initialize()
     m_gameState = GameState::Play;
     m_titleReturnTimer = 0;
 
+    m_stage.SetPlayer(m_player);   // Playerの参照をStageに設定
+
     // Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
     m_stage.SetPlayer(m_player);
     //____________________________________________________________________________________________________
@@ -69,6 +71,9 @@ void PlayScene::Initialize()
 
     // ステージごとに家を配置する
     PlaceHouses(selectedStage);
+
+    // ステージごとに敵を配置する
+    PlaceEnemies(selectedStage);
 
     m_player.Initialize();
 }
@@ -100,14 +105,14 @@ void PlayScene::Update()
     }
     else if (m_gameState == GameState::GameOver || m_gameState == GameState::Clear)
     {
-        // スペースキーの長押しでタイトルへ戻る
+        // スペースキーの長押しで戻る
         if (keyCondition & PAD_INPUT_10)
         {
             m_titleReturnTimer++;
 
             if (m_titleReturnTimer >= TITLE_RETURN_HOLD_TIME)
             {
-                m_sceneManager.RequestNextSceneID(SceneManager::SceneID::TitleScene);
+                m_sceneManager.RequestNextSceneID(SceneManager::SceneID::SelectScene);
             }
         }
         else { m_titleReturnTimer = 0; }// キーを離したらタイマーをリセットする
@@ -130,9 +135,6 @@ void PlayScene::Render()
 
     m_stage.Render();
     m_player.Render();
-
-    // 保有アイテムを表示
-    DrawHeldItemsUI();
 
    
 
@@ -201,42 +203,6 @@ void PlayScene::DrawTitleReturnGauge() const
 
 
 
-// 保有中のアイテムを表示
-void PlayScene::DrawHeldItemsUI() const
-{
-    const auto& items = m_player.GetHeldItems();
-    const int selectedIndex = m_player.GetSelectedItemIndex();
-
-    const int iconSize = 40;
-    const int spacing = 10;
-    const int startX = 10;
-    const int startY = 80;   // HP表示などと被らない位置に調整
-
-    for (int i = 0; i < static_cast<int>(items.size()); i++)
-    {
-        const int x = startX + i * (iconSize + spacing);
-
-        // 保有中のアイコン（食べ物のテクスチャを使う）
-        GhManager::Textures texture;
-        if (items[i]->GetFoodType() == Item_Food::FoodType::Food1)
-        {
-            texture = GhManager::Textures::Item_Food_1;
-        }
-        else
-        {
-            texture = GhManager::Textures::Item_Food_2;
-        }
-
-        DrawGraph(x, startY, m_gameContext.ghManager.GetGraphicHandle(texture), TRUE);
-
-
-        // 選択中のものだけ枠を描く
-        if (i == selectedIndex)
-        {
-            DrawBox(x, startY, x + iconSize, startY + iconSize, GetColor(255, 255, 0), FALSE);
-        }
-    }
-}
 
 
 // ステージごとに家を配置する
@@ -256,6 +222,34 @@ void PlayScene::PlaceHouses(StageId stageId)
         case StageId::Stage3:
             m_stage.AddHouse(Vector2D{ 400.0f, 500.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
             m_stage.AddHouse(Vector2D{ 800.0f, 500.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
+            break;
+
+        default:
+            break;
+    }
+}
+
+
+// ------------------------------------------------------------------
+// ステージごとに敵を配置する
+// ------------------------------------------------------------------
+void PlayScene::PlaceEnemies(StageId stageId)
+{
+    switch (stageId)
+    {
+        case StageId::Stage1:
+            m_stage.AddEnemy(Vector2D{ 200.0f, 200.0f }, m_player);
+            break;
+
+        case StageId::Stage2:
+            m_stage.AddEnemy(Vector2D{ 300.0f, 300.0f }, m_player);
+            m_stage.AddEnemy(Vector2D{ 600.0f, 300.0f }, m_player);
+            break;
+
+        case StageId::Stage3:
+            m_stage.AddEnemy(Vector2D{ 400.0f, 400.0f }, m_player);
+            m_stage.AddEnemy(Vector2D{ 800.0f, 400.0f }, m_player);
+            m_stage.AddEnemy(Vector2D{ 1200.0f, 400.0f }, m_player);
             break;
 
         default:

@@ -16,8 +16,6 @@ Item_Food::Item_Food(GameContext& gameContext, Stage& stage, Player* player, con
     , m_restitution{}
     , m_friction{}
     , m_isPulled{ false }
-    , m_isHeld{ false }
-    , m_pickupCooldownTimer{}
     , m_foodType{ foodType }
     , m_width{ boundingBox.maxPosition.x - boundingBox.minPosition.x }
     , m_height{ boundingBox.maxPosition.y - boundingBox.minPosition.y }
@@ -48,20 +46,17 @@ void Item_Food::Initialize()
 
 void Item_Food::Update()
 {
+    // キー入力情報を取得する
+    const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
+    const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
+
+
     if (!m_isActive) { return; }
-    if (m_isHeld)
-    {
-        return;   // 座標更新は Player 側（PlayScene::Render）で行うので、ここでは何もしない
-    }
-    // 落とした後のクールダウン中はタイマーを減らし、吸引判定を行わない
-    if (m_pickupCooldownTimer > 0)
-    {
-        m_pickupCooldownTimer--;
-    }
+
     //----------------------------------------------------------------------------------
     // プレイヤーが自分の真上にいるかどうかを調べ、吸引フラグを更新
     //----------------------------------------------------------------------------------
-    if (m_player != nullptr && m_pickupCooldownTimer <= 0)// ★安全対策：Playerがまだ設定されていない場合かつ、吸引クールダウン中でない時 → elseへ
+    if (m_player != nullptr)// ★安全対策：Playerがまだ設定されていない場合 → elseへ
     {
         const Vector2D playerPos = m_player->GetPosition();
         const bool isAboveY = (playerPos.y < m_position.y); // 右側の比較が true か false なのか
@@ -77,25 +72,21 @@ void Item_Food::Update()
     else { m_isPulled = false; }
 
     // ------------------------------------------------------------------
-    // 吸引中：プレイヤーへ向かって直進する
+    // 吸引中 かつ スペースキーを押していれば：プレイヤーへ向かって直進する
     // ------------------------------------------------------------------
-    if (m_isPulled)
+    if (m_isPulled && (keyCondition & PAD_INPUT_10))
     {
         const Vector2D playerPos = m_player->GetPosition();
         const Vector2D diff = playerPos - m_position;
         const float distance = Length(diff);
 
-        // 十分近づいたら、保有状態に切り替える
+        // 十分近づいたら、連れている状態に切り替える
         const float HOLD_DISTANCE = 20.0f;
         if (distance < HOLD_DISTANCE)
         {
-            if (m_player->TryHoldItem(this))
-            {
-                m_isHeld = true;
-                m_isPulled = false;
-            }
-            return;   // 保有した場合は、これ以降の移動処理をスキップ
+            // 近づいた時の処理を、ここに書く
         }
+        else { m_isPulled = false; }
 
         const Vector2D direction = Normalize(diff);
 
@@ -147,8 +138,7 @@ void Item_Food::Update()
             const POINT mapPos = m_stage.ConvertWorldPositionToMapPosition(Vector2D{ centerX, footY });
             const float wallTopY = static_cast<float>(mapPos.y * m_stage.GetChipSize());
 
-            const float overlapAmount = m_height * OVERLAP_RATIO;
-            m_position.y = wallTopY - m_height + overlapAmount;
+            m_position.y = wallTopY - m_height;
 
             // 摩擦の影響（横方向の速度を減衰）
             m_velocity.x *= m_friction;
@@ -170,7 +160,6 @@ void Item_Food::Render() const//------------------------------------------------
 {
 
     if (!m_isActive) { return; }
-    if (m_isHeld) { return; }   // 保有中はマップ上に描画しない（左上UIは別途PlayScene側で描画）
 
 
     GhManager::Textures texture{}; //  GhManager::Textures型の、空のオブジェクトを宣言
@@ -183,11 +172,6 @@ void Item_Food::Render() const//------------------------------------------------
     case FoodType::Food3: texture = GhManager::Textures::Item_Food_3; break;
     case FoodType::Food4: texture = GhManager::Textures::Item_Food_4; break;
     case FoodType::Food5: texture = GhManager::Textures::Item_Food_5; break;
-    case FoodType::Food6: texture = GhManager::Textures::Item_Food_6; break;
-    case FoodType::Food7: texture = GhManager::Textures::Item_Food_7; break;
-    case FoodType::Food8: texture = GhManager::Textures::Item_Food_8; break;
-    case FoodType::Food9: texture = GhManager::Textures::Item_Food_9; break;
-    case FoodType::Food10: texture = GhManager::Textures::Item_Food_10; break;
     default:
         // 想定外のタイプに対するエラーハンドリング
         break;

@@ -13,6 +13,7 @@
 #include "Game/CollisionAABB.h"
 #include "Game/GameObject/Item_Food.h"  
 #include "Game/GameObject/House.h"
+#include "Game/GameObject/Enemy.h"
 #include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
 // 前方宣言 ===============================================================
 struct GameContext;
@@ -62,6 +63,8 @@ private:
     std::vector<Item_Food> m_itemFood;   
     // Houseの配列
     std::vector<House> m_houses;
+    // Enemyの配列
+    std::vector<Enemy> m_enemies;
 
 
 public:
@@ -88,18 +91,30 @@ public:
     // プレイヤーの初期位置のゲッター 
     const Vector2D& GetPlayerStartPosition() const { return m_playerStartPosition; }
 
-    // アイテム配列を取得する（外部から位置変更などを行うため）
-    std::vector<Item_Food>& GetItemFood_1() { return m_itemFood; }
-    // m_itemFood_1の配列を取得するゲッター
+
+    // 食べ物配列を取得する（外部から位置変更などを行うため）
+    std::vector<Item_Food>& GetItemFood() { return m_itemFood; }
+
+    // m_itemFoodの配列を取得するゲッター
     std::vector<Item_Food>& GetItems() { return m_itemFood; }
 
     // 家の配列を取得する（アイテムとの当たり判定用）
     std::vector<House>& GetHouses() { return m_houses; }
+
+    // Enemy配列を取得する
+    std::vector<Enemy>& GetEnemies() { return m_enemies; }
+
     // 家を配置する（ステージごとにコードで指定するため）
     void AddHouse(const Vector2D& position, float width, float height, Item_Food::FoodType wantedFoodType)
     {
         BoundingBox bb{ position, Vector2D{ position.x + width, position.y + height } };
         m_houses.emplace_back(m_gameContext, bb, wantedFoodType);
+    }
+
+    // Enemyを配置する
+    void AddEnemy(const Vector2D& startPosition, Player& player)
+    {
+        m_enemies.emplace_back(m_gameContext, *this, player, startPosition);
     }
 
     // プレイヤーの境界ボックスと壁チップとの当たり判定を行い、押し戻し量を計算する
@@ -137,6 +152,7 @@ private:
     // 描画のサブ関数
     void BackgroundRender() const;
     void StageRender() const;
-    void ItemFood_1Render() const;
+    void ItemFoodRender() const;
     void HouseRender() const;
+    void EnemyRender() const;
 };

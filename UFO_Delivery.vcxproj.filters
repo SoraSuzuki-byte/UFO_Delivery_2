@@ -72,6 +72,12 @@
     <Filter Include="Resources\Textures\Background">
       <UniqueIdentifier>{c1be41c8-1e2b-4cd3-9fda-b6932d538d12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\GameObject\Enemy">
+      <UniqueIdentifier>{aa753c7f-c259-4964-b5a4-a8c2478b8172}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures\Enemy">
+      <UniqueIdentifier>{82e3ec81-7719-4447-afa1-d9991fe24a16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -153,6 +159,9 @@
     <ClCompile Include="Game\GameObject\Item_Food.cpp">
       <Filter>Game\GameObject\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameObject\Enemy.cpp">
+      <Filter>Game\GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -206,6 +215,9 @@
     <ClInclude Include="Game\GameObject\Item_Food.h">
       <Filter>Game\GameObject\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameObject\Enemy.h">
+      <Filter>Game\GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Textures\UFO_Bass.png">
@@ -229,9 +241,6 @@
     <Image Include="Resources\Textures\Item_Food_1.png">
       <Filter>Resources\Textures\Item</Filter>
     </Image>
-    <Image Include="Resources\Textures\Grass.png">
-      <Filter>Resources\Textures\Map_Chip</Filter>
-    </Image>
     <Image Include="Resources\Textures\House.png">
       <Filter>Resources\Textures</Filter>
     </Image>
@@ -250,20 +259,11 @@
     <Image Include="Resources\Textures\Item_Food_5.png">
       <Filter>Resources\Textures\Item</Filter>
     </Image>
-    <Image Include="Resources\Textures\Item_Food_6.png">
-      <Filter>Resources\Textures\Item</Filter>
+    <Image Include="Resources\Textures\Enemy_1.png">
+      <Filter>Resources\Textures\Enemy</Filter>
     </Image>
-    <Image Include="Resources\Textures\Item_Food_7.png">
-      <Filter>Resources\Textures\Item</Filter>
-    </Image>
-    <Image Include="Resources\Textures\Item_Food_8.png">
-      <Filter>Resources\Textures\Item</Filter>
-    </Image>
-    <Image Include="Resources\Textures\Item_Food_9.png">
-      <Filter>Resources\Textures\Item</Filter>
-    </Image>
-    <Image Include="Resources\Textures\Item_Food_10.png">
-      <Filter>Resources\Textures\Item</Filter>
+    <Image Include="Resources\Textures\Wall.png">
+      <Filter>Resources\Textures\Map_Chip</Filter>
     </Image>
   </ItemGroup>
 </Project>

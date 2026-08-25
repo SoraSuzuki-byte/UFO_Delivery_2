@@ -69,9 +69,10 @@ private:
     // タイトルへ戻る長押しゲージの描画
     void DrawTitleReturnGauge() const;
 
-    // 保有しているアイテムを表示
-    void DrawHeldItemsUI() const;
 
     // ステージごとに家を配置する
     void PlaceHouses(StageId stageId);
+
+    // ステージごとに敵を配置する
+    void PlaceEnemies(StageId stageId);
 };

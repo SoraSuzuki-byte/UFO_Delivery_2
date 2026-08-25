@@ -54,11 +54,7 @@ void Player::Update()
 	const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
 	// 移動
-	Move(keyCondition);
-
-	// ★アイテムの選択切り替え・ドロップ操作
-	UpdateItemHolding(keyCondition, keyTrigger);
-	
+	Move(keyCondition);	
 }
 
 void Player::Render()
@@ -134,8 +130,6 @@ void Player::Move(int keyCondition)
 		Vector2D{ m_position.x + WIDTH, m_position.y + HEIGHT }
 	};
 
-	// ItemFood_1と当たると
-	CheckItemFood_1Collision(playerBox);
 
 	// ステージの草との当たり判定
 	{
@@ -149,19 +143,12 @@ void Player::Move(int keyCondition)
 		if (correction.x != 0.0f) { m_velocity.x *= -BOUNCE_FACTOR; }
 		if (correction.y != 0.0f) { m_velocity.y *= -BOUNCE_FACTOR; }
 
-		// 壁に当たっていて、かつ無敵時間中でなければダメージを受ける
+	// 壁に衝突するとダメージを受ける
 		const bool isHit = (correction.x != 0.0f) || (correction.y != 0.0f);
-		if (isHit && m_invincibleTimer <= 0)
-		{
-			m_hp--;
-			m_invincibleTimer = INVINCIBLE_TIME;
-		}
+		if (isHit) { TakeDamage(); }
 
 		// 無敵タイマーを減らす
-		if (m_invincibleTimer > 0)
-		{
-			m_invincibleTimer--;
-		}
+		if (m_invincibleTimer > 0) { m_invincibleTimer--; }
 	}
 
 
@@ -288,7 +275,7 @@ void Player::DrawDamageOverlay()
 
 
 // ItemFood_1と当たると
-void Player::CheckItemFood_1Collision(BoundingBox playerBox)
+void Player::CheckItemFoodCollision(BoundingBox playerBox)
 {
 	for (auto& item : m_scene.GetStage().GetItems())
 	{
@@ -301,47 +288,3 @@ void Player::CheckItemFood_1Collision(BoundingBox playerBox)
 	}
 }
 
-
-// ------------------------------------------------------------------
-// 保有アイテムの選択切り替え・ドロップ操作
-// ------------------------------------------------------------------
-void Player::UpdateItemHolding(int keyCondition, int keyTrigger)
-{
-	// 左SHIFTキーの判定は、DXライブラリのCheckHitKeyで直接行う
-	const bool isShiftPressed = (CheckHitKey(KEY_INPUT_LSHIFT) != 0);
-
-	// 左SHIFTキーを押しながら、左右矢印で選択を切り替える
-	if (isShiftPressed)
-	{
-		if (keyTrigger & PAD_INPUT_LEFT)
-		{
-			m_selectedItemIndex--;
-			if (m_selectedItemIndex < 0) { m_selectedItemIndex = 0; }
-		}
-		if (keyTrigger & PAD_INPUT_RIGHT)
-		{
-			m_selectedItemIndex++;
-			const int maxIndex = static_cast<int>(m_heldItems.size()) - 1;
-			if (m_selectedItemIndex > maxIndex) { m_selectedItemIndex = maxIndex < 0 ? 0 : maxIndex; }
-		}
-	}
-
-	// スペースキーで、選択中のアイテムを落とす
-	if (keyTrigger & PAD_INPUT_10)   // これまでスペースキーとして使ってきた定数
-	{
-		if (!m_heldItems.empty() && m_selectedItemIndex < static_cast<int>(m_heldItems.size()))
-		{
-			Item_Food* dropItem = m_heldItems[m_selectedItemIndex];
-			dropItem->Drop(m_position);
-
-			m_heldItems.erase(m_heldItems.begin() + m_selectedItemIndex);
-
-			// 選択インデックスが範囲外にならないよう調整
-			if (m_selectedItemIndex >= static_cast<int>(m_heldItems.size()))
-			{
-				m_selectedItemIndex = static_cast<int>(m_heldItems.size()) - 1;
-				if (m_selectedItemIndex < 0) { m_selectedItemIndex = 0; }
-			}
-		}
-	}
-}

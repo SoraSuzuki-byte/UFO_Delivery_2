@@ -30,7 +30,7 @@ private:
 
     static constexpr float BOUNCE_FACTOR = 1.2f;  // 跳ね返りの強さ（1.0で等倍、大きくすると強く跳ね返る）
 
-    static constexpr int INVINCIBLE_TIME = 60;  // 無敵時間
+    static constexpr int INVINCIBLE_TIME = 120;  // 無敵時間
     static constexpr int BLINK_INTERVAL = 2; // 点滅の速さ(間隔）
     static constexpr int MAX_HP = 5;  // 最大HP
 
@@ -77,6 +77,25 @@ public:
     // m_positionのゲッター
     Vector2D GetPosition() const { return m_position; }
 
+    // HPを減らす
+    void TakeDamage()
+    {
+        if (m_invincibleTimer <= 0)
+        {
+            m_hp -= 1;
+            m_invincibleTimer = INVINCIBLE_TIME;
+        }
+    }
+
+    // 当たり判定用の境界ボックスを取得する
+    BoundingBox GetHurtBox() const
+    {
+        return BoundingBox{
+            m_position,
+            Vector2D{ m_position.x + WIDTH, m_position.y + HEIGHT }
+        };
+    }
+
     // UFOを移動させる
     void Move(int keyCondition);
 
@@ -86,24 +105,11 @@ public:
     // ダメージ表現のオーバーレイ
     void DrawDamageOverlay();
 
-    // ItemFood_1と当たると
-    void CheckItemFood_1Collision(BoundingBox playerBox);
+    // ItemFoodと当たると
+    void CheckItemFoodCollision(BoundingBox playerBox);
 
-    // 保有しているアイテムのリストを取得する（表示用）
-    const std::vector<Item_Food*>& GetHeldItems() const { return m_heldItems; }
 
-    // アイテムの選択切り替え・ドロップ操作
-    void UpdateItemHolding(int keyCondition, int keyTrigger);
 
-    // 現在選択中のインデックスを取得する
-    int GetSelectedItemIndex() const { return m_selectedItemIndex; }
 
-    // アイテムを保有する（上限に達していたら失敗してfalseを返す）
-    bool TryHoldItem(Item_Food* item)
-    {
-        if (static_cast<int>(m_heldItems.size()) >= MAX_HOLD_COUNT) { return false; }
-        m_heldItems.push_back(item);
-        return true;
-    }
 };
 
