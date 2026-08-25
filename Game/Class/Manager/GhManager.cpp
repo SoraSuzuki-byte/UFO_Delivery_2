@@ -42,7 +42,15 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/House.png", // (7)
         L"Resources/Textures/Item_Food_1.png", // (8)
         L"Resources/Textures/Item_Food_2.png", // (9)
-        L"Resources/Textures/Background_1.png" // (10)
+        L"Resources/Textures/Item_Food_3.png", // (10)
+        L"Resources/Textures/Item_Food_4.png", // (11)
+        L"Resources/Textures/Item_Food_5.png", // (12)
+        L"Resources/Textures/Item_Food_6.png", // (13)
+        L"Resources/Textures/Item_Food_7.png", // (14)
+        L"Resources/Textures/Item_Food_8.png", // (15)
+        L"Resources/Textures/Item_Food_9.png", // (16)
+        L"Resources/Textures/Item_Food_10.png", // (17)
+        L"Resources/Textures/Background_1.png" // (18)
 
         //  L"Resources/Textures/
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

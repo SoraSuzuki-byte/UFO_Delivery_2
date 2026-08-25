@@ -7,8 +7,6 @@
 #pragma once
 #include "Game/Class/Manager/InputManager.h"
 #include "Game/Class/Manager/GhManager.h"
-//#include "Game/GameObject/KillCount.h"
-//#include "Game/GameObject/FlagManager.h"
 
 
 // ステージの番号
@@ -26,24 +24,7 @@ struct GameContext
     InputManager& inputManager;
     // グラフィックマネージャー
     GhManager& ghManager;
-
-
-    // 画像とSoundをここで管理してみたい
-
-    //FlagManager& flagManager;
-
-    //KillCount& killCount;
-
-
-
-
-
-
-
-
-
-
-
+    // サウンドマネージャー
 
 
 

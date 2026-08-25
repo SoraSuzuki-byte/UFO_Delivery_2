@@ -20,7 +20,15 @@ public:
         House, // (7)
         Item_Food_1, // (8)
         Item_Food_2, // (9)
-        Background_1, // (10)
+        Item_Food_3, // (10)
+        Item_Food_4, // (11)
+        Item_Food_5, // (12)
+        Item_Food_6, // (13)
+        Item_Food_7, // (14)
+        Item_Food_8, // (15)
+        Item_Food_9, // (16)
+        Item_Food_10, // (17)
+        Background_1, // (18)
 
 
         Max    // テクスチャの合計数

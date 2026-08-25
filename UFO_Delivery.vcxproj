@@ -185,7 +185,15 @@
     <Image Include="Resources\Textures\Grass.png" />
     <Image Include="Resources\Textures\House.png" />
     <Image Include="Resources\Textures\Item_Food_1.png" />
+    <Image Include="Resources\Textures\Item_Food_10.png" />
     <Image Include="Resources\Textures\Item_Food_2.png" />
+    <Image Include="Resources\Textures\Item_Food_3.png" />
+    <Image Include="Resources\Textures\Item_Food_4.png" />
+    <Image Include="Resources\Textures\Item_Food_5.png" />
+    <Image Include="Resources\Textures\Item_Food_6.png" />
+    <Image Include="Resources\Textures\Item_Food_7.png" />
+    <Image Include="Resources\Textures\Item_Food_8.png" />
+    <Image Include="Resources\Textures\Item_Food_9.png" />
     <Image Include="Resources\Textures\UFO_Bass.png" />
     <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
     <Image Include="Resources\Textures\UFO_Orange_All.png" />

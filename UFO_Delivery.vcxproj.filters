@@ -241,5 +241,29 @@
     <Image Include="Resources\Textures\Background_1.png">
       <Filter>Resources\Textures\Background</Filter>
     </Image>
+    <Image Include="Resources\Textures\Item_Food_3.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_4.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_5.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_6.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_7.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_8.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_9.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_10.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
   </ItemGroup>
 </Project>

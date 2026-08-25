@@ -176,15 +176,22 @@ void Item_Food_1::Render() const//----------------------------------------------
     GhManager::Textures texture{}; //  GhManager::Textures型の、空のオブジェクトを宣言
 
     // タイプに合わせて、空のオブジェクトに代入
-    if (m_foodType == FoodType::Food1) 
-    {
-        texture = GhManager::Textures::Item_Food_1;
-    }
-    else 
-    {
-        texture = GhManager::Textures::Item_Food_2;
-    }
-
+    switch (m_foodType) 
+{
+    case FoodType::Food1: texture = GhManager::Textures::Item_Food_1; break;
+    case FoodType::Food2: texture = GhManager::Textures::Item_Food_2; break;
+    case FoodType::Food3: texture = GhManager::Textures::Item_Food_3; break;
+    case FoodType::Food4: texture = GhManager::Textures::Item_Food_4; break;
+    case FoodType::Food5: texture = GhManager::Textures::Item_Food_5; break;
+    case FoodType::Food6: texture = GhManager::Textures::Item_Food_6; break;
+    case FoodType::Food7: texture = GhManager::Textures::Item_Food_7; break;
+    case FoodType::Food8: texture = GhManager::Textures::Item_Food_8; break;
+    case FoodType::Food9: texture = GhManager::Textures::Item_Food_9; break;
+    case FoodType::Food10: texture = GhManager::Textures::Item_Food_10; break;
+    default:
+        // 想定外のタイプに対するエラーハンドリング
+        break;
+}
     DrawGraph(
         static_cast<int>(m_boundingBox.minPosition.x),
         static_cast<int>(m_boundingBox.minPosition.y),
