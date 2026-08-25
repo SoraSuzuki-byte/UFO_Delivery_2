@@ -71,7 +71,7 @@ void Stage::Initialize(const wchar_t* stageNumber)
 // ------------------------------------------------------------------
 void Stage::Update()
 {
-    for (auto& item : m_itemFood_1)
+    for (auto& item : m_itemFood)
     {
         item.Update();
     }
@@ -188,7 +188,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
     
 
     // CSVを読み込む前に、以前のステージのアイテム情報を空（0個）にする
-    m_itemFood_1.clear();
+    m_itemFood.clear();
     
     // CSV３行目以降：マップデータの取得
     for (int y = 0; y < m_mapHeight; y++)
@@ -217,26 +217,26 @@ void Stage::LoadStageData(const wchar_t* stageName)
                 }
                 case 3:  // 食べ物_1
                 {
-                    m_mapArray[y][x] = Type::ItemFood_1;
+                    m_mapArray[y][x] = Type::ItemFood;
 
                     const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood_1.emplace_back(Item_Food_1(m_gameContext, *this, m_player, bb, Item_Food_1::FoodType::Food1)); // bbは BoundingBox
-                    m_itemFood_1.back().Initialize();
+                    m_itemFood.emplace_back(Item_Food(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food1)); // bbは BoundingBox
+                    m_itemFood.back().Initialize();
                     break;
                 }
                 case 4:   // 食べ物_2
                 {
-                    m_mapArray[y][x] = Type::ItemFood_1;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+                    m_mapArray[y][x] = Type::ItemFood;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
 
                     const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood_1.emplace_back(m_gameContext, *this, m_player, bb, Item_Food_1::FoodType::Food2);
-                    m_itemFood_1.back().Initialize();
+                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food2);
+                    m_itemFood.back().Initialize();
                     break;
                 }
                 default:
@@ -418,7 +418,7 @@ void Stage::StageRender() const
 // ------------------------------------------------------------------
 void Stage::ItemFood_1Render() const
 {
-  for (const auto& item : m_itemFood_1)   // ★ Item_Food_1 → item に変更
+  for (const auto& item : m_itemFood)   // ★ Item_Food → item に変更
     {
       // ★保有中でなく、かつ取得済みでもない場合のみ、マップ上に描画する
          if (item.GetActiveFlag() && !item.GetIsHeld())

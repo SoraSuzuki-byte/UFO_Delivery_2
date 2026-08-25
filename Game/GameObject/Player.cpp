@@ -331,7 +331,7 @@ void Player::UpdateItemHolding(int keyCondition, int keyTrigger)
 	{
 		if (!m_heldItems.empty() && m_selectedItemIndex < static_cast<int>(m_heldItems.size()))
 		{
-			Item_Food_1* dropItem = m_heldItems[m_selectedItemIndex];
+			Item_Food* dropItem = m_heldItems[m_selectedItemIndex];
 			dropItem->Drop(m_position);
 
 			m_heldItems.erase(m_heldItems.begin() + m_selectedItemIndex);

@@ -13,7 +13,7 @@ class Stage;
 class Player;
 
 
-class Item_Food_1
+class Item_Food
 {
 public:
     // 食べ物の種類
@@ -83,8 +83,8 @@ private:
     FoodType m_foodType;
 
 public:
-    Item_Food_1(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType);
-    ~Item_Food_1();
+    Item_Food(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType);
+    ~Item_Food();
 
     void Initialize();
     void Update();

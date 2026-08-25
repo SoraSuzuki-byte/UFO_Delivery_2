@@ -14,7 +14,7 @@
 // 前方宣言 ===============================================================
 struct GameContext;
 class PlayScene;
-class Item_Food_1;
+class Item_Food;
 
 
 class Player
@@ -36,7 +36,7 @@ private:
 
     static constexpr const int MAX_HOLD_COUNT = 5;   // 保有できる最大数
 
-    std::vector<Item_Food_1*> m_heldItems;   // 保有しているアイテムのリスト
+    std::vector<Item_Food*> m_heldItems;   // 保有しているアイテムのリスト
     int m_selectedItemIndex;                  // 現在選択中のインデックス
 
 
@@ -90,7 +90,7 @@ public:
     void CheckItemFood_1Collision(BoundingBox playerBox);
 
     // 保有しているアイテムのリストを取得する（表示用）
-    const std::vector<Item_Food_1*>& GetHeldItems() const { return m_heldItems; }
+    const std::vector<Item_Food*>& GetHeldItems() const { return m_heldItems; }
 
     // アイテムの選択切り替え・ドロップ操作
     void UpdateItemHolding(int keyCondition, int keyTrigger);
@@ -99,7 +99,7 @@ public:
     int GetSelectedItemIndex() const { return m_selectedItemIndex; }
 
     // アイテムを保有する（上限に達していたら失敗してfalseを返す）
-    bool TryHoldItem(Item_Food_1* item)
+    bool TryHoldItem(Item_Food* item)
     {
         if (static_cast<int>(m_heldItems.size()) >= MAX_HOLD_COUNT) { return false; }
         m_heldItems.push_back(item);

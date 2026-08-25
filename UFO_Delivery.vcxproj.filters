@@ -147,11 +147,11 @@
     <ClCompile Include="Game\GameObject\Player.cpp">
       <Filter>Game\GameObject\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Game\GameObject\Item_Food_1.cpp">
-      <Filter>Game\GameObject\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Game\GameObject\House.cpp">
       <Filter>Game\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameObject\Item_Food.cpp">
+      <Filter>Game\GameObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,11 +200,11 @@
     <ClInclude Include="Game\GameObject\Player.h">
       <Filter>Game\GameObject\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Game\GameObject\Item_Food_1.h">
-      <Filter>Game\GameObject\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Game\GameObject\House.h">
       <Filter>Game\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameObject\Item_Food.h">
+      <Filter>Game\GameObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

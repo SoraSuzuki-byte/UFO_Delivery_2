@@ -147,7 +147,7 @@
     <ClCompile Include="Game\Class\Scene\SelectScene.cpp" />
     <ClCompile Include="Game\Class\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\GameObject\House.cpp" />
-    <ClCompile Include="Game\GameObject\Item_Food_1.cpp" />
+    <ClCompile Include="Game\GameObject\Item_Food.cpp" />
     <ClCompile Include="Game\GameObject\Player.cpp" />
     <ClCompile Include="Game\GameObject\Stage.cpp" />
     <ClCompile Include="pch.cpp">
@@ -162,7 +162,7 @@
     <ClInclude Include="Game\Class\Scene\TitleScene.h" />
     <ClInclude Include="Game\GameContext.h" />
     <ClInclude Include="Game\GameObject\House.h" />
-    <ClInclude Include="Game\GameObject\Item_Food_1.h" />
+    <ClInclude Include="Game\GameObject\Item_Food.h" />
     <ClInclude Include="Game\GameObject\Player.h" />
     <ClInclude Include="Game\GameObject\Stage.h" />
     <ClInclude Include="Library\GameMath.h" />

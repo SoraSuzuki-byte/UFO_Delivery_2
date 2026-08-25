@@ -10,7 +10,7 @@
 #include "Game/GameContext.h"
 
 
-House::House(GameContext& gameContext, const BoundingBox& boundingBox, Item_Food_1::FoodType wantedFoodType)
+House::House(GameContext& gameContext, const BoundingBox& boundingBox, Item_Food::FoodType wantedFoodType)
     :m_gameContext{ gameContext }
     , m_boundingBox{ boundingBox }
     , m_wantedFoodType{ wantedFoodType }
@@ -45,11 +45,11 @@ void House::RenderWantedItemIcon() const
     // if文の手前で変数を宣言する
     GhManager::Textures texture;
     // if文で画像の種類を分岐して、代入する
-    if (m_wantedFoodType == Item_Food_1::FoodType::Food1)
+    if (m_wantedFoodType == Item_Food::FoodType::Food1)
     {
         texture = GhManager::Textures::Item_Food_1;
     }
-    else if (m_wantedFoodType == Item_Food_1::FoodType::Food2)
+    else if (m_wantedFoodType == Item_Food::FoodType::Food2)
     {
         texture = GhManager::Textures::Item_Food_2;
     }

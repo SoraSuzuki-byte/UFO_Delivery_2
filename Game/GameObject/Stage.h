@@ -11,7 +11,7 @@
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
-#include "Game/GameObject/Item_Food_1.h"  
+#include "Game/GameObject/Item_Food.h"  
 #include "Game/GameObject/House.h"
 #include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
 // 前方宣言 ===============================================================
@@ -27,7 +27,7 @@ public:
     enum class Type
     {
         None = -1,
-        Floor, Wall, Player, ItemFood_1
+        Floor, Wall, Player, ItemFood
     };
 
 private:
@@ -58,8 +58,8 @@ private:
     // プレイヤー初期位置（ワールド座標で管理）
     Vector2D m_playerStartPosition;
 
-    // Item_Food_1の配列
-    std::vector<Item_Food_1> m_itemFood_1;   
+    // Item_Foodの配列
+    std::vector<Item_Food> m_itemFood;   
     // Houseの配列
     std::vector<House> m_houses;
 
@@ -89,14 +89,14 @@ public:
     const Vector2D& GetPlayerStartPosition() const { return m_playerStartPosition; }
 
     // アイテム配列を取得する（外部から位置変更などを行うため）
-    std::vector<Item_Food_1>& GetItemFood_1() { return m_itemFood_1; }
+    std::vector<Item_Food>& GetItemFood_1() { return m_itemFood; }
     // m_itemFood_1の配列を取得するゲッター
-    std::vector<Item_Food_1>& GetItems() { return m_itemFood_1; }
+    std::vector<Item_Food>& GetItems() { return m_itemFood; }
 
     // 家の配列を取得する（アイテムとの当たり判定用）
     std::vector<House>& GetHouses() { return m_houses; }
     // 家を配置する（ステージごとにコードで指定するため）
-    void AddHouse(const Vector2D& position, float width, float height, Item_Food_1::FoodType wantedFoodType)
+    void AddHouse(const Vector2D& position, float width, float height, Item_Food::FoodType wantedFoodType)
     {
         BoundingBox bb{ position, Vector2D{ position.x + width, position.y + height } };
         m_houses.emplace_back(m_gameContext, bb, wantedFoodType);

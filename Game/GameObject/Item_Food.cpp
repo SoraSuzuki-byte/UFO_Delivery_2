@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Item_Food_1.h"
+#include "Item_Food.h"
 #include "Game/GameContext.h"
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
-Item_Food_1::Item_Food_1(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
+Item_Food::Item_Food(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
     : m_gameContext{ gameContext }
     , m_stage{ stage }
     , m_player{ player }
@@ -25,11 +25,11 @@ Item_Food_1::Item_Food_1(GameContext& gameContext, Stage& stage, Player* player,
 {
 }
 
-Item_Food_1::~Item_Food_1()
+Item_Food::~Item_Food()
 {
 }
 
-void Item_Food_1::Initialize()
+void Item_Food::Initialize()
 {
     m_position = m_boundingBox.minPosition;
     // 速度を初期化
@@ -46,7 +46,7 @@ void Item_Food_1::Initialize()
 
 }
 
-void Item_Food_1::Update()
+void Item_Food::Update()
 {
     if (!m_isActive) { return; }
     if (m_isHeld)
@@ -166,7 +166,7 @@ void Item_Food_1::Update()
 }
 
 
-void Item_Food_1::Render() const//-----------------------------------------------------
+void Item_Food::Render() const//-----------------------------------------------------
 {
 
     if (!m_isActive) { return; }

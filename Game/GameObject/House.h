@@ -7,7 +7,7 @@
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
-#include "Game/GameObject/Item_Food_1.h"
+#include "Game/GameObject/Item_Food.h"
 // 前方宣言 ===============================================================
 struct GameContext;
 
@@ -22,13 +22,13 @@ private:
 
 
     // この家が欲しがっている食べ物の種類
-    Item_Food_1::FoodType m_wantedFoodType;
+    Item_Food::FoodType m_wantedFoodType;
 
     // すでに届け終わったかどうか（true = アイコン非表示）
     bool m_isFulfilled;
 
 public:
-    House(GameContext& gameContext, const BoundingBox& boundingBox, Item_Food_1::FoodType wantedFoodType);
+    House(GameContext& gameContext, const BoundingBox& boundingBox, Item_Food::FoodType wantedFoodType);
     ~House();
 
     void Render() const;
@@ -39,7 +39,7 @@ public:
 
     const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
     //「欲しがっている食べ物の種類」を取得する
-    Item_Food_1::FoodType GetWantedFoodType() const { return m_wantedFoodType; }
+    Item_Food::FoodType GetWantedFoodType() const { return m_wantedFoodType; }
 
     // 届け終わったかどうか
     bool GetIsFulfilled() const { return m_isFulfilled; }
