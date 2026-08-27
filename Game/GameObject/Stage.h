@@ -14,7 +14,8 @@
 #include "Game/GameObject/Item_Food.h"  
 #include "Game/GameObject/House.h"
 #include "Game/GameObject/Enemy.h"
-#include <vector>        // Item_Food_1の数を、柔軟に変えられるように                 
+#include "Game/GameObject/Item_Bomb.h"
+#include <vector>        // Item_Foodの数を、柔軟に変えられるように                 
 // 前方宣言 ===============================================================
 struct GameContext;
 class Player;
@@ -28,7 +29,7 @@ public:
     enum class Type
     {
         None = -1,
-        Floor, Wall, Player, ItemFood
+        Floor, Wall, Player, ItemFood, ItemBomb
     };
 
 private:
@@ -65,6 +66,8 @@ private:
     std::vector<House> m_houses;
     // Enemyの配列
     std::vector<Enemy> m_enemies;
+    // Item_Bombの配列
+    std::vector<Item_Bomb> m_itemBomb;
 
 
 public:
@@ -155,4 +158,5 @@ private:
     void ItemFoodRender() const;
     void HouseRender() const;
     void EnemyRender() const;
+    void ItemBombRender() const;
 };

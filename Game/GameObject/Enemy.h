@@ -16,7 +16,7 @@ class Enemy
 {
 private:
     // 移動速度
-    static constexpr const float SPEED = 2.0f;
+    static constexpr const float SPEED = 1.0f;
 
     // 見た目・当たり判定のサイズ
     static constexpr const float WIDTH = 40.0f;

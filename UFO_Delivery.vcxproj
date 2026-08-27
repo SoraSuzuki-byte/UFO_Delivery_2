@@ -148,6 +148,7 @@
     <ClCompile Include="Game\Class\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\GameObject\Enemy.cpp" />
     <ClCompile Include="Game\GameObject\House.cpp" />
+    <ClCompile Include="Game\GameObject\Item_Bomb.cpp" />
     <ClCompile Include="Game\GameObject\Item_Food.cpp" />
     <ClCompile Include="Game\GameObject\Player.cpp" />
     <ClCompile Include="Game\GameObject\Stage.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Game\GameContext.h" />
     <ClInclude Include="Game\GameObject\Enemy.h" />
     <ClInclude Include="Game\GameObject\House.h" />
+    <ClInclude Include="Game\GameObject\Item_Bomb.h" />
     <ClInclude Include="Game\GameObject\Item_Food.h" />
     <ClInclude Include="Game\GameObject\Player.h" />
     <ClInclude Include="Game\GameObject\Stage.h" />
@@ -186,6 +188,7 @@
     <Image Include="Resources\Textures\Background_1.png" />
     <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\House.png" />
+    <Image Include="Resources\Textures\Item_Bomb.png" />
     <Image Include="Resources\Textures\Item_Food_1.png" />
     <Image Include="Resources\Textures\Item_Food_2.png" />
     <Image Include="Resources\Textures\Item_Food_3.png" />

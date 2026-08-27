@@ -24,7 +24,8 @@ public:
         Item_Food_3, // (12)
         Item_Food_4, // (12)
         Item_Food_5, // (13)
-        Enemy_1, // (14)
+        Item_Bomb, // (14)
+        Enemy_1, // (15)
 
 
         Max    // テクスチャの合計数

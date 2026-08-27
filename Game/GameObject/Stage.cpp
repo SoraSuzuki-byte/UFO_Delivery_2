@@ -81,6 +81,12 @@ void Stage::Update()
     {
         enemy.Update();
     }
+
+    // 爆弾
+    for (auto& bomb : m_itemBomb)
+    {
+        bomb.Update();
+    }
 }
 
 // ------------------------------------------------------------------
@@ -93,6 +99,7 @@ void Stage::Render() const
     StageRender();
     HouseRender();
     EnemyRender();
+    ItemBombRender();
 }
 
 // ------------------------------------------------------------------
@@ -101,6 +108,11 @@ void Stage::Render() const
 void Stage::Finalize()
 {
 }
+
+
+
+
+
 
 // ------------------------------------------------------------------
 // ワールド座標から（マップ座標の）マップチップの型を返す
@@ -289,6 +301,19 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_itemFood.back().Initialize();
                     break;
                 }
+                // Bomb
+                case 8:
+                {
+                    m_mapArray[y][x] = Type::ItemBomb;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemBomb.emplace_back(m_gameContext, *this, m_player, bb);
+                    m_itemBomb.back().Initialize();
+                    break;
+                }
 
                 default:
                     assert(!"不正なタイル番号が検知されました");
@@ -448,13 +473,6 @@ void Stage::StageRender() const
             // 壁・足場（Type::Wall）を描画
             if (m_mapArray[y][x] == Type::Wall)
             {
-                //DrawBox(
-                //    x * CHIP_SIZE,
-                //    y * CHIP_SIZE,
-                //    x * CHIP_SIZE + CHIP_SIZE,
-                //    y * CHIP_SIZE + CHIP_SIZE,
-                //    GetColor(255, 255, 255), TRUE); // ★白の塗りつぶしで描画
-
                 DrawGraph(
                     x * CHIP_SIZE,
                     y * CHIP_SIZE,
@@ -506,6 +524,23 @@ void Stage::EnemyRender() const
         if (enemy.GetActiveFlag())
         {
             enemy.Render();
+        }
+    }
+}
+
+
+
+// ------------------------------------------------------------------
+// ItemBombを描画
+// ------------------------------------------------------------------
+void Stage::ItemBombRender() const
+{
+    for (const auto& bomb : m_itemBomb)   // ★ Item_Bomb → bomb に変更
+    {
+        // 使用済みでもない場合のみ、マップ上に描画する
+        if (bomb.GetActiveFlag())
+        {
+            bomb.Render();
         }
     }
 }

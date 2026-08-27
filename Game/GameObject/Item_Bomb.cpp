@@ -1,18 +1,18 @@
 /*
-    @file   Item_Food_1.cpp
-    @brief  食べ物アイテム のクラス
+    @file   Item_Food_1.h
+    @brief  爆弾アイテム のクラス
     @author 鈴木蒼良
-    @date   2026年8月20日
+    @date   2026年8月27日
 */
 
 
 #include "pch.h"
-#include "Item_Food.h"
+#include "Item_Bomb.h"
 #include "Game/GameContext.h"
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
-Item_Food::Item_Food(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
+Item_Bomb::Item_Bomb(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox)
     : m_gameContext{ gameContext }
     , m_stage{ stage }
     , m_player{ player }
@@ -24,18 +24,17 @@ Item_Food::Item_Food(GameContext& gameContext, Stage& stage, Player* player, con
     , m_restitution{}
     , m_friction{}
     , m_isPulled{ false }
-    , m_foodType{ foodType }
     , m_width{ boundingBox.maxPosition.x - boundingBox.minPosition.x }
     , m_height{ boundingBox.maxPosition.y - boundingBox.minPosition.y }
 
 {
 }
 
-Item_Food::~Item_Food()
+Item_Bomb::~Item_Bomb()
 {
 }
 
-void Item_Food::Initialize()
+void Item_Bomb::Initialize()
 {
     m_position = m_boundingBox.minPosition;
     // 速度を初期化
@@ -50,10 +49,9 @@ void Item_Food::Initialize()
 
     m_isActive = true;
     m_isPulled = false;
-
 }
 
-void Item_Food::Update()
+void Item_Bomb::Update()
 {
     // キー入力情報を取得する
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
@@ -109,22 +107,14 @@ void Item_Food::Update()
         m_velocity.y += m_gravity;
         m_position += m_velocity;
 
-        // 家との当たり判定
-        for (auto& house : m_stage.GetHouses())
+        // 敵との当たり判定
+        for (auto& enemy : m_stage.GetEnemies())
         {
-            if (CheckHitAABB(m_boundingBox, house.GetBoundingBox()))
+            if (CheckHitAABB(m_boundingBox, enemy.GetBoundingBox()))
             {
-                if (house.GetIsFulfilled()) { continue; }   // 届け済みの家はもう判定しない
-
-                // 食べ物の種類が、家と一致した時だけ命中とする
-                if (house.GetWantedFoodType() == m_foodType)
-                {
-                    m_isActive = false;       // 食べ物は消える
-                    house.SetIsFulfilled(true);   // 家の付近にある、欲しい食べ物のアイコンを消す
+                    m_isActive = false;       // 爆弾は消える
+                    enemy.SetActiveFlag(false); // 敵を消す
                     return;
-
-                }
-                // 種類が違う場合は何もしない（すり抜けてそのまま落下し続ける）
             }
         }
 
@@ -161,33 +151,20 @@ void Item_Food::Update()
    // ------------------------------------------------------------------
     m_boundingBox.minPosition = m_position;
     m_boundingBox.maxPosition = Vector2D{ m_position.x + m_width, m_position.y + m_height };
-
 }
 
 
-void Item_Food::Render() const//-----------------------------------------------------
-{
 
+
+void Item_Bomb::Render() const
+{
     if (!m_isActive) { return; }
 
 
-    GhManager::Textures texture{}; //  GhManager::Textures型の、空のオブジェクトを宣言
-
-    // タイプに合わせて、空のオブジェクトに代入
-    switch (m_foodType) 
-{
-    case FoodType::Food1: texture = GhManager::Textures::Item_Food_1; break;
-    case FoodType::Food2: texture = GhManager::Textures::Item_Food_2; break;
-    case FoodType::Food3: texture = GhManager::Textures::Item_Food_3; break;
-    case FoodType::Food4: texture = GhManager::Textures::Item_Food_4; break;
-    case FoodType::Food5: texture = GhManager::Textures::Item_Food_5; break;
-    default:
-        // 想定外のタイプに対するエラーハンドリング
-        break;
-}
     DrawGraph(
         static_cast<int>(m_boundingBox.minPosition.x),
         static_cast<int>(m_boundingBox.minPosition.y),
-        m_gameContext.ghManager.GetGraphicHandle(texture),
+        m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Item_Bomb),
         TRUE);
+
 }

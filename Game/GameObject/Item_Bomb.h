@@ -1,8 +1,8 @@
-﻿/*
+/*
     @file   Item_Food_1.h
-    @brief  食べ物アイテム のクラス
+    @brief  爆弾アイテム のクラス
     @author 鈴木蒼良
-    @date   2026年8月20日
+    @date   2026年8月27日
 */
 #pragma once
 #include "Library/GameMath.h"
@@ -13,18 +13,8 @@ class Stage;
 class Player;
 
 
-class Item_Food
+class Item_Bomb
 {
-public:
-    // 食べ物の種類
-    enum class FoodType
-    {
-        Food1,
-        Food2,
-        Food3,
-        Food4,
-        Food5
-    };
 private:
 
     // 重力
@@ -66,12 +56,9 @@ private:
     float m_width;
     float m_height;
 
-    // このインスタンスの、食べ物の種類
-    FoodType m_foodType;
-
 public:
-    Item_Food(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType);
-    ~Item_Food();
+    Item_Bomb(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox);
+    ~Item_Bomb();
 
     void Initialize();
     void Update();
@@ -82,8 +69,6 @@ public:
     void SetActiveFlag(bool isActive) { m_isActive = isActive; }
 
 
-    // 種類を取得する
-    FoodType GetFoodType() const { return m_foodType; }
 
 
 
