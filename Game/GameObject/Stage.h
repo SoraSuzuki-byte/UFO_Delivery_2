@@ -136,10 +136,14 @@ public:
         return true;   // 全部届いていれば true
     }
 
+    // 食べ物と、家との当たり判定
+    void CheckFoodHouseCollision();
+
 
     int GetMapWidth()  const { return m_mapWidth; }
     int GetMapHeight() const { return m_mapHeight; }
     int GetChipSize()  const { return CHIP_SIZE; }
+
 
 
 

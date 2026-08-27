@@ -17,6 +17,7 @@ Item_Bomb::Item_Bomb(GameContext& gameContext, Stage& stage, Player* player, con
     , m_stage{ stage }
     , m_player{ player }
     , m_boundingBox{ boundingBox }
+    , m_explosion{}
     , m_isActive{ true }
     , m_position{}
     , m_velocity{}
@@ -56,6 +57,19 @@ void Item_Bomb::Update()
     // キー入力情報を取得する
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
+
+    // 敵との当たり判定
+    for (auto& enemy : m_stage.GetEnemies())
+    {
+        if (CheckHitAABB(m_boundingBox, enemy.GetBoundingBox()))
+        {
+            m_explosion.SetEnemyPosition(m_position);
+            m_explosion.StartExplosion();
+            m_isActive = false;       // 爆弾は消える
+            enemy.SetActiveFlag(false); // 敵を消す
+            return;
+        }
+    }
 
 
     if (!m_isActive) { return; }
@@ -107,16 +121,6 @@ void Item_Bomb::Update()
         m_velocity.y += m_gravity;
         m_position += m_velocity;
 
-        // 敵との当たり判定
-        for (auto& enemy : m_stage.GetEnemies())
-        {
-            if (CheckHitAABB(m_boundingBox, enemy.GetBoundingBox()))
-            {
-                    m_isActive = false;       // 爆弾は消える
-                    enemy.SetActiveFlag(false); // 敵を消す
-                    return;
-            }
-        }
 
         // 足元が壁（草）かどうかを調べる
         const float centerX = m_position.x + m_width * 0.5f;
@@ -158,6 +162,8 @@ void Item_Bomb::Update()
 
 void Item_Bomb::Render() const
 {
+
+
     if (!m_isActive) { return; }
 
 

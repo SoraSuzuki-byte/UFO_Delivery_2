@@ -78,6 +78,9 @@
     <Filter Include="Resources\Textures\Enemy">
       <UniqueIdentifier>{82e3ec81-7719-4447-afa1-d9991fe24a16}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Class\Effect">
+      <UniqueIdentifier>{452fe834-0740-485c-a64b-aee869a07a51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -165,6 +168,9 @@
     <ClCompile Include="Game\GameObject\Item_Bomb.cpp">
       <Filter>Game\GameObject\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Class\Effect\Explosion.cpp">
+      <Filter>Game\Class\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -224,6 +230,9 @@
     <ClInclude Include="Game\GameObject\Item_Bomb.h">
       <Filter>Game\GameObject\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Class\Effect\Explosion.h">
+      <Filter>Game\Class\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Textures\UFO_Bass.png">
@@ -273,6 +282,9 @@
     </Image>
     <Image Include="Resources\Textures\Item_Bomb.png">
       <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Explosion.png">
+      <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>
 </Project>

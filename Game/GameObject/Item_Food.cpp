@@ -109,25 +109,6 @@ void Item_Food::Update()
         m_velocity.y += m_gravity;
         m_position += m_velocity;
 
-        // 家との当たり判定
-        for (auto& house : m_stage.GetHouses())
-        {
-            if (CheckHitAABB(m_boundingBox, house.GetBoundingBox()))
-            {
-                if (house.GetIsFulfilled()) { continue; }   // 届け済みの家はもう判定しない
-
-                // 食べ物の種類が、家と一致した時だけ命中とする
-                if (house.GetWantedFoodType() == m_foodType)
-                {
-                    m_isActive = false;       // 食べ物は消える
-                    house.SetIsFulfilled(true);   // 家の付近にある、欲しい食べ物のアイコンを消す
-                    return;
-
-                }
-                // 種類が違う場合は何もしない（すり抜けてそのまま落下し続ける）
-            }
-        }
-
         // 足元が壁（草）かどうかを調べる
         const float centerX = m_position.x + m_width * 0.5f;
         const float footY = m_position.y + m_height;

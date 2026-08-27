@@ -7,6 +7,7 @@
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
+#include "Game/Class/Effect/Explosion.h"
 
 struct GameContext;
 class Stage;
@@ -29,6 +30,7 @@ private:
     GameContext& m_gameContext;
     Stage& m_stage;
     Player* m_player;
+    Explosion m_explosion;
 
     // 境界ボックス（ワールド座標）
     BoundingBox m_boundingBox;

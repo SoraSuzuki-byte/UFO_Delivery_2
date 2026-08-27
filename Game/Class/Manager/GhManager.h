@@ -17,15 +17,16 @@ public:
         UFO_Orange_Left,   // オレンジのひだり（4）
         UFO_Orange_Middle, // オレンジの中央（5）
         UFO_Orange_Right,  // オレンジのみぎ（6）
-        House, // (7)
-        Background_1, // (8)
+        House, // 家 (7)
+        Background_1, // 背景画像 (8)
         Item_Food_1, // (9)
         Item_Food_2, // (10)
         Item_Food_3, // (12)
         Item_Food_4, // (12)
         Item_Food_5, // (13)
-        Item_Bomb, // (14)
-        Enemy_1, // (15)
+        Item_Bomb, // 爆弾アイテム (14)
+        Explosion, // 爆発エフェクト (15)
+        Enemy_1, // (16)
 
 
         Max    // テクスチャの合計数

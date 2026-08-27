@@ -43,6 +43,7 @@ public:
 
     // 届け終わったかどうか
     bool GetIsFulfilled() const { return m_isFulfilled; }
+    // 届けたら、フラグを更新
     void SetIsFulfilled(bool isFulfilled) { m_isFulfilled = isFulfilled; }
 };
 

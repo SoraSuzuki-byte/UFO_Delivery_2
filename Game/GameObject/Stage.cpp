@@ -81,12 +81,16 @@ void Stage::Update()
     {
         enemy.Update();
     }
-
     // 爆弾
     for (auto& bomb : m_itemBomb)
     {
         bomb.Update();
     }
+
+
+    // 食べ物と、家との当たり判定
+    CheckFoodHouseCollision();
+
 }
 
 // ------------------------------------------------------------------
@@ -149,6 +153,52 @@ POINT Stage::ConvertWorldPositionToMapPosition(const Vector2D& worldPosition)
         static_cast<int>(worldPosition.y) / CHIP_SIZE
     };
 }
+
+  
+// ------------------------------------------------------------------
+// 食べ物と、家との当たり判定
+// ------------------------------------------------------------------
+void Stage::CheckFoodHouseCollision()
+{
+    for (auto& house : m_houses)
+    {
+        if (house.GetIsFulfilled()) continue;
+
+        for (auto& item : m_itemFood)
+        {
+            if (!item.GetActiveFlag()) continue;
+
+            // 当たり判定をチェック
+            if (CheckHitAABB(item.GetBoundingBox(), house.GetBoundingBox())) {
+
+                // 食べ物の種類と 家が求める種類を照合
+                if (item.GetFoodType() == house.GetWantedFoodType())
+                {
+                    // 納品成功
+                    item.SetActiveFlag(false);
+                    house.SetIsFulfilled(true);
+
+                }
+                break;
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// 内部処理-----------------------------------------------------------------------------------------------
+
 
 // ------------------------------------------------------------------
 // ステージデータをロードする
