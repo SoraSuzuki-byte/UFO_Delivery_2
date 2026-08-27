@@ -17,11 +17,12 @@ class Item_Bomb
 {
 private:
 
+    // 画像サイズ
+    static constexpr const float SIZE = 47;
     // 重力
     static constexpr const float GRAVITY = 9.8f;
     // プレイヤーに引き寄せられる速さ
     static constexpr const float ATTRACT_SPEED = 3.0f;
-
     //「真上にいる」とみなすX座標の許容範囲（左右何ピクセルまでOKか）
     static constexpr const float ABOVE_X_RANGE = 30.0f;
 

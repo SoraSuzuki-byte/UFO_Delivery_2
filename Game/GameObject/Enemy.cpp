@@ -56,4 +56,17 @@ void Enemy::Render() const
         static_cast<int>(m_position.y),
         m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_1),
         TRUE);
+
+
+    // 2. 当たり判定（BoundingBox）の可視化処理（デバッグ用）
+    // =================================================================
+    const BoundingBox box = GetBoundingBox();
+
+    const int left = static_cast<int>(box.minPosition.x);
+    const int top = static_cast<int>(box.minPosition.y);
+    const int right = static_cast<int>(box.maxPosition.x);
+    const int bottom = static_cast<int>(box.maxPosition.y);
+
+    // 赤色の枠線を描画 (FALSE = 枠線のみ)
+    DrawBox(left, top, right, bottom, GetColor(255, 0, 0), FALSE);
 }

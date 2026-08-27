@@ -24,8 +24,8 @@ Item_Bomb::Item_Bomb(GameContext& gameContext, Stage& stage, Player* player, con
     , m_restitution{}
     , m_friction{}
     , m_isPulled{ false }
-    , m_width{ boundingBox.maxPosition.x - boundingBox.minPosition.x }
-    , m_height{ boundingBox.maxPosition.y - boundingBox.minPosition.y }
+    , m_width{ SIZE }
+    , m_height{ SIZE }
 
 {
 }
@@ -49,6 +49,10 @@ void Item_Bomb::Initialize()
 
     m_isActive = true;
     m_isPulled = false;
+
+    m_width = SIZE;
+    m_height = SIZE;
+
 }
 
 void Item_Bomb::Update()
@@ -158,5 +162,4 @@ void Item_Bomb::Render() const
         static_cast<int>(m_boundingBox.minPosition.y),
         m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Item_Bomb),
         TRUE);
-
 }

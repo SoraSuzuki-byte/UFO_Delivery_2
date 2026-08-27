@@ -111,6 +111,7 @@ void Stage::Render() const
     // -- 爆発エフェクトの描画 -- //
     // 1. 画像ハンドルを取得する
     const int explosionHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Explosion);
+
     // 2. アクティブな爆発だけ描画関数を呼ぶ（ハンドルを渡す）
     for (int i = 0; i < MAX_EXPLOSION; i++) {
         if (m_explosions[i].IsActive()) 

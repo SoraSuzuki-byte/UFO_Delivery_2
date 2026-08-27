@@ -19,8 +19,8 @@ private:
     static constexpr const float SPEED = 1.0f;
 
     // 見た目・当たり判定のサイズ
-    static constexpr const float WIDTH = 40.0f;
-    static constexpr const float HEIGHT = 40.0f;
+    static constexpr const float WIDTH = 64.0f;
+    static constexpr const float HEIGHT = 74.0f;
 
     GameContext& m_gameContext;
     Stage& m_stage;
