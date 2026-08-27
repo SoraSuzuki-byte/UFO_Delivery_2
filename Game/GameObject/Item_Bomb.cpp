@@ -17,7 +17,6 @@ Item_Bomb::Item_Bomb(GameContext& gameContext, Stage& stage, Player* player, con
     , m_stage{ stage }
     , m_player{ player }
     , m_boundingBox{ boundingBox }
-    , m_explosion{}
     , m_isActive{ true }
     , m_position{}
     , m_velocity{}
@@ -58,24 +57,11 @@ void Item_Bomb::Update()
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
-    // 敵との当たり判定
-    for (auto& enemy : m_stage.GetEnemies())
-    {
-        if (CheckHitAABB(m_boundingBox, enemy.GetBoundingBox()))
-        {
-            m_explosion.SetEnemyPosition(m_position);
-            m_explosion.StartExplosion();
-            m_isActive = false;       // 爆弾は消える
-            enemy.SetActiveFlag(false); // 敵を消す
-            return;
-        }
-    }
-
 
     if (!m_isActive) { return; }
 
     //----------------------------------------------------------------------------------
-    // プレイヤーが自分の真上にいるかどうかを調べ、吸引フラグを更新
+    // プレイヤーが真上にいるかどうかを調べ、吸引フラグを更新
     //----------------------------------------------------------------------------------
     if (m_player != nullptr)// ★安全対策：Playerがまだ設定されていない場合 → elseへ
     {

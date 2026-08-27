@@ -7,7 +7,6 @@
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
-#include "Game/Class/Effect/Explosion.h"
 
 struct GameContext;
 class Stage;
@@ -30,7 +29,6 @@ private:
     GameContext& m_gameContext;
     Stage& m_stage;
     Player* m_player;
-    Explosion m_explosion;
 
     // 境界ボックス（ワールド座標）
     BoundingBox m_boundingBox;
@@ -69,6 +67,9 @@ public:
     // 取得済みかどうか
     bool GetActiveFlag() const { return m_isActive; }
     void SetActiveFlag(bool isActive) { m_isActive = isActive; }
+
+    Vector2D GetPosition() const { return m_position; }
+
 
 
 

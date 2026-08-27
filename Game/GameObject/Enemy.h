@@ -38,6 +38,7 @@ public:
 
     bool GetActiveFlag() const { return m_isActive; }
     void SetActiveFlag(bool isActive) { m_isActive = isActive; }
+    Vector2D GetPosition() const { return m_position; }
 
     // 当たり判定用の境界ボックスを取得する
     BoundingBox GetBoundingBox() const

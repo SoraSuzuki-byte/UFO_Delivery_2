@@ -62,8 +62,8 @@ void Stage::Initialize(const wchar_t* stageNumber)
 {
     LoadStageData(stageNumber);
     m_gameContext.ghManager.Initialize();
-
     CreateBoundingBoxArray();
+    for (int i = 0; i < MAX_EXPLOSION; i++) { m_explosions[i].Initialize(); }
 }
 
 // ------------------------------------------------------------------
@@ -71,25 +71,28 @@ void Stage::Initialize(const wchar_t* stageNumber)
 // ------------------------------------------------------------------
 void Stage::Update()
 {
-    // 食べ物
-    for (auto& item : m_itemFood)
+   // 各オブジェクトの更新
+    for (auto& item : m_itemFood) // 食べ物
     {
         item.Update();
-    }
-    // Enemy
-    for (auto& enemy : m_enemies)
+    }    
+    for (auto& enemy : m_enemies) // Enemy
     {
         enemy.Update();
-    }
-    // 爆弾
-    for (auto& bomb : m_itemBomb)
+    }   
+    for (auto& bomb : m_itemBomb) // 爆弾
     {
         bomb.Update();
     }
+    for (int i = 0; i < MAX_EXPLOSION; i++) // 爆発エフェクト
+    {
+        m_explosions[i].Update();
+    }
 
 
-    // 食べ物と、家との当たり判定
-    CheckFoodHouseCollision();
+    // 当たり判定
+    CheckFoodHouseCollision(); // 食べ物と,家
+    CheckBombEnemyCollision();  // 爆弾と, 敵
 
 }
 
@@ -104,6 +107,17 @@ void Stage::Render() const
     HouseRender();
     EnemyRender();
     ItemBombRender();
+
+    // -- 爆発エフェクトの描画 -- //
+    // 1. 画像ハンドルを取得する
+    const int explosionHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Explosion);
+    // 2. アクティブな爆発だけ描画関数を呼ぶ（ハンドルを渡す）
+    for (int i = 0; i < MAX_EXPLOSION; i++) {
+        if (m_explosions[i].IsActive()) 
+        { 
+            m_explosions[i].Render(explosionHandle); 
+        } 
+    }
 }
 
 // ------------------------------------------------------------------
@@ -185,6 +199,44 @@ void Stage::CheckFoodHouseCollision()
     }
 
 }
+
+
+// ------------------------------------------------------------------
+// 爆弾と、敵の当たり判定
+// ------------------------------------------------------------------
+void Stage::CheckBombEnemyCollision()
+{
+    for (auto& bomb : m_itemBomb)
+    {
+        if (!bomb.GetActiveFlag()) continue;
+
+        for (auto& enemy : m_enemies)
+        {
+            if (!enemy.GetActiveFlag()) continue;
+
+            // 当たり判定チェック
+            if (CheckHitAABB(bomb.GetBoundingBox(), enemy.GetBoundingBox()))
+            {
+                // 空いている爆発枠を探して再生を開始する
+                for (int i = 0; i < MAX_EXPLOSION; i++)
+                {
+                    // 使われていない（アニメーションが終わっている）爆発枠を見つける
+                    if (!m_explosions[i].IsActive())
+                    {
+                        m_explosions[i].SetEnemyPosition(bomb.GetPosition());
+                        m_explosions[i].StartExplosion();
+                        break; // 1つ設定したらループを抜ける
+                    }
+                }
+
+                    bomb.SetActiveFlag(false);   // 爆弾消去
+                    enemy.SetActiveFlag(false);  // 敵撃破
+                    break; // 敵探索のループを抜ける
+                }
+            }
+        }
+    }
+
 
 
 
@@ -362,6 +414,16 @@ void Stage::LoadStageData(const wchar_t* stageName)
 
                     m_itemBomb.emplace_back(m_gameContext, *this, m_player, bb);
                     m_itemBomb.back().Initialize();
+                    break;
+                }
+                // Enemy
+                case 9:
+                {
+                    m_mapArray[y][x] = Type::Floor; // 出現する位置は、移動できる「床」であるため
+
+                    const Vector2D startPos{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+
+                    m_enemies.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
                     break;
                 }
 

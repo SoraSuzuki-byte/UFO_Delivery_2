@@ -35,6 +35,9 @@ void Explosion::Initialize()
 /// -----------------------------------------------------------------
 void Explosion::Update()
 {
+    // 非アクティブなら何もしない
+    if (!IsActive()) return;
+   
     /*
         ・「m_animationCounter」「ANIMATION_INTERVAL」「m_animationState」
         　を使用して、爆発アニメーションの切り替え部分を実装している

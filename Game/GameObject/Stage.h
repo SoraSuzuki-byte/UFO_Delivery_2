@@ -15,7 +15,9 @@
 #include "Game/GameObject/House.h"
 #include "Game/GameObject/Enemy.h"
 #include "Game/GameObject/Item_Bomb.h"
-#include <vector>        // Item_Foodの数を、柔軟に変えられるように                 
+#include <vector>        // Item_Foodの数を、柔軟に変えられるように    
+#include "Game/Class/Effect/Explosion.h"
+
 // 前方宣言 ===============================================================
 struct GameContext;
 class Player;
@@ -41,6 +43,12 @@ private:
     const std::wstring CSV = L".csv";
 
 private:
+    // 爆発エフェクトの同時に出せる最大数
+    static constexpr int MAX_EXPLOSION = 3;
+    // 爆発エフェクトの配列
+    Explosion m_explosions[MAX_EXPLOSION]; 
+
+
     // ゲームコンテキストのインスタンス
     GameContext& m_gameContext;
 
@@ -114,12 +122,6 @@ public:
         m_houses.emplace_back(m_gameContext, bb, wantedFoodType);
     }
 
-    // Enemyを配置する
-    void AddEnemy(const Vector2D& startPosition, Player& player)
-    {
-        m_enemies.emplace_back(m_gameContext, *this, player, startPosition);
-    }
-
     // プレイヤーの境界ボックスと壁チップとの当たり判定を行い、押し戻し量を計算する
     Vector2D ResolveWallCollision(const BoundingBox& playerBox) const;
 
@@ -138,6 +140,8 @@ public:
 
     // 食べ物と、家との当たり判定
     void CheckFoodHouseCollision();
+    // 爆弾と、敵の当たり判定
+    void CheckBombEnemyCollision(); 
 
 
     int GetMapWidth()  const { return m_mapWidth; }

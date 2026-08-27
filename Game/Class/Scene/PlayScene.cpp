@@ -72,9 +72,6 @@ void PlayScene::Initialize()
     // ステージごとに家を配置する
     PlaceHouses(selectedStage);
 
-    // ステージごとに敵を配置する
-    PlaceEnemies(selectedStage);
-
     m_player.Initialize();
 }
 
@@ -93,9 +90,8 @@ void PlayScene::Update()
     // プレイ中のときのみ、プレイヤーや敵を 更新
     if (m_gameState == GameState::Play)
     {
-        m_stage.Update();
+        m_stage.Update(); // Stage.cppで「Enemy」「Food」「Bomb」などをUpdateしている
         m_player.Update();
-        // m_enemy.Update();
         
         // HPが0になったら、ゲームオーバー状態に切り替える
         if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; }
@@ -222,34 +218,6 @@ void PlayScene::PlaceHouses(StageId stageId)
         case StageId::Stage3:
             m_stage.AddHouse(Vector2D{ 400.0f, 500.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
             m_stage.AddHouse(Vector2D{ 800.0f, 500.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
-            break;
-
-        default:
-            break;
-    }
-}
-
-
-// ------------------------------------------------------------------
-// ステージごとに敵を配置する
-// ------------------------------------------------------------------
-void PlayScene::PlaceEnemies(StageId stageId)
-{
-    switch (stageId)
-    {
-        case StageId::Stage1:
-            m_stage.AddEnemy(Vector2D{ 200.0f, 200.0f }, m_player);
-            break;
-
-        case StageId::Stage2:
-            m_stage.AddEnemy(Vector2D{ 300.0f, 300.0f }, m_player);
-            m_stage.AddEnemy(Vector2D{ 600.0f, 300.0f }, m_player);
-            break;
-
-        case StageId::Stage3:
-            m_stage.AddEnemy(Vector2D{ 400.0f, 400.0f }, m_player);
-            m_stage.AddEnemy(Vector2D{ 800.0f, 400.0f }, m_player);
-            m_stage.AddEnemy(Vector2D{ 1200.0f, 400.0f }, m_player);
             break;
 
         default:
