@@ -224,7 +224,7 @@ void Stage::CheckBombEnemyCollision()
                     // 使われていない（アニメーションが終わっている）爆発枠を見つける
                     if (!m_explosions[i].IsActive())
                     {
-                        m_explosions[i].SetEnemyPosition(bomb.GetPosition());
+                        m_explosions[i].SetEnemyPosition(enemy.GetCenterPosition());
                         m_explosions[i].StartExplosion();
                         break; // 1つ設定したらループを抜ける
                     }
