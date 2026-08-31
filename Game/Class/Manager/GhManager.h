@@ -27,6 +27,7 @@ public:
         Item_Bomb, // 爆弾アイテム (14)
         Explosion, // 爆発エフェクト (15)
         Enemy_1, // (16)
+        Enemy_2, // (17)
 
 
         Max    // テクスチャの合計数

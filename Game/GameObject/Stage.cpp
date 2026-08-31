@@ -76,7 +76,11 @@ void Stage::Update()
     {
         item.Update();
     }    
-    for (auto& enemy : m_enemies) // Enemy
+    for (auto& enemy : m_enemies_1) // Enemy
+    {
+        enemy.Update();
+    }   
+    for (auto& enemy : m_enemies_2) // Enemy2
     {
         enemy.Update();
     }   
@@ -93,6 +97,7 @@ void Stage::Update()
     // 当たり判定
     CheckFoodHouseCollision(); // 食べ物と,家
     CheckBombEnemyCollision();  // 爆弾と, 敵
+    CheckBombEnemy2Collision();  // 爆弾と, 敵2
 
 }
 
@@ -106,6 +111,7 @@ void Stage::Render() const
     StageRender();
     HouseRender();
     EnemyRender();
+    Enemy2Render();
     ItemBombRender();
 
     // -- 爆発エフェクトの描画 -- //
@@ -211,7 +217,48 @@ void Stage::CheckBombEnemyCollision()
     {
         if (!bomb.GetActiveFlag()) continue;
 
-        for (auto& enemy : m_enemies)
+        for (auto& enemy : m_enemies_1)
+        {
+            if (!enemy.GetActiveFlag()) continue;
+
+            // 当たり判定チェック
+            if (CheckHitAABB(bomb.GetBoundingBox(), enemy.GetBoundingBox()))
+            {
+                // 空いている爆発枠を探して再生を開始する
+                for (int i = 0; i < MAX_EXPLOSION; i++)
+                {
+                    // 使われていない（アニメーションが終わっている）爆発枠を見つける
+                    if (!m_explosions[i].IsActive())
+                    {
+                        m_explosions[i].SetEnemyPosition(enemy.GetCenterPosition());
+                        m_explosions[i].StartExplosion();
+                        break; // 1つ設定したらループを抜ける
+                    }
+                }
+
+                    bomb.SetActiveFlag(false);   // 爆弾消去
+                    enemy.SetActiveFlag(false);  // 敵撃破
+                    break; // 敵探索のループを抜ける
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+// ------------------------------------------------------------------
+// 爆弾と、敵2の当たり判定
+// ------------------------------------------------------------------
+void Stage::CheckBombEnemy2Collision()
+{
+    for (auto& bomb : m_itemBomb)
+    {
+        if (!bomb.GetActiveFlag()) continue;
+
+        for (auto& enemy : m_enemies_2)
         {
             if (!enemy.GetActiveFlag()) continue;
 
@@ -260,7 +307,8 @@ void Stage::LoadStageData(const wchar_t* stageName)
 {
     // CSVを読み込む前に、以前のステージの「House」の情報を空にする
     m_houses.clear();
-    m_enemies.clear();
+    m_enemies_1.clear();
+    m_enemies_2.clear();
 
     std::ifstream ifs;      // ファイルストリーム
     std::string line;       // １行分のデータ
@@ -417,14 +465,24 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_itemBomb.back().Initialize();
                     break;
                 }
-                // Enemy
+                // Enemy_1
                 case 9:
                 {
                     m_mapArray[y][x] = Type::Floor; // 出現する位置は、移動できる「床」であるため
 
                     const Vector2D startPos{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
 
-                    m_enemies.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
+                    m_enemies_1.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
+                    break;
+                }
+                // Enemy_2
+                case 10:
+                {
+                    m_mapArray[y][x] = Type::Floor; // 出現する位置は、移動できる「床」であるため
+
+                    const Vector2D startPos{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+
+                    m_enemies_2.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
                     break;
                 }
 
@@ -632,7 +690,25 @@ void Stage::HouseRender() const
 // ------------------------------------------------------------------
 void Stage::EnemyRender() const
 {
-    for (const auto& enemy : m_enemies)
+    for (const auto& enemy : m_enemies_1)
+    {
+        if (enemy.GetActiveFlag())
+        {
+            enemy.Render();
+        }
+    }
+}
+
+
+
+
+
+// ------------------------------------------------------------------
+// Enemy2を描画
+// ------------------------------------------------------------------
+void Stage::Enemy2Render() const
+{
+    for (const auto& enemy : m_enemies_2)
     {
         if (enemy.GetActiveFlag())
         {

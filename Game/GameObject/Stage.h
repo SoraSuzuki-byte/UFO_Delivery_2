@@ -14,6 +14,7 @@
 #include "Game/GameObject/Item_Food.h"  
 #include "Game/GameObject/House.h"
 #include "Game/GameObject/Enemy.h"
+#include "Game/GameObject/Enemy2.h"
 #include "Game/GameObject/Item_Bomb.h"
 #include <vector>        // Item_Foodの数を、柔軟に変えられるように    
 #include "Game/Class/Effect/Explosion.h"
@@ -73,7 +74,9 @@ private:
     // Houseの配列
     std::vector<House> m_houses;
     // Enemyの配列
-    std::vector<Enemy> m_enemies;
+    std::vector<Enemy> m_enemies_1;
+    // Enemy2の配列
+    std::vector<Enemy2> m_enemies_2;
     // Item_Bombの配列
     std::vector<Item_Bomb> m_itemBomb;
 
@@ -113,7 +116,7 @@ public:
     std::vector<House>& GetHouses() { return m_houses; }
 
     // Enemy配列を取得する
-    std::vector<Enemy>& GetEnemies() { return m_enemies; }
+    std::vector<Enemy>& GetEnemies() { return m_enemies_1; }
 
     // 家を配置する（ステージごとにコードで指定するため）
     void AddHouse(const Vector2D& position, float width, float height, Item_Food::FoodType wantedFoodType)
@@ -142,6 +145,8 @@ public:
     void CheckFoodHouseCollision();
     // 爆弾と、敵の当たり判定
     void CheckBombEnemyCollision(); 
+    // 爆弾と、敵2の当たり判定
+    void CheckBombEnemy2Collision(); 
 
 
     int GetMapWidth()  const { return m_mapWidth; }
@@ -166,5 +171,6 @@ private:
     void ItemFoodRender() const;
     void HouseRender() const;
     void EnemyRender() const;
+    void Enemy2Render() const;
     void ItemBombRender() const;
 };

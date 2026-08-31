@@ -171,6 +171,9 @@
     <ClCompile Include="Game\Class\Effect\Explosion.cpp">
       <Filter>Game\Class\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameObject\Enemy2.cpp">
+      <Filter>Game\GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -233,6 +236,9 @@
     <ClInclude Include="Game\Class\Effect\Explosion.h">
       <Filter>Game\Class\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Game\GameObject\Enemy2.h">
+      <Filter>Game\GameObject\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Textures\UFO_Bass.png">
@@ -285,6 +291,9 @@
     </Image>
     <Image Include="Resources\Textures\Explosion.png">
       <Filter>Resources\Textures</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Enemy_2.png">
+      <Filter>Resources\Textures\Enemy</Filter>
     </Image>
   </ItemGroup>
 </Project>
