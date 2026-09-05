@@ -195,6 +195,7 @@
     <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\Enemy_2.png" />
     <Image Include="Resources\Textures\Enemy_3.png" />
+    <Image Include="Resources\Textures\Enemy_3_1.png" />
     <Image Include="Resources\Textures\Explosion.png" />
     <Image Include="Resources\Textures\House.png" />
     <Image Include="Resources\Textures\Item_Bomb.png" />

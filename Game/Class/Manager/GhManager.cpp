@@ -49,8 +49,9 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Item_Bomb.png", // (14)
         L"Resources/Textures/Explosion.png", // (15)
         L"Resources/Textures/Enemy_1.png" , // (16)
-        L"Resources/Textures/Enemy_2.png" ,// (17)
-        L"Resources/Textures/Enemy_3.png" // (18)
+        L"Resources/Textures/Enemy_2.png" , // (17)
+        L"Resources/Textures/Enemy_3.png" , // (18)
+        L"Resources/Textures/Enemy_3_1.png" // (18)
 
         //  L"Resources/Textures/
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

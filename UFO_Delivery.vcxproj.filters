@@ -304,5 +304,8 @@
     <Image Include="Resources\Textures\Enemy_3.png">
       <Filter>Resources\Textures\Enemy</Filter>
     </Image>
+    <Image Include="Resources\Textures\Enemy_3_1.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
   </ItemGroup>
 </Project>

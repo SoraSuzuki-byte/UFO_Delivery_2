@@ -29,6 +29,7 @@ public:
         Enemy_1, // (16)
         Enemy_2, // (17)
         Enemy_3, // (18)
+        Enemy_3_1, // (19)
 
 
         Max    // テクスチャの合計数
