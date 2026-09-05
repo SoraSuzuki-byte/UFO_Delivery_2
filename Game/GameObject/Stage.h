@@ -15,6 +15,7 @@
 #include "Game/GameObject/House.h"
 #include "Game/GameObject/Enemy.h"
 #include "Game/GameObject/Enemy2.h"
+#include "Game/GameObject/Enemy3.h"
 #include "Game/GameObject/Item_Bomb.h"
 #include <vector>        // Item_Foodの数を、柔軟に変えられるように    
 #include "Game/Class/Effect/Explosion.h"
@@ -77,6 +78,8 @@ private:
     std::vector<Enemy> m_enemies_1;
     // Enemy2の配列
     std::vector<Enemy2> m_enemies_2;
+    // Enemy3の配列
+    std::vector<Enemy3> m_enemies_3;
     // Item_Bombの配列
     std::vector<Item_Bomb> m_itemBomb;
 
@@ -143,7 +146,7 @@ public:
 
     // 食べ物と、家との当たり判定
     void CheckFoodHouseCollision();
-    // 爆弾と、敵の当たり判定
+    // 爆弾と、敵1の当たり判定
     void CheckBombEnemyCollision(); 
     // 爆弾と、敵2の当たり判定
     void CheckBombEnemy2Collision(); 
@@ -172,5 +175,6 @@ private:
     void HouseRender() const;
     void EnemyRender() const;
     void Enemy2Render() const;
+    void Enemy3Render() const;
     void ItemBombRender() const;
 };

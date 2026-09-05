@@ -28,6 +28,7 @@ public:
         Explosion, // 爆発エフェクト (15)
         Enemy_1, // (16)
         Enemy_2, // (17)
+        Enemy_3, // (18)
 
 
         Max    // テクスチャの合計数

@@ -84,6 +84,10 @@ void Stage::Update()
     {
         enemy.Update();
     }   
+    for (auto& enemy : m_enemies_3) // Enemy3
+    {
+        enemy.Update();
+    }   
     for (auto& bomb : m_itemBomb) // 爆弾
     {
         bomb.Update();
@@ -112,6 +116,7 @@ void Stage::Render() const
     HouseRender();
     EnemyRender();
     Enemy2Render();
+    Enemy3Render();
     ItemBombRender();
 
     // -- 爆発エフェクトの描画 -- //
@@ -209,7 +214,7 @@ void Stage::CheckFoodHouseCollision()
 
 
 // ------------------------------------------------------------------
-// 爆弾と、敵の当たり判定
+// 爆弾と、敵1の当たり判定
 // ------------------------------------------------------------------
 void Stage::CheckBombEnemyCollision()
 {
@@ -485,6 +490,16 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_enemies_2.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
                     break;
                 }
+                // Enemy_3
+                case 11:
+                {
+                    m_mapArray[y][x] = Type::Floor; // 出現する位置は、移動できる「床」であるため
+
+                    const Vector2D startPos{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+
+                    m_enemies_3.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
+                    break;
+                }
 
                 default:
                     assert(!"不正なタイル番号が検知されました");
@@ -699,16 +714,26 @@ void Stage::EnemyRender() const
     }
 }
 
-
-
-
-
 // ------------------------------------------------------------------
 // Enemy2を描画
 // ------------------------------------------------------------------
 void Stage::Enemy2Render() const
 {
     for (const auto& enemy : m_enemies_2)
+    {
+        if (enemy.GetActiveFlag())
+        {
+            enemy.Render();
+        }
+    }
+}
+
+// ------------------------------------------------------------------
+// Enemy3を描画
+// ------------------------------------------------------------------
+void Stage::Enemy3Render() const
+{
+    for (const auto& enemy : m_enemies_3)
     {
         if (enemy.GetActiveFlag())
         {
