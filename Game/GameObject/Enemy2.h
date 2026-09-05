@@ -22,7 +22,6 @@ private:
     static constexpr const float WIDTH = 64.0f;
     static constexpr const float HEIGHT = 64.0f;
 
-    つぎ、敵2を「横揺れ」させるか
 
 
     GameContext& m_gameContext;
@@ -31,6 +30,7 @@ private:
 
     Vector2D m_position;
     bool m_isActive;
+    float m_degree;
 
 public:
     Enemy2(GameContext& gameContext, Stage& stage, Player& player, const Vector2D& startPosition);
@@ -56,5 +56,10 @@ public:
             Vector2D{ m_position.x + WIDTH, m_position.y + HEIGHT }
         };
     }
+
+    // 動きの処理
+    void Move();
+    // 当たり判定
+    void ProcessCollision();
 };
 
