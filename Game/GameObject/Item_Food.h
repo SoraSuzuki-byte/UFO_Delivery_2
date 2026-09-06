@@ -35,6 +35,10 @@ private:
     //「真上にいる」とみなすX座標の許容範囲（左右何ピクセルまでOKか）
     static constexpr const float ABOVE_X_RANGE = 30.0f;
 
+    static constexpr float HOLD_OFFSET_Y = 5.0f; // 吸引中の描画オフセット
+   
+
+
 
     GameContext& m_gameContext;
     Stage& m_stage;
@@ -59,7 +63,6 @@ private:
     float m_friction;
     // 吸引されているか
     bool m_isPulled;
-
 
 
 

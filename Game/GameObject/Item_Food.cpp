@@ -58,8 +58,6 @@ void Item_Food::Update()
     // キー入力情報を取得する
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
-
-
     if (!m_isActive) { return; }
 
     //----------------------------------------------------------------------------------
@@ -68,48 +66,54 @@ void Item_Food::Update()
     if (m_player != nullptr)// ★安全対策：Playerがまだ設定されていない場合 → elseへ
     {
         const Vector2D playerPos = m_player->GetPosition();
-        const bool isAboveY = (playerPos.y < m_position.y); // 右側の比較が true か false なのか
+        const bool isAboveY = (playerPos.y < m_position.y); // この比較が true か false なのか
 
         // X座標が近いか
         const float diffX = playerPos.x - m_position.x; // diffX：プレイヤーのX座標とアイテムのX座標の差
         const bool isNearX = (diffX > -ABOVE_X_RANGE) && (diffX < ABOVE_X_RANGE);
 
         // 両方の条件を満たした時だけ「真上にいる」とみなす
-        m_isPulled = isAboveY && isNearX;
+        m_isPulled = isAboveY && isNearX && (keyCondition & PAD_INPUT_10);
 
     }
     else { m_isPulled = false; }
 
     // ------------------------------------------------------------------
-    // 吸引中 かつ スペースキーを押していれば：プレイヤーへ向かって直進する
+    // 吸引中：プレイヤーへ向かって直進し、近づいたらくっつく
     // ------------------------------------------------------------------
-    if (m_isPulled && (keyCondition & PAD_INPUT_10))
+    if (m_isPulled)
+{
+    const Vector2D playerCenterPos = m_player->GetCenterPosition();
+
+    // UFOの少し下の位置を「追いかける目標地点」にする
+    // UFOの中心から、食べ物自身の当たり判定の半幅ぶん左にずらす
+    const Vector2D targetPos = playerCenterPos + Vector2D{ 0.0f, HOLD_OFFSET_Y } - Vector2D{ m_width * 0.5f, 0.0f };
+
+    const Vector2D diff = targetPos - m_position;
+    const float distance = Length(diff);
+
+    const float ATTRACT_SPEED = 3.0f;
+
+    if (distance <= ATTRACT_SPEED)
     {
-        const Vector2D playerPos = m_player->GetPosition();
-        const Vector2D diff = playerPos - m_position;
-        const float distance = Length(diff);
-
-        // 十分近づいたら、連れている状態に切り替える
-        const float HOLD_DISTANCE = 20.0f;
-        if (distance < HOLD_DISTANCE)
-        {
-            // 近づいた時の処理を、ここに書く
-        }
-        else { m_isPulled = false; }
-
-        const Vector2D direction = Normalize(diff);
-
-        const float ATTRACT_SPEED = 3.0f;
-        m_position += direction * ATTRACT_SPEED;
-
-        m_velocity = Vector2D{ 0.0f, 0.0f };
+        // 残りわずかなら、行き過ぎないようにピタッと合わせる
+        m_position = targetPos;
     }
+    else
+    {
+        // 常にx/y同時に、正規化した方向で一定速度で近づく（爆弾と同じ考え方）
+        const Vector2D direction = Normalize(diff);
+        m_position += direction * ATTRACT_SPEED;
+    }
+
+    m_velocity = Vector2D{ 0.0f, 0.0f };
+}
     else // 吸引されていないとき：重力の影響を受ける
     {
         m_velocity.y += m_gravity;
         m_position += m_velocity;
 
-        // 足元が壁（草）かどうかを調べる
+        // 足元が壁かどうかを調べる
         const float centerX = m_position.x + m_width * 0.5f;
         const float footY = m_position.y + m_height;
 
@@ -135,7 +139,9 @@ void Item_Food::Update()
 
             // 反発の影響（跳ね返り）
             m_velocity.y *= -m_restitution;
-        }
+        } 
+        
+
     }
     // ------------------------------------------------------------------
    // 境界ボックスを、現在位置に合わせて更新する
@@ -166,9 +172,39 @@ void Item_Food::Render() const//------------------------------------------------
         // 想定外のタイプに対するエラーハンドリング
         break;
 }
+    // 画像の大きさ
+    const float imageWidth = 50.0f;
+    const float imageHeight = 50.0f;
+
+    // 横方向は常に当たり判定の中央に画像の中央を合わせる
+    const float boxCenterX = m_boundingBox.minPosition.x + m_width * 0.5f;
+    const int drawX = static_cast<int>(boxCenterX - imageWidth * 0.5f);
+
+    int drawY;
+    if (m_isPulled)
+    {
+        // 吸引中：当たり判定の「上端」に画像の「上端」を合わせる（UFOの真下にぶら下がる見た目）
+        drawY = static_cast<int>(m_boundingBox.minPosition.y);
+    }
+    else
+    {
+        // 通常時（床の上など）：当たり判定の「下端」に画像の「下端」を合わせる（床にめり込まない）
+        drawY = static_cast<int>(m_boundingBox.maxPosition.y - imageHeight);
+    }
+
+    if (m_isPulled)
+    {
+        drawY = static_cast<int>(m_boundingBox.minPosition.y);
+    }
+    else
+    {
+        drawY = static_cast<int>(m_boundingBox.maxPosition.y - imageHeight);
+    }
+
+    // 画像を描画
     DrawGraph(
-        static_cast<int>(m_boundingBox.minPosition.x),
-        static_cast<int>(m_boundingBox.minPosition.y),
+        drawX,
+        drawY,
         m_gameContext.ghManager.GetGraphicHandle(texture),
         TRUE);
 }

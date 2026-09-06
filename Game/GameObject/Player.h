@@ -77,6 +77,12 @@ public:
     // m_positionのゲッター
     Vector2D GetPosition() const { return m_position; }
 
+    // UFOの見た目の中心座標を取得する
+    Vector2D GetCenterPosition() const
+    {
+        return Vector2D{ m_position.x + WIDTH / 2.0f, m_position.y + HEIGHT / 2.0f };
+    }
+
     // HPを減らす
     void TakeDamage()
     {

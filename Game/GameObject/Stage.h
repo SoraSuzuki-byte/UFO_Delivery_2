@@ -39,6 +39,8 @@ public:
 private:
     // マップチップの大きさ
     static constexpr int CHIP_SIZE = 20;
+    // 食べ物の画像の大きさ
+    static constexpr int FOOD_SIZE = 50;
 
     // CSVのパスを作るための文字列データ
     const std::wstring PATH = L"Resources/MapData/";
