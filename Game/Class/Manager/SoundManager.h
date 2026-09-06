@@ -57,7 +57,7 @@ public:
 
     // 操作
 public:
-    void SoundSe(Se se)const;
+    void StartSe(Se se)const;
     void StartBgm(Bgm bgm)const;
     void EndBgm(Bgm bgm)const;
 

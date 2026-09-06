@@ -30,6 +30,8 @@ public:
         Enemy_2, // (17)
         Enemy_3, // (18)
         Enemy_3_1, // (19)
+        Background_2, // 背景画像 (20)
+        Background_3, // 背景画像 (21)
 
 
         Max    // テクスチャの合計数

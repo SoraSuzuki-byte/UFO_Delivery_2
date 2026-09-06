@@ -77,7 +77,7 @@ void Player::Render()
 
 
 	// ★追加：HPを画面に文字で表示する（動作確認用）
-	DrawFormatString(10, 40, GetColor(255, 255, 0), L"HP: %d / %d", m_hp, MAX_HP);
+	//DrawFormatString(10, 40, GetColor(255, 255, 0), L"HP: %d / %d", m_hp, MAX_HP);
 
 }
    

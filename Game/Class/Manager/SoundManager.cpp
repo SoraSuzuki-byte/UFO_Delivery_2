@@ -101,7 +101,7 @@ void SoundManager::Finalize()//-------------------------------------------------
 // -------------------------------------------------------------
 // Seを鳴らす
 /// <param name="se">鳴らしたいSeハンドルへの参照</param>
-void SoundManager::SoundSe(Se se)const
+void SoundManager::StartSe(Se se)const
 {
     PlaySoundMem(m_seSoundHandle[static_cast<int>(se)], DX_PLAYTYPE_BACK);
 }

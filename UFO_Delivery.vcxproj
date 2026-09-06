@@ -194,6 +194,8 @@
     <!-- 埋め込みリソース -->
     <ClInclude Include="EmbeddedResources\Resource.h" />
     <Image Include="Resources\Textures\Background_1.png" />
+    <Image Include="Resources\Textures\Background_2.png" />
+    <Image Include="Resources\Textures\Background_3.png" />
     <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\Enemy_2.png" />
     <Image Include="Resources\Textures\Enemy_3.png" />

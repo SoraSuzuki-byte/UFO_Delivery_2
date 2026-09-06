@@ -110,7 +110,6 @@ void Stage::Update()
 // ------------------------------------------------------------------
 void Stage::Render() const
 {
-    BackgroundRender();
     ItemFoodRender();
     StageRender();
     HouseRender();
@@ -203,7 +202,7 @@ void Stage::CheckFoodHouseCollision()
                     // 納品成功
                     item.SetActiveFlag(false);
                     house.SetIsFulfilled(true);
-
+                    m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Delivery);
                 }
                 break;
             }
@@ -243,6 +242,7 @@ void Stage::CheckBombEnemyCollision()
 
                     bomb.SetActiveFlag(false);   // 爆弾消去
                     enemy.SetActiveFlag(false);  // 敵撃破
+                    m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
                     break; // 敵探索のループを抜ける
                 }
             }
@@ -284,6 +284,7 @@ void Stage::CheckBombEnemy2Collision()
 
                     bomb.SetActiveFlag(false);   // 爆弾消去
                     enemy.SetActiveFlag(false);  // 敵撃破
+                    m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
                     break; // 敵探索のループを抜ける
                 }
             }
@@ -633,17 +634,6 @@ Vector2D Stage::ResolveWallCollision(const BoundingBox& playerBox) const
 
 
 
-// ------------------------------------------------------------------
-// 背景を描画
-// ------------------------------------------------------------------
-void Stage::BackgroundRender() const
-{
-    // 選ばれているステージIDが、Stage1であれば
-    if (m_gameContext.GetSelectedStageId() == StageId::Stage1)
-    {
-        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_1), TRUE);
-    }
-}
 
 
 // ------------------------------------------------------------------

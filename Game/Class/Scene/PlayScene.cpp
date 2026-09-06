@@ -121,14 +121,7 @@ void PlayScene::Update()
 /// -----------------------------------------------------------------
 void PlayScene::Render()
 {
-
-
-    int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
-    SetFontSize(80);
-    DrawString(300, 500, L"プレイシーン", Colors::GRAY);
-    SetFontSize(defaultFontSize);// フォントサイズを元に戻す
-
-
+    BackgroundRender();
     m_stage.Render();
     m_player.Render();
 
@@ -139,7 +132,6 @@ void PlayScene::Render()
     {
         SetFontSize(100);
         DrawString(280, 300, L"GAME OVER", GetColor(255, 0, 0));
-        SetFontSize(defaultFontSize);
 
         // 長押しの進捗を 描画
         DrawTitleReturnGauge();
@@ -149,7 +141,6 @@ void PlayScene::Render()
     {
         SetFontSize(100);
         DrawString(320, 300, L"CLEAR!", GetColor(0, 255, 0));
-        SetFontSize(defaultFontSize);
 
         DrawTitleReturnGauge();
     }
@@ -165,6 +156,27 @@ void PlayScene::Finalize()
 {
 }
 
+
+
+// ------------------------------------------------------------------
+// 背景を描画
+// ------------------------------------------------------------------
+void PlayScene::BackgroundRender() const
+{    
+    // 選ばれているステージIDが、Stage1であれば
+    if (m_gameContext.GetSelectedStageId() == StageId::Stage1)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_1), TRUE);
+    }
+    else if (m_gameContext.GetSelectedStageId() == StageId::Stage2)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_2), TRUE);
+    }
+    else if (m_gameContext.GetSelectedStageId() == StageId::Stage3)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_3), TRUE);
+    }
+}
 
 
 // ------------------------------------------------------------------

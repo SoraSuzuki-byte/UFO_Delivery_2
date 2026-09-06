@@ -171,7 +171,6 @@ private:
     void CreateBoundingBoxArray();
 
     // 描画のサブ関数
-    void BackgroundRender() const;
     void StageRender() const;
     void ItemFoodRender() const;
     void HouseRender() const;

@@ -66,6 +66,9 @@ public:
 
     // 内部処理--------------------------------------------------------------------
 private:
+    // 背景の描画
+    void BackgroundRender() const;
+
     // タイトルへ戻る長押しゲージの描画
     void DrawTitleReturnGauge() const;
 
