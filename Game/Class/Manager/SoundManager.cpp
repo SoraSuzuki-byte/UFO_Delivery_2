@@ -98,18 +98,19 @@ void SoundManager::Finalize()//-------------------------------------------------
 
 
 
-// ------------------------------------------------------------------
+// -------------------------------------------------------------
 // Seを鳴らす
-/// <param name="se">鳴らしたいSeハンドルへの参照</param>// ------------------------------------------------------------------
+/// <param name="se">鳴らしたいSeハンドルへの参照</param>
 void SoundManager::SoundSe(Se se)const
 {
     PlaySoundMem(m_seSoundHandle[static_cast<int>(se)], DX_PLAYTYPE_BACK);
 }
 
 
-// ------------------------------------------------------------------
+
+// --------------------------------------------------------------
 // Bgmをはじめる
-/// <param name="bgm">はじめるBgmハンドルへの参照</param>// ------------------------------------------------------------------
+/// <param name="bgm">はじめるBgmハンドルへの参照</param>
 void SoundManager::StartBgm(Bgm bgm)const
 {
     int index = static_cast<int>(bgm);
@@ -129,9 +130,9 @@ void SoundManager::StartBgm(Bgm bgm)const
 }
 
 
-// ------------------------------------------------------------------
+// -----------------------------------------------------------
 // Bgmを止める
-/// <param name="bgm">止めるBgmハンドルへの参照</param>// ------------------------------------------------------------------
+/// <param name="bgm">止めるBgmハンドルへの参照</param>
 void SoundManager::EndBgm(Bgm bgm)const
 {
     StopSoundMem(m_bgmSoundHandle[static_cast<int>(bgm)]);
@@ -140,9 +141,19 @@ void SoundManager::EndBgm(Bgm bgm)const
 
 
 
-// ------------------------------------------------------------------
+// ---------------------------------------------------------------
+// Bgmをロードする
+/// <param name="handle">ロードするBgmハンドルへの参照</param>
+void SoundManager::BgmInitialize()
+{
+}
+
+
+
+
+// ---------------------------------------------------------------
 // Seハンドルを安全に解放する
-/// <param name="handle">解放するSeハンドルへの参照</param>// ------------------------------------------------------------------
+/// <param name="handle">解放するSeハンドルへの参照</param>
 void SoundManager::DeleteSeHandle(int& handle)
 {
     if (handle != -1)
@@ -154,9 +165,9 @@ void SoundManager::DeleteSeHandle(int& handle)
 
 
 
-// ------------------------------------------------------------------
+// ---------------------------------------------------------------
 // Bgmハンドルを安全に解放する
-/// <param name="handle">解放するBgmハンドルへの参照</param>// ------------------------------------------------------------------
+/// <param name="handle">解放するBgmハンドルへの参照</param>
 void SoundManager::DeleteBgmHandle(int& handle)
 {
     StopSoundMem(handle);

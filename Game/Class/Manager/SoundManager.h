@@ -57,9 +57,11 @@ public:
 
     // 操作
 public:
+    void SoundSe(Se se)const;
     void StartBgm(Bgm bgm)const;
     void EndBgm(Bgm bgm)const;
-    void SoundSe(Se se)const;
+
+    void BgmInitialize();
 
 
     // 取得/設定
