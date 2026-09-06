@@ -57,6 +57,8 @@ void PlayScene::Initialize()
         L"stage_01",   // StageId::Stage1 用
         L"stage_02",   // StageId::Stage2 用
         L"stage_03",   // StageId::Stage3 用
+        L"stage_04",   // StageId::Stage4 用
+        L"stage_05",   // StageId::Stage5 用
     };
 
     // 現在選択されているステージIDを取得する
@@ -219,19 +221,33 @@ void PlayScene::PlaceHouses(StageId stageId)
     switch (stageId)
     {
         case StageId::Stage1:
+        {
             m_stage.AddHouse(Vector2D{ 200.0f, 680.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
             m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
             break;
-
+        }
         case StageId::Stage2:
+        {
             m_stage.AddHouse(Vector2D{ 100.0f, 600.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
             break;
-
+        }
         case StageId::Stage3:
-            m_stage.AddHouse(Vector2D{ 400.0f, 500.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
-            m_stage.AddHouse(Vector2D{ 800.0f, 500.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
+        {
+            m_stage.AddHouse(Vector2D{ 400.0f, 380.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 100.0f, 660.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
             break;
-
+        }
+        case StageId::Stage4:
+        {
+            m_stage.AddHouse(Vector2D{ 600.0f, 230.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
+            break;
+        }
+        case StageId::Stage5:
+        {
+            m_stage.AddHouse(Vector2D{ 1000.0f, 680.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
+            break;
+        }
         default:
             break;
     }

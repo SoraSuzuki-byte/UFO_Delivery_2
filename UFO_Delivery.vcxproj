@@ -215,6 +215,8 @@
     <Image Include="Resources\Textures\UFO_Orange_Middle.png" />
     <Image Include="Resources\Textures\UFO_Orange_Right.png" />
     <Image Include="Resources\Textures\Wall.png" />
+    <None Include="Resources\MapData\stage_04.csv" />
+    <None Include="Resources\MapData\stage_05.csv" />
     <ResourceCompile Include="EmbeddedResources\Resource.rc" />
     <Image Include="EmbeddedResources\Icon\Game.ico" />
     <!-- リソースファイル -->
