@@ -55,6 +55,10 @@ void Player::Update()
 
 	// 移動
 	Move(keyCondition);	
+	// 画面外に出ないようにする
+	ClampPositionToScreen();
+	// 当たった時の処理
+	OnCollision();
 }
 
 void Player::Render()
@@ -91,10 +95,6 @@ void Player::Finalize()
 
 
 
-//item.SetActiveFlag(false);   // 目的地に運んで、加点されると（消える）
-
-
-
 
 // UFOを移動させる
 void Player::Move(int keyCondition)
@@ -122,8 +122,18 @@ void Player::Move(int keyCondition)
 
 	// 座標の更新
 	m_position += m_velocity;
-
-
+}
+// 自機が画面外へ出ないように位置を修正する
+void Player::ClampPositionToScreen()
+{
+	if (m_position.x < 0.0f) { m_position.x = 0.0f; }
+	if (m_position.x + WIDTH > Screen::WIDTH) { m_position.x = Screen::WIDTH - WIDTH; }
+	if (m_position.y < 0.0f) { m_position.y = 0.0f; }
+	if (m_position.y + HEIGHT > Screen::HEIGHT) { m_position.y = Screen::HEIGHT - HEIGHT; }
+}
+// 当たった時の処理
+void Player::OnCollision()
+{
 	// プレイヤーの境界ボックスを作成する
 	BoundingBox playerBox{
 		Vector2D{ m_position.x, m_position.y },
@@ -140,23 +150,27 @@ void Player::Move(int keyCondition)
 		m_position += correction;
 
 		// 壁に当たった方向の速度を反転させる（跳ね返り）
-		if (correction.x != 0.0f) { m_velocity.x *= -BOUNCE_FACTOR; }
-		if (correction.y != 0.0f) { m_velocity.y *= -BOUNCE_FACTOR; }
+		if(correction.x != 0.0f) { m_velocity.x *= -BOUNCE_FACTOR; }
+		if(correction.y != 0.0f) { m_velocity.y *= -BOUNCE_FACTOR; }
 
-	// 壁に衝突するとダメージを受ける
+		// 壁に衝突するとダメージを受ける
 		const bool isHit = (correction.x != 0.0f) || (correction.y != 0.0f);
-		if (isHit) { TakeDamage(); }
+		if(isHit) { TakeDamage(); }
 
 		// 無敵タイマーを減らす
-		if (m_invincibleTimer > 0) { m_invincibleTimer--; }
+		if(m_invincibleTimer > 0) { m_invincibleTimer--; }
+	}
+}
+// HPが減る処理
+void Player::TakeDamage()
+{
+	if (m_invincibleTimer <= 0)
+	{
+		m_hp -= 1;
+		m_invincibleTimer = INVINCIBLE_TIME;
+		m_gameContext.soundManager.StartSe(SoundManager::Se::Se_TakeDamage);
 	}
 
-
-	// 自機が画面外へ出ないように位置を修正する
-	if (m_position.x < 0.0f) { m_position.x = 0.0f; }
-	if (m_position.x + WIDTH > Screen::WIDTH) { m_position.x = Screen::WIDTH - WIDTH; }
-	if (m_position.y < 0.0f) { m_position.y = 0.0f; }
-	if (m_position.y + HEIGHT > Screen::HEIGHT) { m_position.y = Screen::HEIGHT - HEIGHT; }
 }
 
 
@@ -251,8 +265,6 @@ void Player::MoveAnimation()
 		}
 	}
 }
-
-
 // ダメージ表現のオーバーレイ
 void Player::DrawDamageOverlay()
 {

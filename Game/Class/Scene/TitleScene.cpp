@@ -50,8 +50,7 @@ TitleScene::~TitleScene()
 /// </summary>
 /// -----------------------------------------------------------------
 void TitleScene::Initialize()
-{
-   
+{   
     m_gameContext.soundManager.StartBgm(SoundManager::Bgm::Bgm_TitleScene);
 }
 //  -----------------------------------------------------------------

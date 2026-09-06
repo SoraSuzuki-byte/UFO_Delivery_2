@@ -83,15 +83,6 @@ public:
         return Vector2D{ m_position.x + WIDTH / 2.0f, m_position.y + HEIGHT / 2.0f };
     }
 
-    // HPを減らす
-    void TakeDamage()
-    {
-        if (m_invincibleTimer <= 0)
-        {
-            m_hp -= 1;
-            m_invincibleTimer = INVINCIBLE_TIME;
-        }
-    }
 
     // 当たり判定用の境界ボックスを取得する
     BoundingBox GetHurtBox() const
@@ -104,10 +95,16 @@ public:
 
     // UFOを移動させる
     void Move(int keyCondition);
+    // 画面外に出ないようにする
+    void ClampPositionToScreen();
+    // 当たった時の処理
+    void OnCollision();
+    // HPを減らす
+    void TakeDamage();
+
 
     // 移動時のアニメーション
     void MoveAnimation();
-
     // ダメージ表現のオーバーレイ
     void DrawDamageOverlay();
 

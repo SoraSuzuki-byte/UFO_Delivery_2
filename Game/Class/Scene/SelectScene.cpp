@@ -43,6 +43,7 @@ SelectScene::~SelectScene()
 /// -----------------------------------------------------------------
 void SelectScene::Initialize()
 {
+    m_gameContext.soundManager.StartBgm(SoundManager::Bgm::Bgm_SelectScene);
 }
 
 //  -----------------------------------------------------------------
