@@ -143,6 +143,7 @@
     <ClCompile Include="Game\Class\Manager\GhManager.cpp" />
     <ClCompile Include="Game\Class\Manager\InputManager.cpp" />
     <ClCompile Include="Game\Class\Manager\SceneManager.cpp" />
+    <ClCompile Include="Game\Class\Manager\SoundManager.cpp" />
     <ClCompile Include="Game\Class\Scene\PlayScene.cpp" />
     <ClCompile Include="Game\Class\Scene\SceneChange.cpp" />
     <ClCompile Include="Game\Class\Scene\SelectScene.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Game\Class\Manager\GhManager.h" />
     <ClInclude Include="Game\Class\Manager\InputManager.h" />
     <ClInclude Include="Game\Class\Manager\SceneManager.h" />
+    <ClInclude Include="Game\Class\Manager\SoundManager.h" />
     <ClInclude Include="Game\Class\Scene\PlayScene.h" />
     <ClInclude Include="Game\Class\Scene\SceneChange.h" />
     <ClInclude Include="Game\Class\Scene\SelectScene.h" />

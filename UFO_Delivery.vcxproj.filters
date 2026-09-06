@@ -177,6 +177,9 @@
     <ClCompile Include="Game\GameObject\Enemy3.cpp">
       <Filter>Game\GameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Class\Manager\SoundManager.cpp">
+      <Filter>Game\Class\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -244,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="Game\GameObject\Enemy3.h">
       <Filter>Game\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Manager\SoundManager.h">
+      <Filter>Game\Class\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
