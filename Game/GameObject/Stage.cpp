@@ -61,7 +61,7 @@ Stage::~Stage()
 void Stage::Initialize(const wchar_t* stageNumber)
 {
     LoadStageData(stageNumber);
-    m_gameContext.ghManager.Initialize();
+   
     CreateBoundingBoxArray();
     for (int i = 0; i < MAX_EXPLOSION; i++) { m_explosions[i].Initialize(); }
 }

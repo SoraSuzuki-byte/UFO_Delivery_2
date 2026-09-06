@@ -220,7 +220,17 @@
     <None Include="Resources\MapData\stage_01.csv" />
     <None Include="Resources\MapData\stage_02.csv" />
     <None Include="Resources\MapData\stage_03.csv" />
-    <None Include="Resources\Sounds\SE00.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Bgm_SelectScene.mp3" />
+    <Media Include="Resources\Sounds\Bgm_Stage1.mp3" />
+    <Media Include="Resources\Sounds\Bgm_Stage2.mp3" />
+    <Media Include="Resources\Sounds\Bgm_Stage3.mp3" />
+    <Media Include="Resources\Sounds\Bgm_TitleScene.mp3" />
+    <Media Include="Resources\Sounds\Se_Delivery.mp3" />
+    <Media Include="Resources\Sounds\Se_Explosion.mp3" />
+    <Media Include="Resources\Sounds\Se_Falling.mp3" />
+    <Media Include="Resources\Sounds\Se_TakeDamage.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

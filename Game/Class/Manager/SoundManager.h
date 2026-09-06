@@ -1,8 +1,8 @@
 ﻿/*
     @file   SoundManager.h
-    @brief  グラフィックを管理するクラス
+    @brief  サウンドを管理するクラス
     @author 鈴木蒼良
-    @date   2026年8月15日
+    @date   2026年9月6日
 */
 
 #pragma once
@@ -10,19 +10,20 @@ class SoundManager
 {
 public:
     enum class Se {
-        Wall, // 草(0)
-        UFO_Bass, // UFOの素体（1）
-        UFO_Damage_Overlay,   // UFOのHPに合わせて透明度が変わるやつ（2）
-        UFO_Orange_All,    // オレンジの全部（3）
+        Se_Explosion,  // 爆発(0)
+        Se_TakeDamage, // 被ダメージ音（1）
+        Se_Falling,    // 落下音（2）
+        Se_Delivery,   // 宅配音（3）
         
         Max    // SEの合計数
     };
 
     enum class Bgm {
-        Wall, // 草(0)
-        UFO_Bass, // UFOの素体（1）
-        UFO_Damage_Overlay,   // UFOのHPに合わせて透明度が変わるやつ（2）
-        UFO_Orange_All,    // オレンジの全部（3）
+        Bgm_TitleScene,  // タイトルシーンのBGM (0)
+        Bgm_SelectScene, // セレクトシーンのBGM（1）
+        Bgm_Stage1,      //（2）
+        Bgm_Stage2,      //（3）
+        Bgm_Stage3,      //（4）
         
         Max    // BGMの合計数
     };

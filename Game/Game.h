@@ -39,6 +39,8 @@ private:
     InputManager m_inputManager;
     // グラフィックマネージャー
     GhManager m_ghManager;
+    // サウンドマネージャー
+    SoundManager m_soundManager;
 
 
     // シーンマネジャー

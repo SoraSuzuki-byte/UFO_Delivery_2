@@ -21,7 +21,7 @@
  * @param なし
  */
 Game::Game()
-    : m_gameContext{ m_inputManager ,m_ghManager }
+    : m_gameContext{ m_inputManager ,m_ghManager ,m_soundManager }
     , m_sceneManager{ m_gameContext }
 {
     // 乱数の初期値を設定
@@ -52,8 +52,15 @@ void Game::Initialize()
     // 入力マネジャーを初期化する
     m_gameContext.inputManager.Initialize();
 
+    m_gameContext.ghManager.Initialize();
+
+    m_gameContext.soundManager.Initialize();
+
     // シーンマネジャーを初期化する
     m_sceneManager.Initialize();
+
+
+  
 }
 
 

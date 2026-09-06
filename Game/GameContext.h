@@ -7,6 +7,7 @@
 #pragma once
 #include "Game/Class/Manager/InputManager.h"
 #include "Game/Class/Manager/GhManager.h"
+#include"Game/Class/Manager/SoundManager.h"
 
 
 // ステージの番号
@@ -25,6 +26,7 @@ struct GameContext
     // グラフィックマネージャー
     GhManager& ghManager;
     // サウンドマネージャー
+    SoundManager& soundManager;
 
 
 

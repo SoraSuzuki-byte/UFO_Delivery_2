@@ -51,6 +51,8 @@ TitleScene::~TitleScene()
 /// -----------------------------------------------------------------
 void TitleScene::Initialize()
 {
+   
+    m_gameContext.soundManager.StartBgm(SoundManager::Bgm::Bgm_TitleScene);
 }
 //  -----------------------------------------------------------------
 /// <summary>
@@ -99,6 +101,8 @@ void TitleScene::Render()
 /// -----------------------------------------------------------------
 void TitleScene::Finalize()
 {
+    // タイトルシーン終了時にBGMを停止する
+    m_gameContext.soundManager.EndBgm(SoundManager::Bgm::Bgm_TitleScene);
 }
 
 

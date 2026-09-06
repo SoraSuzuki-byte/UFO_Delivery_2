@@ -81,6 +81,12 @@
     <Filter Include="Game\Class\Effect">
       <UniqueIdentifier>{452fe834-0740-485c-a64b-aee869a07a51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Sounds\Se">
+      <UniqueIdentifier>{ba104892-c2e9-4606-a59d-5aaef653f24c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sounds\Bgm">
+      <UniqueIdentifier>{fcd3a48f-dd11-41db-9a0b-97505d3f40a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -126,9 +132,6 @@
       <Filter>EmbeddedResources\Icon</Filter>
     </Image>
     <!-- リソースファイル -->
-    <None Include="Resources\Sounds\SE00.ogg">
-      <Filter>Resources\Sounds</Filter>
-    </None>
     <ClCompile Include="Game\Class\Scene\SceneChange.cpp">
       <Filter>Game\Class\Scene</Filter>
     </ClCompile>
@@ -313,5 +316,34 @@
     <Image Include="Resources\Textures\Enemy_3_1.png">
       <Filter>Resources\Textures\Enemy</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Se_Delivery.mp3">
+      <Filter>Resources\Sounds\Se</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Se_Explosion.mp3">
+      <Filter>Resources\Sounds\Se</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Se_Falling.mp3">
+      <Filter>Resources\Sounds\Se</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Se_TakeDamage.mp3">
+      <Filter>Resources\Sounds\Se</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Bgm_SelectScene.mp3">
+      <Filter>Resources\Sounds\Bgm</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Bgm_Stage1.mp3">
+      <Filter>Resources\Sounds\Bgm</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Bgm_Stage2.mp3">
+      <Filter>Resources\Sounds\Bgm</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Bgm_Stage3.mp3">
+      <Filter>Resources\Sounds\Bgm</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Bgm_TitleScene.mp3">
+      <Filter>Resources\Sounds\Bgm</Filter>
+    </Media>
   </ItemGroup>
 </Project>

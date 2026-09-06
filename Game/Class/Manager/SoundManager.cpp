@@ -1,8 +1,8 @@
 ﻿/*
     @file   SoundManager.h
-    @brief  グラフィックを管理するクラス
+    @brief  サウンドを管理するクラス
     @author 鈴木蒼良
-    @date   2026年8月15日
+    @date   2026年9月6日
 */
 
 
@@ -49,21 +49,18 @@ void SoundManager::Initialize()//-----------------------------------------------
 
     // 画像のパスを配列で管理（enum の順番と合わせることに注意）
     const wchar_t* sePaths[] = {
-        L"Resources/Sounds/SE.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)        
+        L"Resources/Sounds/Se_Explosion.mp3", // (0)
+        L"Resources/Sounds/Se_TakeDamage.mp3", // (1)
+        L"Resources/Sounds/Se_Falling.mp3", // (2)
+        L"Resources/Sounds/Se_Delivery.mp3", // (3)
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
     const wchar_t* bgmPaths[] = {
-        L"Resources/Sounds/BGM.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)
-        L"Resources/Sounds/Wall.png", // (0)        
+        L"Resources/Sounds/Bgm_TitleScene.mp3", // (0)
+        L"Resources/Sounds/Bgm_SelectScene.mp3", // (1)
+        L"Resources/Sounds/Bgm_Stage1.mp3", // (2)
+        L"Resources/Sounds/Bgm_Stage2.mp3", // (3)
+        L"Resources/Sounds/Bgm_Stage3.mp3", // (4)
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 
@@ -115,7 +112,20 @@ void SoundManager::SoundSe(Se se)const
 /// <param name="bgm">はじめるBgmハンドルへの参照</param>// ------------------------------------------------------------------
 void SoundManager::StartBgm(Bgm bgm)const
 {
-    PlaySoundMem(m_bgmSoundHandle[static_cast<int>(bgm)], DX_PLAYTYPE_LOOP, FALSE);
+    int index = static_cast<int>(bgm);
+    int handle = m_bgmSoundHandle[index];
+
+    // ハンドルが無効なら処理しない
+    if (handle == -1) return;
+
+    // すでに再生中（CheckSoundMem == 1）なら何もしない（最初から鳴らし直さない）
+    if (CheckSoundMem(handle) == 1)
+    {
+        return;
+    }
+
+    // 再生中でない場合のみ、再生する
+    PlaySoundMem(handle, DX_PLAYTYPE_LOOP, TRUE);
 }
 
 
