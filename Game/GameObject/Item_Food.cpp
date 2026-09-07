@@ -1,5 +1,5 @@
 /*
-    @file   Item_Food_1.cpp
+    @file   Item_Food.cpp
     @brief  食べ物アイテム のクラス
     @author 鈴木蒼良
     @date   2026年8月20日
@@ -38,6 +38,8 @@ Item_Food::~Item_Food()
 void Item_Food::Initialize()
 {
     m_position = m_boundingBox.minPosition;
+    m_width = 50.0f;
+    m_height =50.0f;
     // 速度を初期化
     m_velocity = Vector2D{ 0.0f, 0.0f };
 
@@ -172,39 +174,10 @@ void Item_Food::Render() const//------------------------------------------------
         // 想定外のタイプに対するエラーハンドリング
         break;
 }
-    // 画像の大きさ
-    const float imageWidth = 50.0f;
-    const float imageHeight = 50.0f;
 
-    // 横方向は常に当たり判定の中央に画像の中央を合わせる
-    const float boxCenterX = m_boundingBox.minPosition.x + m_width * 0.5f;
-    const int drawX = static_cast<int>(boxCenterX - imageWidth * 0.5f);
-
-    int drawY;
-    if (m_isPulled)
-    {
-        // 吸引中：当たり判定の「上端」に画像の「上端」を合わせる（UFOの真下にぶら下がる見た目）
-        drawY = static_cast<int>(m_boundingBox.minPosition.y);
-    }
-    else
-    {
-        // 通常時（床の上など）：当たり判定の「下端」に画像の「下端」を合わせる（床にめり込まない）
-        drawY = static_cast<int>(m_boundingBox.maxPosition.y - imageHeight);
-    }
-
-    if (m_isPulled)
-    {
-        drawY = static_cast<int>(m_boundingBox.minPosition.y);
-    }
-    else
-    {
-        drawY = static_cast<int>(m_boundingBox.maxPosition.y - imageHeight);
-    }
-
-    // 画像を描画
     DrawGraph(
-        drawX,
-        drawY,
+        static_cast<int>(m_boundingBox.minPosition.x),
+        static_cast<int>(m_boundingBox.minPosition.y),
         m_gameContext.ghManager.GetGraphicHandle(texture),
         TRUE);
 }

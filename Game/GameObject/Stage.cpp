@@ -316,6 +316,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
     m_enemies_1.clear();
     m_enemies_2.clear();
     m_enemies_3.clear();
+    m_itemBomb.clear();
 
     std::ifstream ifs;      // ファイルストリーム
     std::string line;       // １行分のデータ

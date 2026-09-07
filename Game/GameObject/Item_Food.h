@@ -1,5 +1,5 @@
 ﻿/*
-    @file   Item_Food_1.h
+    @file   Item_Food.h
     @brief  食べ物アイテム のクラス
     @author 鈴木蒼良
     @date   2026年8月20日
