@@ -12,7 +12,7 @@
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
-Item_Food::Item_Food(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
+Item_Food::Item_Food(GameContext& gameContext, Stage* stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
     : m_gameContext{ gameContext }
     , m_stage{ stage }
     , m_player{ player }
@@ -57,9 +57,9 @@ void Item_Food::Initialize()
 
 void Item_Food::Update()
 {
-    // キー入力情報を取得する
-    const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
-    const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
+    //// キー入力情報を取得する
+    //const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
+    //const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
     if (!m_isActive) { return; }
 
     //----------------------------------------------------------------------------------
@@ -74,8 +74,11 @@ void Item_Food::Update()
         const float diffX = playerPos.x - m_position.x; // diffX：プレイヤーのX座標とアイテムのX座標の差
         const bool isNearX = (diffX > -ABOVE_X_RANGE) && (diffX < ABOVE_X_RANGE);
 
-        // 両方の条件を満たした時だけ「真上にいる」とみなす
-        m_isPulled = isAboveY && isNearX && (keyCondition & PAD_INPUT_10);
+        // 吸引の入力中かどうか
+        const bool isPullingPressed = m_player->IsPullingInput();
+
+        // 全ての条件を満たした時だけ「真上にいる」とみなす
+        m_isPulled = {isAboveY && isNearX && isPullingPressed };
 
     }
     else { m_isPulled = false; }
@@ -112,36 +115,52 @@ void Item_Food::Update()
 }
     else // 吸引されていないとき：重力の影響を受ける
     {
-        m_velocity.y += m_gravity;
-        m_position += m_velocity;
-
-        // 足元が壁かどうかを調べる
-        const float centerX = m_position.x + m_width * 0.5f;
-        const float footY = m_position.y + m_height;
-
-        // マップ外への落下対策
-        const float mapBottom = static_cast<float>(m_stage.GetMapHeight() * m_stage.GetChipSize());
-        if (footY > mapBottom)
+        if (m_stage == nullptr)
         {
-            m_isActive = false;
-            return;
+            // Stageがない場面（タイトル画面）：簡易的な自由落下
+            m_velocity.y += m_gravity;
+            m_position += m_velocity;
+
+            // 指定の地面Yに到達したら停止させる
+            if (m_hasDemoGround && (m_position.y + m_height >= m_demoGroundY))
+            {
+                m_position.y = m_demoGroundY - m_height;
+                m_velocity = Vector2D{ 0.0f, 0.0f };
+            }
         }
-
-        const Stage::Type footType = m_stage.GetChipType(Vector2D{ centerX, footY });
-
-        if (footType == Stage::Type::Wall)
+        else
         {
-            const POINT mapPos = m_stage.ConvertWorldPositionToMapPosition(Vector2D{ centerX, footY });
-            const float wallTopY = static_cast<float>(mapPos.y * m_stage.GetChipSize());
+            m_velocity.y += m_gravity;
+            m_position += m_velocity;
 
-            m_position.y = wallTopY - m_height;
+            // 足元が壁かどうかを調べる
+            const float centerX = m_position.x + m_width * 0.5f;
+            const float footY = m_position.y + m_height;
 
-            // 摩擦の影響（横方向の速度を減衰）
-            m_velocity.x *= m_friction;
+            // マップ外への落下対策
+            const float mapBottom = static_cast<float>(m_stage->GetMapHeight() * m_stage->GetChipSize());
+            if (footY > mapBottom)
+            {
+                m_isActive = false;
+                return;
+            }
 
-            // 反発の影響（跳ね返り）
-            m_velocity.y *= -m_restitution;
-        } 
+            const Stage::Type footType = m_stage->GetChipType(Vector2D{ centerX, footY });
+
+            if (footType == Stage::Type::Wall)
+            {
+                const POINT mapPos = m_stage->ConvertWorldPositionToMapPosition(Vector2D{ centerX, footY });
+                const float wallTopY = static_cast<float>(mapPos.y * m_stage->GetChipSize());
+
+                m_position.y = wallTopY - m_height;
+
+                // 摩擦の影響（横方向の速度を減衰）
+                m_velocity.x *= m_friction;
+
+                // 反発の影響（跳ね返り）
+                m_velocity.y *= -m_restitution;
+            }
+        }
         
 
     }

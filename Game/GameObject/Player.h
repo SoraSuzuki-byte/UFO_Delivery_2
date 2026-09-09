@@ -13,8 +13,8 @@
 
 // 前方宣言 ===============================================================
 struct GameContext;
-class PlayScene;
 class Item_Food;
+class Stage;
 
 
 class Player
@@ -34,17 +34,11 @@ private:
     static constexpr int BLINK_INTERVAL = 2; // 点滅の速さ(間隔）
     static constexpr int MAX_HP = 5;  // 最大HP
 
-    static constexpr const int MAX_HOLD_COUNT = 5;   // 保有できる最大数
-
-    std::vector<Item_Food*> m_heldItems;   // 保有しているアイテムのリスト
-    int m_selectedItemIndex;                  // 現在選択中のインデックス
-
 
     // ゲームコンテキストのリファレンス　（インスタンス・実体ではない
     GameContext& m_gameContext;
 
-    // ステージクラスのリファレンス
-    PlayScene& m_scene;          
+    Stage* m_stage; // PlayScene&ではなくStage*にする（nullptr許容）  
 
 
     // 現在の位置
@@ -61,21 +55,48 @@ private:
      // 無敵タイマー（0より大きい間は無敵）
     int m_invincibleTimer;    
 
+    // スペースキーを押しているか
+    bool m_isPullingInput;
+
+
+
+
 
 
 public:
-    Player(GameContext& gameContext, PlayScene& scene);
+    Player(GameContext& gameContext, Stage* stage = nullptr);// stage は nullptr でも良い（例：タイトル画面など、壁判定が不要な場面）
     ~Player();
 
-    void Initialize();
+    // startPosition は stage が nullptr のときのみ使われる
+    void Initialize(const Vector2D& startPosition = Vector2D{ 0.0f, 0.0f });
     void Update();
     void Render();
     void Finalize();
+
+    void SetStage(Stage* stage) { m_stage = stage; }
+
+    // 「通常入力」と「タイトルシーンでの自動で移動」の２つのモード
+    enum class ControlMode
+    {
+        Manual, // キー入力で操作するモード
+        AutoDemo, //タイトルシーンで自動で動くモード
+    };
+    // コントロールモードのセッター
+    void SetControlMode(ControlMode mode) { m_controlMode = mode; }
+
+    // 現在、吸引ボタンに相当する入力が入っているか（手動操作でもデモでも共通で使う）
+    bool IsPullingInput() const { return m_isPullingInput; }
+
+
+
+
 
     // HPのゲッター　プレイシーンで「HPが0になったらリザルト表示」をするため
     int GetHp() const { return m_hp; }
     // m_positionのゲッター
     Vector2D GetPosition() const { return m_position; }
+    // m_positionのセッター
+    Vector2D SetPosition(Vector2D add) { m_position += add; }
 
     // UFOの見た目の中心座標を取得する
     Vector2D GetCenterPosition() const
@@ -108,11 +129,35 @@ public:
     // ダメージ表現のオーバーレイ
     void DrawDamageOverlay();
 
-    // ItemFoodと当たると
-    void CheckItemFoodCollision(BoundingBox playerBox);
 
 
 
+
+    private: // 内部処理--------------------------------------------
+
+        ControlMode m_controlMode; // 変数宣言
+
+        // ---- タイトルデモ用のステート管理 ----
+        enum class DemoState
+        {
+            MoveLeft,   // 指定位置まで左に移動
+            Pulling,    // その場で吸引
+            MoveRight,  // 指定位置まで右に移動
+            Idle,       // 吸引をやめて停止
+        };
+        DemoState m_demoState = DemoState::MoveLeft;
+        int       m_demoTimer;
+
+        // タイトルシーンでのデモ用の目標座標
+        static constexpr float DEMO_LEFT_TARGET_X = 210.0f; // ここまで左に移動する
+        static constexpr float DEMO_RIGHT_TARGET_X = 1100.0f; // ここまで右に移動する
+        static constexpr int   DEMO_PULL_DURATION = 240;     // 吸引し続けるフレーム数
+        static constexpr float DEMO_POSITION_TOLERANCE = 5.0f; // 目標位置とみなす誤差
+
+        // タイトルデモ時の速度倍率（本編の難易度には影響しない）
+        static constexpr float DEMO_SPEED_SCALE = 0.2f;
+
+        int GenerateAutoInput();
 
 };
 

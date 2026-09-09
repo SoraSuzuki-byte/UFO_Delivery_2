@@ -15,28 +15,38 @@
 
 
 
-Player::Player(GameContext& gameContext, PlayScene& scene)
+Player::Player(GameContext& gameContext, Stage* stage)
     : m_gameContext{gameContext}
-    , m_scene{scene}
+    , m_stage{stage}
     , m_position{}
 	, m_velocity{}
 	, m_acceleration{}
 	, m_animationTimer{}
 	, m_hp{}
 	, m_invincibleTimer{}
-	, m_heldItems{}
-	, m_selectedItemIndex{}
+	, m_controlMode{ControlMode::Manual}
+	, m_demoState {DemoState::MoveLeft}
+	, m_demoTimer {}
+	, m_isPullingInput{false}
 {
 }
+
 
 Player::~Player()
 {
 }
 
-void Player::Initialize()
+void Player::Initialize(const Vector2D& startPosition)
 {
-	// 初期位置を設定
-    m_position = m_scene.GetStage().GetPlayerStartPosition();
+	// Stageがあればステージ指定の開始位置、なければ引数の位置を使う
+	if (m_stage != nullptr) 
+	{
+		m_position = m_stage->GetPlayerStartPosition();
+	}
+	else {
+		m_position = startPosition;
+	}
+
 	// 速度を初期化
 	m_velocity = Vector2D{ 0.0f, 0.0f };
 	// 加速度を初期化
@@ -45,13 +55,30 @@ void Player::Initialize()
 	m_animationTimer = 0;
 	m_hp = MAX_HP;
 	m_invincibleTimer = 0;
+	m_controlMode = ControlMode::Manual;
+	m_demoState = DemoState::MoveLeft;
+	m_demoTimer = 0;
+	m_isPullingInput = false;
 }
 
 void Player::Update()
 {
-	// キー入力情報を取得する
-	const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
-	const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
+	int keyCondition{};
+	int keyTrigger{};
+	
+	if (m_controlMode == ControlMode::AutoDemo)
+	{
+		keyCondition = GenerateAutoInput();
+		keyTrigger = 0;
+	}
+	else
+	{
+		keyCondition = m_gameContext.inputManager.GetKeyCondition();
+		keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
+	}
+
+	// 「今のフレームの吸引入力状態」を記録しておく
+	m_isPullingInput = { (keyCondition & PAD_INPUT_10) != 0 };
 
 	// 移動
 	Move(keyCondition);	
@@ -113,11 +140,16 @@ void Player::Move(int keyCondition)
 	m_velocity.x *= FRICTION;
 	m_velocity.y *= FRICTION;
 
+	// タイトルデモ中だけ、最高速度を落とす（本編のMAX_SPEEDはそのまま）
+	const float currentMaxSpeed = (m_controlMode == ControlMode::AutoDemo)// 条件式
+		? MAX_SPEED * DEMO_SPEED_SCALE // 条件がtrueのとき、採用される値
+		: MAX_SPEED; // 条件がfalseのとき、採用される値
+		
 	// 最高速度の制限
-	if ((m_velocity.x * m_velocity.x) + (m_velocity.y * m_velocity.y) > MAX_SPEED * MAX_SPEED)   //if (Length(m_velocity) > MAX_SPEED) { ←これだと「sqrt」を使っており平方根で計算していて、処理が重たい
+	if ((m_velocity.x * m_velocity.x) + (m_velocity.y * m_velocity.y) > currentMaxSpeed * currentMaxSpeed)   //if (Length(m_velocity) > currentMaxSpeed) { ←これだと「sqrt」を使っており平方根で計算していて、処理が重たい
 	{
 		// 速度を正規化したあと、最大速度を かけ算
-		m_velocity = Normalize(m_velocity) * MAX_SPEED;
+		m_velocity = Normalize(m_velocity) * currentMaxSpeed;
 	}
 
 	// 座標の更新
@@ -134,6 +166,14 @@ void Player::ClampPositionToScreen()
 // 当たった時の処理
 void Player::OnCollision()
 {
+	// Stageがない（タイトル画面など）場合は壁判定を行わない
+	if (m_stage == nullptr)
+	{
+		if (m_invincibleTimer > 0) { m_invincibleTimer--; }
+		return;
+	}
+
+
 	// プレイヤーの境界ボックスを作成する
 	BoundingBox playerBox{
 		Vector2D{ m_position.x, m_position.y },
@@ -144,8 +184,7 @@ void Player::OnCollision()
 	// ステージの草との当たり判定
 	{
 		// 壁にめり込んでいたら、押し戻し量を計算する
-		const Vector2D correction = m_scene.GetStage().ResolveWallCollision(playerBox);
-
+		const Vector2D correction = m_stage->ResolveWallCollision(playerBox);
 		// 押し戻し量をプレイヤーの座標に反映する
 		m_position += correction;
 
@@ -286,17 +325,69 @@ void Player::DrawDamageOverlay()
 }
 
 
-// ItemFood_1と当たると
-void Player::CheckItemFoodCollision(BoundingBox playerBox)
-{
-	for (auto& item : m_scene.GetStage().GetItems())
-	{
-		if (!item.GetActiveFlag()) { continue; }
 
-		if (CheckHitAABB(playerBox, item.GetBoundingBox()))
+
+// タイトルシーンでのUFOの動きを処理
+int Player::GenerateAutoInput()
+{
+	int input{};
+
+	switch (m_demoState)
+	{
+		case DemoState::MoveLeft:
 		{
-			// TODO: ここに取得時の効果（HP回復など）を後で追加
+			// まだ目標位置に届いていなければ、左キー入力を出す
+			if (m_position.x > DEMO_LEFT_TARGET_X + DEMO_POSITION_TOLERANCE)
+			{
+				input |= PAD_INPUT_LEFT;
+			}
+			else
+			{
+				// 目標位置に到着 → 吸引ステートへ
+				m_demoState = DemoState::Pulling;
+				m_demoTimer = 0;
+			}
+			break;
 		}
+
+		case DemoState::Pulling:
+		{
+			// その場に留まりつつ、吸引ボタンを押し続ける
+			input |= PAD_INPUT_10;
+
+			m_demoTimer++;
+			if (m_demoTimer >= DEMO_PULL_DURATION)
+			{
+				// 一定時間吸引したら、右移動ステートへ
+				m_demoState = DemoState::MoveRight;
+			}
+			break;
+		}
+
+		case DemoState::MoveRight:
+		{
+			// 移動しながらも吸引ボタンは押し続ける → 食べ物を運びながら移動できる
+			input |= PAD_INPUT_10;
+
+			if (m_position.x < DEMO_RIGHT_TARGET_X - DEMO_POSITION_TOLERANCE)
+			{
+				input |= PAD_INPUT_RIGHT;
+			}
+			else
+			{
+				// 目標位置に到着 → 吸引をやめて停止ステートへ
+				m_demoState = DemoState::Idle;
+			}
+			break;
+		}
+
+		case DemoState::Idle:
+		{
+			// 何も入力しない（吸引もしない＝Item_Food側の isPulled は false になる）
+			break;
+		}
+
 	}
+		return input;
 }
 

@@ -311,6 +311,9 @@ void Stage::CheckBombEnemy2Collision()
 // ------------------------------------------------------------------
 void Stage::LoadStageData(const wchar_t* stageName)
 {
+    // SetPlayer()を先に呼ぶように、メッセージ（呼び出し順序が間違っている場合、エラーで知らせる）
+    assert(m_player != nullptr && L"LoadStageDataの前にSetPlayer()を呼んでください");
+
     // CSVを読み込む前に、以前のステージの「House」の情報を空にする
     m_houses.clear();
     m_enemies_1.clear();
@@ -404,7 +407,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood.emplace_back(Item_Food(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food1)); // bbは BoundingBox
+                    m_itemFood.emplace_back(Item_Food(m_gameContext, this, m_player, bb, Item_Food::FoodType::Food1)); // bbは BoundingBox
                     m_itemFood.back().Initialize();
                     break;
                 }
@@ -417,7 +420,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food2);
+                    m_itemFood.emplace_back(m_gameContext, this, m_player, bb, Item_Food::FoodType::Food2);
                     m_itemFood.back().Initialize();
                     break;
                 }
@@ -430,7 +433,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food3);
+                    m_itemFood.emplace_back(m_gameContext, this, m_player, bb, Item_Food::FoodType::Food3);
                     m_itemFood.back().Initialize();
                     break;
                 }
@@ -443,7 +446,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food4);
+                    m_itemFood.emplace_back(m_gameContext, this, m_player, bb, Item_Food::FoodType::Food4);
                     m_itemFood.back().Initialize();
                     break;
                 }
@@ -456,7 +459,7 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
                     BoundingBox bb{ minVec2D, maxVec2D };
 
-                    m_itemFood.emplace_back(m_gameContext, *this, m_player, bb, Item_Food::FoodType::Food5);
+                    m_itemFood.emplace_back(m_gameContext, this, m_player, bb, Item_Food::FoodType::Food5);
                     m_itemFood.back().Initialize();
                     break;
                 }

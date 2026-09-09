@@ -47,6 +47,11 @@ private:
     const std::wstring CSV = L".csv";
 
 private:
+    // 家の大きさ
+    static constexpr float WIDTH = 61.0f;
+    static constexpr float HEIGHT = 38.0f;
+
+
     // 爆発エフェクトの同時に出せる最大数
     static constexpr int MAX_EXPLOSION = 3;
     // 爆発エフェクトの配列
@@ -124,9 +129,9 @@ public:
     std::vector<Enemy>& GetEnemies() { return m_enemies_1; }
 
     // 家を配置する（ステージごとにコードで指定するため）
-    void AddHouse(const Vector2D& position, float width, float height, Item_Food::FoodType wantedFoodType)
+    void AddHouse(const Vector2D& position, Item_Food::FoodType wantedFoodType)
     {
-        BoundingBox bb{ position, Vector2D{ position.x + width, position.y + height } };
+        BoundingBox bb{ position, Vector2D{ position.x + WIDTH, position.y +  HEIGHT} };
         m_houses.emplace_back(m_gameContext, bb, wantedFoodType);
     }
 

@@ -26,7 +26,6 @@ public:
         Food5
     };
 private:
-
     // 重力
     static constexpr const float GRAVITY = 9.8f;
     // プレイヤーに引き寄せられる速さ
@@ -38,10 +37,13 @@ private:
     static constexpr float HOLD_OFFSET_Y = 5.0f; // 吸引中の描画オフセット
    
 
+    // Stageがない場面（タイトル画面など）で使う、着地とみなすY座標
+    float m_demoGroundY = 0.0f;
+    bool  m_hasDemoGround = false;// タイトルシーンの重力フラグ
 
 
     GameContext& m_gameContext;
-    Stage& m_stage;
+    Stage* m_stage;
     Player* m_player;
 
     // 境界ボックス（ワールド座標）
@@ -73,12 +75,16 @@ private:
     FoodType m_foodType;
 
 public:
-    Item_Food(GameContext& gameContext, Stage& stage, Player* player, const BoundingBox& boundingBox, FoodType foodType);
+    // stage は nullptr でも良い（例：タイトル画面など、床判定が不要な場面）
+    Item_Food(GameContext& gameContext, Stage* stage, Player* player,
+        const BoundingBox& boundingBox, FoodType foodType);
     ~Item_Food();
 
     void Initialize();
     void Update();
     void Render() const;
+
+    void SetStage(Stage* stage) { m_stage = stage; }
 
     // 取得済みかどうか
     bool GetActiveFlag() const { return m_isActive; }
@@ -103,4 +109,14 @@ public:
     }
 
     const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
+
+
+
+
+    // タイトル画面などStageがない場面で「ここまで落ちたら止まる」地面のY座標を設定する
+        void SetDemoGroundY(float groundY)
+    {
+        m_demoGroundY = groundY;
+        m_hasDemoGround = true;
+    }
 };

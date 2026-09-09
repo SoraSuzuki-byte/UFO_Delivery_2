@@ -59,6 +59,7 @@ public:
     void Render();
     void Finalize();
 
+ 
 
     Stage& GetStage() { return m_stage; }
 
@@ -71,6 +72,9 @@ private:
 
     // タイトルへ戻る長押しゲージの描画
     void DrawTitleReturnGauge() const;
+
+    // リザルト表示時の、半透明の黒い四角を描画
+    void DrawClearResultBackground();
 
 
     // ステージごとに家を配置する

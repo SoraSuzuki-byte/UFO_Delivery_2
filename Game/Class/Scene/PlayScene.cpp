@@ -22,7 +22,7 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     : m_sceneManager{ sceneManager }
     , m_gameContext{ gameContext }
     , m_stage{ gameContext }
-    , m_player{ gameContext,*this }
+    , m_player{ gameContext, &m_stage }
     , m_gameState{ GameState::Play }
     , m_titleReturnTimer{}
 {
@@ -46,8 +46,6 @@ void PlayScene::Initialize()
 {
     m_gameState = GameState::Play;
     m_titleReturnTimer = 0;
-
-    m_stage.SetPlayer(m_player);   // Playerの参照をStageに設定
 
     // Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
     m_stage.SetPlayer(m_player);
@@ -132,6 +130,9 @@ void PlayScene::Render()
     // ゲームオーバー中なら、画面に重ねて表示する
     if (m_gameState == GameState::GameOver)
     {
+        // 半透明の四角を描画
+        DrawClearResultBackground();
+
         SetFontSize(100);
         DrawString(280, 300, L"GAME OVER", GetColor(255, 0, 0));
 
@@ -141,9 +142,13 @@ void PlayScene::Render()
     //　クリア中の表示
     else if (m_gameState == GameState::Clear)
     {
+        // 半透明の黒い四角を描画
+        DrawClearResultBackground();
+
         SetFontSize(100);
         DrawString(320, 300, L"CLEAR!", GetColor(0, 255, 0));
 
+        // 長押しの進捗を 描画
         DrawTitleReturnGauge();
     }
 
@@ -196,6 +201,7 @@ void PlayScene::DrawTitleReturnGauge() const
     POINT offset{ Screen::CENTER_X - MAX_WIDTH / 2, 420 };
 
     // 案内テキスト
+    SetFontSize(50);
     DrawString(offset.x, offset.y - 30, L"スペースキー長押しでタイトルへ", Colors::WHITE);
 
     // ゲージの色（黄色で表現）
@@ -211,6 +217,21 @@ void PlayScene::DrawTitleReturnGauge() const
 }
 
 
+// ------------------------------------------------------------------
+// リザルト表示で、半透明の黒い四角を描画
+// ------------------------------------------------------------------
+void PlayScene::DrawClearResultBackground()
+{
+    // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+
+    DrawBox(200, 100, 1100, 600, GetColor(0, 0, 0), TRUE);
+
+    // 描画モードを通常に戻す 
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+
 
 
 
@@ -222,30 +243,30 @@ void PlayScene::PlaceHouses(StageId stageId)
     {
         case StageId::Stage1:
         {
-            m_stage.AddHouse(Vector2D{ 200.0f, 680.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
-            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 200.0f, 680.0f },Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f },Item_Food::FoodType::Food2);
             break;
         }
         case StageId::Stage2:
         {
-            m_stage.AddHouse(Vector2D{ 100.0f, 600.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
-            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 100.0f, 600.0f },Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f },Item_Food::FoodType::Food2);
             break;
         }
         case StageId::Stage3:
         {
-            m_stage.AddHouse(Vector2D{ 400.0f, 380.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
-            m_stage.AddHouse(Vector2D{ 100.0f, 660.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 400.0f, 380.0f },Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 100.0f, 660.0f },Item_Food::FoodType::Food1);
             break;
         }
         case StageId::Stage4:
         {
-            m_stage.AddHouse(Vector2D{ 600.0f, 230.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 600.0f, 230.0f },Item_Food::FoodType::Food2);
             break;
         }
         case StageId::Stage5:
         {
-            m_stage.AddHouse(Vector2D{ 1000.0f, 680.0f }, 80.0f, 80.0f, Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 1000.0f, 680.0f }, Item_Food::FoodType::Food1);
             break;
         }
         default:
