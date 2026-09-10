@@ -10,7 +10,7 @@
 
 struct GameContext;
 class Stage;
-class Player;
+class Player; 
 
 class Enemy
 {
