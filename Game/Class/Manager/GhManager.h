@@ -10,7 +10,7 @@ class GhManager
 {
 public:
     enum class Textures {
-        Wall, // 草(0)
+        Wall, // 壁(0)
         UFO_Bass, // UFOの素体（1）
         UFO_Damage_Overlay,   // UFOのHPに合わせて透明度が変わるやつ（2）
         UFO_Orange_All,    // オレンジの全部（3）
@@ -34,6 +34,17 @@ public:
         Enemy_3_1, // (21)
         Background_2, // 背景画像 (22)
         Background_3, // 背景画像 (23)
+        Background_SelectScene, // セレクトシーンの背景画像 (24)
+        Stage1_a, // ステージ1のアフター画像(25)
+        Stage1_b, // ステージ1のビフォー画像(26)
+        Stage2_a, // ステージ2のアフター画像(27)
+        Stage2_b, // ステージ2のビフォー画像(28)
+        Stage3_a, // ステージ3のアフター画像(29)
+        Stage3_b, // ステージ3のビフォー画像(30)
+        Stage4_a, // ステージ4のアフター画像(31)
+        Stage4_b, // ステージ4のビフォー画像(32)
+        Stage5_a, // ステージ5のアフター画像(33)
+        Stage5_b, // ステージ5のビフォー画像(34)
 
 
         Max    // テクスチャの合計数

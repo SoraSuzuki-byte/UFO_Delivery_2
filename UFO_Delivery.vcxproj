@@ -196,6 +196,7 @@
     <Image Include="Resources\Textures\Background_1.png" />
     <Image Include="Resources\Textures\Background_2.png" />
     <Image Include="Resources\Textures\Background_3.png" />
+    <Image Include="Resources\Textures\Background_SelectScene.png" />
     <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\Enemy_1_1.png" />
     <Image Include="Resources\Textures\Enemy_2.png" />
@@ -210,6 +211,16 @@
     <Image Include="Resources\Textures\Item_Food_3.png" />
     <Image Include="Resources\Textures\Item_Food_4.png" />
     <Image Include="Resources\Textures\Item_Food_5.png" />
+    <Image Include="Resources\Textures\Stage1_a.png" />
+    <Image Include="Resources\Textures\Stage1_b.png" />
+    <Image Include="Resources\Textures\Stage2_a.png" />
+    <Image Include="Resources\Textures\Stage2_b.png" />
+    <Image Include="Resources\Textures\Stage3_a.png" />
+    <Image Include="Resources\Textures\Stage3_b.png" />
+    <Image Include="Resources\Textures\Stage4_a.png" />
+    <Image Include="Resources\Textures\Stage4_b.png" />
+    <Image Include="Resources\Textures\Stage5_a.png" />
+    <Image Include="Resources\Textures\Stage5_b.png" />
     <Image Include="Resources\Textures\UFO_Bass.png" />
     <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
     <Image Include="Resources\Textures\UFO_Orange_All.png" />

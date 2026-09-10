@@ -91,13 +91,20 @@ void PlayScene::Update()
     if (m_gameState == GameState::Play)
     {
         m_stage.Update(); // Stage.cppで「Enemy」「Food」「Bomb」などをUpdateしている
-        m_player.Update();
-        
-        // HPが0になったら、ゲームオーバー状態に切り替える
-        if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; }
+        m_player.Update();        
+       
+        if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; } // HPが0になったら、ゲームオーバー状態に切り替える
 
         // すべての家に届け終わったら、クリア状態に切り替える
-        if (m_stage.IsAllHousesFulfilled()) { m_gameState = GameState::Clear; }
+        if (m_stage.IsAllHousesFulfilled()) 
+        { 
+            m_gameState = GameState::Clear;
+
+            // 現在のステージをクリア済みにする
+            m_gameContext.SetStageCleared(
+                m_gameContext.GetSelectedStageId()
+            );
+        }
     }
     else if (m_gameState == GameState::GameOver || m_gameState == GameState::Clear)
     {
@@ -243,7 +250,7 @@ void PlayScene::PlaceHouses(StageId stageId)
     {
         case StageId::Stage1:
         {
-            m_stage.AddHouse(Vector2D{ 200.0f, 680.0f },Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 200.0f, 670.0f },Item_Food::FoodType::Food1);
             m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f },Item_Food::FoodType::Food2);
             break;
         }

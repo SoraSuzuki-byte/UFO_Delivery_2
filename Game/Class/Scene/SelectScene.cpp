@@ -112,13 +112,16 @@ void SelectScene::Update()
 /// -----------------------------------------------------------------
 void SelectScene::Render()
 {
-    RenderPlayer();
+    DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene), TRUE);
 
+    RenderStageImage();
+    RenderPlayer();
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(80);
-    DrawFormatString(300, 300, Colors::GRAY, L"選択中のステージID: %d", m_gameContext.selectedStageIndex);
-    DrawString(300, 500, L"セレクトシーン", Colors::GRAY);
+    DrawFormatString(300, 100, Colors::GRAY, L"選択中のステージID: %d", m_gameContext.selectedStageIndex);
+    DrawString(300, 500, L"スペースキーを押して", Colors::GRAY);
+    DrawString(300, 650, L"配送先を決定", Colors::GRAY);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 }
 
@@ -144,8 +147,8 @@ void SelectScene::MovePlayer()
         const Vector2D& targetPos = STAGE_POSITIONS[stageIndex];
 
         // イージング移動
-        m_playerPosition.x += (targetPos.x - m_playerPosition.x) * 0.05f;
-        m_playerPosition.y += (targetPos.y - m_playerPosition.y) * 0.05f;
+        m_playerPosition.x += (targetPos.x - m_playerPosition.x) * MOVE_SPEED;
+        m_playerPosition.y += (targetPos.y - m_playerPosition.y) * MOVE_SPEED;
     }
 }
 
@@ -161,4 +164,50 @@ void SelectScene::RenderPlayer()
 
     DrawGraph(drawX, drawY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
     DrawGraph(drawX, drawY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Damage_Overlay), TRUE);
+}
+
+
+
+//  -----------------------------------------------------------------
+// ステージの星の画像を描画
+//  -----------------------------------------------------------------
+void SelectScene::RenderStageImage()
+{
+    if (m_gameContext.IsStageCleared(StageId::Stage1)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage1_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage1_b), TRUE);
+    }
+    if (m_gameContext.IsStageCleared(StageId::Stage2)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage2_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage2_b), TRUE);
+    }
+
+    if (m_gameContext.IsStageCleared(StageId::Stage3)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage3_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage3_b), TRUE);
+    }
+
+    if (m_gameContext.IsStageCleared(StageId::Stage4)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage4_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage4_b), TRUE);
+    }
+
+    if (m_gameContext.IsStageCleared(StageId::Stage5)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage5_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage5_b), TRUE);
+    }
+}
+
+void SelectScene::RenderUi()
+{
 }

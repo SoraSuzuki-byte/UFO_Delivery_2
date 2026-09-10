@@ -22,20 +22,22 @@ class SceneManager;
 class SelectScene
 {
 private:
-    static constexpr const float STAGE1_POS_X = 100.0f;
-    static constexpr const float STAGE1_POS_Y = 100.0f;
+    static constexpr const float MOVE_SPEED = 0.05f;
 
-    static constexpr const float STAGE2_POS_X = 130.0f;
-    static constexpr const float STAGE2_POS_Y = 300.0f;
+    static constexpr const float STAGE1_POS_X = 50.0f;
+    static constexpr const float STAGE1_POS_Y = 50.0f;
 
-    static constexpr const float STAGE3_POS_X = 240.0f;
-    static constexpr const float STAGE3_POS_Y = 350.0f;
+    static constexpr const float STAGE2_POS_X = 140.0f;
+    static constexpr const float STAGE2_POS_Y = 390.0f;
 
-    static constexpr const float STAGE4_POS_X = 620.0f;
-    static constexpr const float STAGE4_POS_Y = 600.0f;
+    static constexpr const float STAGE3_POS_X = 450.0f;
+    static constexpr const float STAGE3_POS_Y = 520.0f;
 
-    static constexpr const float STAGE5_POS_X = 1200.0f;
-    static constexpr const float STAGE5_POS_Y = 100.0f;
+    static constexpr const float STAGE4_POS_X = 820.0f;
+    static constexpr const float STAGE4_POS_Y = 370.0f;
+
+    static constexpr const float STAGE5_POS_X = 1120.0f;
+    static constexpr const float STAGE5_POS_Y = 150.0f;
 
     // StageId::Max を利用して配列サイズを固定
     // （描画・移動用の目標座標テーブル）   
@@ -73,5 +75,7 @@ public:
 private:
     void MovePlayer();
     void RenderPlayer();
+    void RenderStageImage();
+    void RenderUi();
 };
 

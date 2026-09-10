@@ -55,10 +55,18 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Enemy_3.png" , // (20)
         L"Resources/Textures/Enemy_3_1.png" , // (21)
         L"Resources/Textures/Background_2.png", // (22)
-        L"Resources/Textures/Background_3.png" // (23)
-
-        //  L"Resources/Textures/
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        L"Resources/Textures/Background_3.png", // (23)
+        L"Resources/Textures/Background_SelectScene.png", // (24)
+        L"Resources/Textures/Stage1_a.png", // (25)
+        L"Resources/Textures/Stage1_b.png", // (26)
+        L"Resources/Textures/Stage2_a.png", // (27)
+        L"Resources/Textures/Stage2_b.png", // (28)
+        L"Resources/Textures/Stage3_a.png", // (29)
+        L"Resources/Textures/Stage3_b.png", // (30)
+        L"Resources/Textures/Stage4_a.png", // (31)
+        L"Resources/Textures/Stage4_b.png", // (32)
+        L"Resources/Textures/Stage5_a.png", // (33)
+        L"Resources/Textures/Stage5_b.png" // (34)
     };
 
     // 【安全チェック】enumの登録数 と パス文字列の数 が一致しているかビルド時に確認→パスの追加忘れや enum の書き換えミスによるメモリクラッシュを未然に防げる

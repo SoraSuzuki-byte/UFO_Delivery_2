@@ -21,6 +21,8 @@ enum class StageId {
 };
 
 
+
+
 struct GameContext
 {
     // インプットマネージャー
@@ -47,5 +49,18 @@ struct GameContext
         return static_cast<StageId>(selectedStageIndex);
     }
     //---------------------------------------------------------------------------------------------
+     // ステージをクリアしたかどうか
+    bool stageCleared[static_cast<int>(StageId::Max)]{false};
 
+    // 指定したステージを クリア済みにする
+    void SetStageCleared(StageId stageId)
+    {
+        stageCleared[static_cast<int>(stageId)] = true;
+    }
+
+    // 指定したステージを クリア済みかを取得する
+    bool IsStageCleared(StageId stageId) const
+    {
+        return stageCleared[static_cast<int>(stageId)];
+    }
 };

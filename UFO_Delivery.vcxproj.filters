@@ -87,6 +87,9 @@
     <Filter Include="Resources\Sounds\Bgm">
       <UniqueIdentifier>{fcd3a48f-dd11-41db-9a0b-97505d3f40a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Textures\StageImage_atSelectScene">
+      <UniqueIdentifier>{2e8b466a-6b8e-476b-be5a-c7485cdae951}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -333,6 +336,39 @@
     </Image>
     <Image Include="Resources\Textures\Enemy_2_1.png">
       <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_SelectScene.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage1_a.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage1_b.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage2_a.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage2_b.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage3_a.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage3_b.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage4_a.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage4_b.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage5_a.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage5_b.png">
+      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
