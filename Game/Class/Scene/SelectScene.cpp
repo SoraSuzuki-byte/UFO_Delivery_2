@@ -10,7 +10,6 @@
 #include "pch.h"
 #include "SelectScene.h"
 #include "Game/Class/Manager/SceneManager.h"
-#include "Game/GameContext.h"
 #include "Game/Screen.h"
 #include <cassert>
 
@@ -24,6 +23,7 @@
 SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     : m_sceneManager{ sceneManager }
     , m_gameContext{ gameContext }
+    , m_playerPosition{}
 {
 }
 
@@ -44,6 +44,14 @@ SelectScene::~SelectScene()
 void SelectScene::Initialize()
 {
     m_gameContext.soundManager.StartBgm(SoundManager::Bgm::Bgm_SelectScene);
+
+    // 初期位置を現在の選択中ステージ座標に合わせる
+    const size_t selectedIndex = static_cast<size_t>(m_gameContext.GetSelectedStageId());
+    if (selectedIndex < STAGE_POSITIONS.size())
+    {
+        m_playerPosition.x = STAGE_POSITIONS[selectedIndex].x;
+        m_playerPosition.y = STAGE_POSITIONS[selectedIndex].y;
+    }
 }
 
 //  -----------------------------------------------------------------
@@ -62,8 +70,7 @@ void SelectScene::Update()
     {
         // シーンを変更する
         m_sceneManager.RequestNextSceneID(SceneManager::SceneID::PlayScene);
-    }
-
+    }   
 
 
 
@@ -88,13 +95,13 @@ void SelectScene::Update()
         // 選択中のステージIDを、減少
         m_gameContext.selectedStageIndex--;
 
-        if (m_gameContext.selectedStageIndex <= 0)// 0より小さいステージを選択することになった場合
+        if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
         {
             m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
         }
     }
 
-
+    MovePlayer();
 
 }
 
@@ -105,8 +112,8 @@ void SelectScene::Update()
 /// -----------------------------------------------------------------
 void SelectScene::Render()
 {
-    int x = 150;
-    int y = 300;
+    RenderPlayer();
+
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(80);
@@ -122,4 +129,36 @@ void SelectScene::Render()
 /// -----------------------------------------------------------------
 void SelectScene::Finalize()
 {
+}
+
+
+
+//  -----------------------------------------------------------------
+// プレイヤーの移動
+//  -----------------------------------------------------------------
+void SelectScene::MovePlayer()
+{
+    const size_t stageIndex = static_cast<size_t>(m_gameContext.GetSelectedStageId());
+    if (stageIndex < STAGE_POSITIONS.size())
+    {
+        const Vector2D& targetPos = STAGE_POSITIONS[stageIndex];
+
+        // 滑らかに目標位置へ補間移動（0.1fの数値を調整することで移動速度が変わります）
+        m_playerPosition.x += (targetPos.x - m_playerPosition.x) * 0.1f;
+        m_playerPosition.y += (targetPos.y - m_playerPosition.y) * 0.1f;
+    }
+}
+
+
+
+//  -----------------------------------------------------------------
+// プレイヤーの描画
+//  -----------------------------------------------------------------
+void SelectScene::RenderPlayer()
+{
+    const int drawX = static_cast<int>(m_playerPosition.x);
+    const int drawY = static_cast<int>(m_playerPosition.y);
+
+    DrawGraph(drawX, drawY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
+    DrawGraph(drawX, drawY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Damage_Overlay), TRUE);
 }
