@@ -143,9 +143,9 @@ void SelectScene::MovePlayer()
     {
         const Vector2D& targetPos = STAGE_POSITIONS[stageIndex];
 
-        // 滑らかに目標位置へ補間移動（0.1fの数値を調整することで移動速度が変わります）
-        m_playerPosition.x += (targetPos.x - m_playerPosition.x) * 0.1f;
-        m_playerPosition.y += (targetPos.y - m_playerPosition.y) * 0.1f;
+        // イージング移動
+        m_playerPosition.x += (targetPos.x - m_playerPosition.x) * 0.05f;
+        m_playerPosition.y += (targetPos.y - m_playerPosition.y) * 0.05f;
     }
 }
 

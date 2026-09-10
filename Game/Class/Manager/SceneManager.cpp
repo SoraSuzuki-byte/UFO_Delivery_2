@@ -18,6 +18,8 @@ SceneManager::SceneManager(GameContext& gameContext)
     , m_playScene{ *this, gameContext }
     , m_currentSceneID{}
     , m_requestedSceneID{}
+    , m_transitionState{}
+    , m_fadeFrameCounter{}
 {
 }
 
@@ -27,29 +29,98 @@ void SceneManager::Initialize()
     m_currentSceneID = SceneID::TitleScene;
     m_requestedSceneID = SceneID::None;
 
+    // シーン遷移に関する初期化
+    m_transitionState = TransitionState::None;
+    m_fadeFrameCounter = 0;
+
     // 現在シーンを初期化する
     InitializeCurrentScene();
 }
 
+
+
+
+//  -----------------------------------------------------------------
+/// <summary>
+/// 更新処理
+/// </summary>
+/// -----------------------------------------------------------------
 void SceneManager::Update()
 {
-    // 現在シーンの更新
-    UpdateCurrentScene();
-
-    // 「シーン切り替えリクエスト発生」
-    if (m_requestedSceneID != SceneID::None)
+    switch (m_transitionState)
     {
-        // シーン変更
-        ChangeScene();
+        // 通常時
+        case TransitionState::None:
+        {
+            // 現在シーンの更新
+            UpdateCurrentScene();
+
+            // 「シーン切り替えリクエスト発生」
+            if (m_requestedSceneID != SceneID::None)
+            {
+                m_transitionState = TransitionState::FadeOut;
+                m_fadeFrameCounter = 0;
+            }
+            break;
+        }
+        // フェードアウト状態
+        case TransitionState::FadeOut:
+        {
+            m_fadeFrameCounter++;
+            if (m_fadeFrameCounter >= FADE_FRAMES)
+            {
+                m_transitionState = TransitionState::ChangeScene;
+            }
+            break;
+        }
+        // シーン変更状態
+        case TransitionState::ChangeScene:
+        {
+            ChangeScene();
+            m_transitionState = TransitionState::FadeIn;
+            break;
+        }
+        // フェードイン状態
+        case TransitionState::FadeIn:
+        {
+            m_fadeFrameCounter--;
+            if (m_fadeFrameCounter <= 0)
+            {
+                m_fadeFrameCounter = 0;
+                m_transitionState = TransitionState::None;
+            }
+            break;
+        }
+        default:
+            assert(!"シーンのフェード状態が不正です");
     }
 }
 
+
+
+//  -----------------------------------------------------------------
+/// <summary>
+/// 描画処理
+/// </summary>
+/// -----------------------------------------------------------------
 void SceneManager::Render()
 {
     // 現在シーンの描画
     RenderCurrentScene();
+
+    // フェードの描画
+    if (m_transitionState != TransitionState::None)
+    {
+        DrawFade();
+    }
 }
 
+
+//  -----------------------------------------------------------------
+/// <summary>
+/// 終了処理
+/// </summary>
+/// -----------------------------------------------------------------
 void SceneManager::Finalize()
 {
     // 現在シーンの終了処理
@@ -160,4 +231,22 @@ void SceneManager::FinalizeCurrentScene()
         case SceneID::PlayScene:    m_playScene.Finalize();   break;
         default:      assert(!"シーンIDが不正です");
     }
+}
+
+
+//  -----------------------------------------------------------------
+/// <summary>
+/// フェードの描画処理
+/// </summary>
+/// -----------------------------------------------------------------
+void SceneManager::DrawFade()
+{
+    // 描画に使用するアルファ値を計算する
+    const float fadeRate = static_cast<float>(m_fadeFrameCounter) / FADE_FRAMES;
+    const int   alpha = static_cast<int>(255 * fadeRate);
+
+    // アルファブレンドを設定し、画面を覆う四角形を描画する
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+    DrawBox(0, 0, Screen::WIDTH, Screen::HEIGHT, Colors::WHITE, TRUE);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

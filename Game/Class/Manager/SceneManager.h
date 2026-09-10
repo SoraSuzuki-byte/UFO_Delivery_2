@@ -34,6 +34,17 @@ public:
 
 
 private:
+	// シーン遷移状態
+	enum class TransitionState {
+		None, FadeOut, ChangeScene, FadeIn,
+	};	
+	static constexpr int FADE_FRAMES = 60;// フェード時間
+
+	// シーン遷移状態関連
+	TransitionState m_transitionState;
+	int m_fadeFrameCounter;
+
+
 	// ゲームコンテキストのインスタンス
 	GameContext& m_gameContext;
 
@@ -69,6 +80,7 @@ private:
 	void RenderCurrentScene();
 	void FinalizeCurrentScene();
 
-
+	// フェードの描画
+	void DrawFade();
 };
 
