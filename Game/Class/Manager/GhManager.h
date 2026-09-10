@@ -27,11 +27,13 @@ public:
         Item_Bomb, // 爆弾アイテム (14)
         Explosion, // 爆発エフェクト (15)
         Enemy_1, // (16)
-        Enemy_2, // (17)
-        Enemy_3, // (18)
-        Enemy_3_1, // (19)
-        Background_2, // 背景画像 (20)
-        Background_3, // 背景画像 (21)
+        Enemy_1_1, // (17)
+        Enemy_2, // (19)
+        Enemy_2_1, // (18)
+        Enemy_3, // (20)
+        Enemy_3_1, // (21)
+        Background_2, // 背景画像 (22)
+        Background_3, // 背景画像 (23)
 
 
         Max    // テクスチャの合計数

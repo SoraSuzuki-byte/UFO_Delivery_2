@@ -328,6 +328,12 @@
     <Image Include="Resources\Textures\Background_3.png">
       <Filter>Resources\Textures\Background</Filter>
     </Image>
+    <Image Include="Resources\Textures\Enemy_1_1.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Enemy_2_1.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Se_Delivery.mp3">

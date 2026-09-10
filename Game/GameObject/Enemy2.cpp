@@ -39,11 +39,23 @@ void Enemy2::Render() const
 {
     if (!m_isActive) { return; }
 
-    DrawGraph(
-        static_cast<int>(m_position.x),
-        static_cast<int>(m_position.y),
-        m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_2),
-        TRUE);
+    const Vector2D playerPos = m_player.GetPosition();
+    if (m_position.x < playerPos.x)
+    {
+        DrawGraph(
+            static_cast<int>(m_position.x),
+            static_cast<int>(m_position.y),
+            m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_2_1),
+            TRUE);
+    }
+    else
+    {
+        DrawGraph(
+            static_cast<int>(m_position.x),
+            static_cast<int>(m_position.y),
+            m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_2),
+            TRUE);
+    }
 
 
     // 2. 当たり判定（BoundingBox）の可視化処理（デバッグ用）
