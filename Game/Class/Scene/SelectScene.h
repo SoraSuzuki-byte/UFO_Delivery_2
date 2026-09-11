@@ -47,7 +47,7 @@ private:
 
     static constexpr const float MESSAGE_UI_POS_X = 30.0f;
     static constexpr const float MESSAGE_UI_POS_Y = 600.0f;
-    static constexpr const float MESSAGE_DIALOG_BOX_POS_X = 200.0f;
+    static constexpr const float MESSAGE_DIALOG_BOX_POS_X = 180.0f;
     static constexpr const float MESSAGE_DIALOG_BOX_POS_Y = 100.0f;
 
     // StageId::Max を利用して配列サイズを固定

@@ -127,7 +127,8 @@ void TitleScene::Render()
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(70);
-    DrawString(300, 500, L"Spaceキーで始める", Colors::WHITE);
+    DrawString(300, 500, L"Spaceキーで 配達開始", Colors::WHITE);
+    //DrawString(300, 500, L"Spaceキーで始める", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
 

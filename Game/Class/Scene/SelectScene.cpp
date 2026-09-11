@@ -71,7 +71,43 @@ void SelectScene::Update()
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
-     // シーン変更の処理
+
+    {
+        // ステージの合計の数を取得
+        const int maxStages = static_cast<int>(StageId::Max);
+
+        if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {
+
+            // みぎ矢印キーが押されたら
+            if (keyTrigger & PAD_INPUT_RIGHT)
+            {
+                // 選択中のステージIDを、増加
+                m_gameContext.selectedStageIndex++;
+
+                if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
+                {
+                    m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
+                }
+            }
+
+            // ひだり矢印キーが押されたら
+            if (keyTrigger & PAD_INPUT_LEFT)
+            {
+                // 選択中のステージIDを、減少
+                m_gameContext.selectedStageIndex--;
+
+                if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
+                {
+                    m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
+                }
+            }
+        }
+    }
+
+    MovePlayer();
+
+
+    // シーン変更の処理
     if (!m_isStageSelected)
     {
         if (keyTrigger & PAD_INPUT_10) { m_isStageSelected = true; }
@@ -80,39 +116,6 @@ void SelectScene::Update()
     {
         ChangeScene(keyTrigger);
     }
-
-    // ステージの合計の数を取得
-    const int maxStages = static_cast<int>(StageId::Max);
-
-    if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {
-
-        // みぎ矢印キーが押されたら
-        if (keyTrigger & PAD_INPUT_RIGHT)
-        {
-            // 選択中のステージIDを、増加
-            m_gameContext.selectedStageIndex++;
-
-            if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
-            {
-                m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
-            }
-        }
-
-        // ひだり矢印キーが押されたら
-        if (keyTrigger & PAD_INPUT_LEFT)
-        {
-            // 選択中のステージIDを、減少
-            m_gameContext.selectedStageIndex--;
-
-            if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
-            {
-                m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
-            }
-        }
-    }
-
-    MovePlayer();
-
 }
 
 //  -----------------------------------------------------------------
@@ -125,10 +128,10 @@ void SelectScene::Render()
     DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene), TRUE);
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
-    SetFontSize(80);
-    if (!m_isStageSelected) {
-        DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先を選びましょう", Colors::WHITE);
-    }
+    //SetFontSize(80);
+    //if (!m_isStageSelected) {
+    //    DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先を選びましょう", Colors::WHITE);
+    //}
     SetFontSize(25);
     DrawString(MESSAGE_UI_POS_X, MESSAGE_UI_POS_Y, L"Spaceキーで決定", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
@@ -293,11 +296,11 @@ void SelectScene::RenderConfirmingUi()
 {
     if (!m_isStageSelected) { return; } // 早期リターン
 
-        DrawDialogBackground();
 
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(80);
         DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先が決まりましたか？", Colors::WHITE, TRUE);
+        DrawDialogBackground();
         DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::GRAY, TRUE);
         DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::GRAY, TRUE);
 
@@ -310,11 +313,11 @@ void SelectScene::RenderConfirmingUi()
         {
             if (m_isConfirming) {
                 DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, TRUE);
-                DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, FALSE);
+                DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, FALSE); // 文字の縁取り
             }
             else {
                 DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, TRUE);
-                DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, FALSE);
+                DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, FALSE); // 文字の縁取り
             }
         }
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
@@ -324,12 +327,13 @@ void SelectScene::RenderConfirmingUi()
 
 
 // ------------------------------------------------------------------
-// ステージ選択の確認ダイアログ、半透明の黒い四角を描画
+// ステージ選択の確認ダイアログ "半透明の黒い四角"を描画
 // ------------------------------------------------------------------
 void SelectScene::DrawDialogBackground()
 {
     // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
-    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+    //SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
 
     DrawBox(100, 40, 1200, 600, GetColor(0, 0, 0), TRUE);
 
