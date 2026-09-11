@@ -45,6 +45,14 @@ public:
         Stage4_b, // ステージ4のビフォー画像(32)
         Stage5_a, // ステージ5のアフター画像(33)
         Stage5_b, // ステージ5のビフォー画像(34)
+        LeftArrow_None, // デフォルトの左キー(35)
+        LeftArrow_Push, // 押されている左キー(36)
+        RightArrow_None, // デフォルトの右キー(37)
+        RightArrow_Push, // 押されている右キー(38)
+        Background_4, // 背景画像 (39)
+        Background_5, // 背景画像 (40)
+        Logo, // タイトル画面のロゴ(41)
+
 
 
         Max    // テクスチャの合計数

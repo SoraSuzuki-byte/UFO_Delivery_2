@@ -190,6 +190,19 @@ void PlayScene::BackgroundRender() const
     {
         DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_3), TRUE);
     }
+    else if (m_gameContext.GetSelectedStageId() == StageId::Stage4)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_4), TRUE);
+    }
+
+    // ステージ５をクリアすると、背景が描画されるようになる
+    if (m_gameContext.IsStageCleared(StageId::Stage5)) 
+    {
+        if (m_gameContext.GetSelectedStageId() == StageId::Stage5)
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_5), TRUE);
+        }
+    }
 }
 
 
@@ -207,9 +220,10 @@ void PlayScene::DrawTitleReturnGauge() const
     // ゲージの左上座標（画面中央下寄りに配置）
     POINT offset{ Screen::CENTER_X - MAX_WIDTH / 2, 420 };
 
-    // 案内テキスト
+    int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(50);
     DrawString(offset.x, offset.y - 30, L"スペースキー長押しでタイトルへ", Colors::WHITE);
+    SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
     // ゲージの色（黄色で表現）
     const int color = GetColor(255, 255, 0);

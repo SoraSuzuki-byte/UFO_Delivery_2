@@ -87,7 +87,10 @@
     <Filter Include="Resources\Sounds\Bgm">
       <UniqueIdentifier>{fcd3a48f-dd11-41db-9a0b-97505d3f40a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Textures\StageImage_atSelectScene">
+    <Filter Include="Resources\Textures\UI">
+      <UniqueIdentifier>{4db2da88-3543-40d4-a028-db2d1e8af5f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Textures\StageImage_inSelectScene">
       <UniqueIdentifier>{2e8b466a-6b8e-476b-be5a-c7485cdae951}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -328,9 +331,6 @@
     <Image Include="Resources\Textures\Background_2.png">
       <Filter>Resources\Textures\Background</Filter>
     </Image>
-    <Image Include="Resources\Textures\Background_3.png">
-      <Filter>Resources\Textures\Background</Filter>
-    </Image>
     <Image Include="Resources\Textures\Enemy_1_1.png">
       <Filter>Resources\Textures\Enemy</Filter>
     </Image>
@@ -341,34 +341,58 @@
       <Filter>Resources\Textures\Background</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage1_a.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage1_b.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage2_a.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage2_b.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage3_a.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage3_b.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage4_a.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage4_b.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage5_a.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
     </Image>
     <Image Include="Resources\Textures\Stage5_b.png">
-      <Filter>Resources\Textures\StageImage_atSelectScene</Filter>
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\LeftArrow_None.png">
+      <Filter>Resources\Textures\UI</Filter>
+    </Image>
+    <Image Include="Resources\Textures\LeftArrow_Push.png">
+      <Filter>Resources\Textures\UI</Filter>
+    </Image>
+    <Image Include="Resources\Textures\RightArrow_None.png">
+      <Filter>Resources\Textures\UI</Filter>
+    </Image>
+    <Image Include="Resources\Textures\RightArrow_Push.png">
+      <Filter>Resources\Textures\UI</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_3.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_4.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_5.jpg">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\logo.png">
+      <Filter>Resources\Textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

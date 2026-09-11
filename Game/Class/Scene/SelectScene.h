@@ -39,6 +39,17 @@ private:
     static constexpr const float STAGE5_POS_X = 1120.0f;
     static constexpr const float STAGE5_POS_Y = 150.0f;
 
+
+    static constexpr const float MESSAGE_YES_POS_X = 350.0f;
+    static constexpr const float MESSAGE_YES_POS_Y = 450.0f;
+    static constexpr const float MESSAGE_NO_POS_X = 750.0f;
+    static constexpr const float MESSAGE_NO_POS_Y = 450.0f;
+
+    static constexpr const float MESSAGE_UI_POS_X = 30.0f;
+    static constexpr const float MESSAGE_UI_POS_Y = 600.0f;
+    static constexpr const float MESSAGE_DIALOG_BOX_POS_X = 200.0f;
+    static constexpr const float MESSAGE_DIALOG_BOX_POS_Y = 100.0f;
+
     // StageId::Max を利用して配列サイズを固定
     // （描画・移動用の目標座標テーブル）   
     const std::array<Vector2D, static_cast<size_t>(StageId::Max)> STAGE_POSITIONS = // std::array は「サイズが固定された配列」を扱うための標準コンテナ
@@ -60,6 +71,12 @@ private:
     // セレクト画面でのプレイヤーの位置
     Vector2D m_playerPosition;
 
+    // ステージを選ぶフラグ
+    bool m_isStageSelected;
+    // 選んだステージでいいかを確認フラグ
+    bool m_isConfirming;
+    // 選択項目を点滅させる時のカウンター
+    int m_selectionBlinkCounter;
 
 
 public:
@@ -73,9 +90,12 @@ public:
 
 
 private:
+    void ChangeScene(int keyTrigger);
     void MovePlayer();
     void RenderPlayer();
     void RenderStageImage();
-    void RenderUi();
+    void RenderArrowUi();
+    void RenderConfirmingUi();
+    void DrawDialogBackground();
 };
 

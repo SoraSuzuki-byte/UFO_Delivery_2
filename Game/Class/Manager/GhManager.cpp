@@ -66,7 +66,15 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Stage4_a.png", // (31)
         L"Resources/Textures/Stage4_b.png", // (32)
         L"Resources/Textures/Stage5_a.png", // (33)
-        L"Resources/Textures/Stage5_b.png" // (34)
+        L"Resources/Textures/Stage5_b.png", // (34)
+        L"Resources/Textures/LeftArrow_None.png", // (35)
+        L"Resources/Textures/LeftArrow_Push.png", // (36)
+        L"Resources/Textures/RightArrow_None.png", // (37)
+        L"Resources/Textures/RightArrow_Push.png", // (38)
+        L"Resources/Textures/Background_4.png", // (39)
+        L"Resources/Textures/Background_5.jpg", // (40)
+        L"Resources/Textures/logo.png" // (41)
+
     };
 
     // 【安全チェック】enumの登録数 と パス文字列の数 が一致しているかビルド時に確認→パスの追加忘れや enum の書き換えミスによるメモリクラッシュを未然に防げる

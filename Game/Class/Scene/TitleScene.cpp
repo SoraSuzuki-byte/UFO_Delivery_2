@@ -126,8 +126,8 @@ void TitleScene::Render()
 
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
-    SetFontSize(80);
-    DrawString(300, 500, L"スペースキーで始める", Colors::GRAY);
+    SetFontSize(70);
+    DrawString(300, 500, L"Spaceキーで始める", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
 
@@ -138,6 +138,8 @@ void TitleScene::Render()
 
     m_player.Render();
     m_demoHouse.Render();
+    DrawGraph(200, 100, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Logo), TRUE);
+
 }
 
 //  -----------------------------------------------------------------
