@@ -53,6 +53,7 @@ void SoundManager::Initialize()//-----------------------------------------------
         L"Resources/Sounds/Se_TakeDamage.mp3", // (1)
         L"Resources/Sounds/Se_Falling.mp3", // (2)
         L"Resources/Sounds/Se_Delivery.mp3", // (3)
+        L"Resources/Sounds/Se_ResultBar.wav", // (3)
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
     const wchar_t* bgmPaths[] = {
@@ -108,6 +109,37 @@ void SoundManager::StartSe(Se se)const
 
 
 
+// -------------------------------------------------------------
+// Seをループ再生する（すでに再生中なら何もしない）
+/// <param name="se">鳴らしたいSeハンドルへの参照</param>
+void SoundManager::LoopSe(Se se)const
+{
+    int handle = m_seSoundHandle[static_cast<int>(se)];
+
+    // ハンドルが無効なら処理しない
+    if (handle == -1) return;
+
+    // すでに再生中（CheckSoundMem == 1）なら何もしない（多重再生防止）
+    if (CheckSoundMem(handle) == 1)
+    {
+        return;
+    }
+
+    // 再生中でない場合のみ、ループ再生する
+    PlaySoundMem(handle, DX_PLAYTYPE_LOOP, TRUE);
+}
+
+
+// -------------------------------------------------------------
+// Seを止める
+/// <param name="se">止めたいSeハンドルへの参照</param>
+void SoundManager::StopSe(Se se)const
+{
+    StopSoundMem(m_seSoundHandle[static_cast<int>(se)]);
+}
+
+
+
 // --------------------------------------------------------------
 // Bgmをはじめる
 /// <param name="bgm">はじめるBgmハンドルへの参照</param>
@@ -133,7 +165,7 @@ void SoundManager::StartBgm(Bgm bgm)const
 // -----------------------------------------------------------
 // Bgmを止める
 /// <param name="bgm">止めるBgmハンドルへの参照</param>
-void SoundManager::EndBgm(Bgm bgm)const
+void SoundManager::StopBgm(Bgm bgm)const
 {
     StopSoundMem(m_bgmSoundHandle[static_cast<int>(bgm)]);
 }

@@ -423,5 +423,8 @@
     <Media Include="Resources\Sounds\Bgm_TitleScene.mp3">
       <Filter>Resources\Sounds\Bgm</Filter>
     </Media>
+    <Media Include="Resources\Sounds\Se_Result_Bar.wav">
+      <Filter>Resources\Sounds\Se</Filter>
+    </Media>
   </ItemGroup>
 </Project>

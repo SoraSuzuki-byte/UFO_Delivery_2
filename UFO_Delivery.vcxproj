@@ -254,6 +254,7 @@
     <Media Include="Resources\Sounds\Se_Delivery.mp3" />
     <Media Include="Resources\Sounds\Se_Explosion.mp3" />
     <Media Include="Resources\Sounds\Se_Falling.mp3" />
+    <Media Include="Resources\Sounds\Se_Result_Bar.wav" />
     <Media Include="Resources\Sounds\Se_TakeDamage.mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

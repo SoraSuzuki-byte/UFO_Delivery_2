@@ -151,7 +151,7 @@ void TitleScene::Render()
 void TitleScene::Finalize()
 {
     // タイトルシーン終了時にBGMを停止する
-    m_gameContext.soundManager.EndBgm(SoundManager::Bgm::Bgm_TitleScene);
+    m_gameContext.soundManager.StopBgm(SoundManager::Bgm::Bgm_TitleScene);
 }
 
 // 家と食べ物の当たり判定

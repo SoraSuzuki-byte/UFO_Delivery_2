@@ -113,12 +113,22 @@ void PlayScene::Update()
         {
             m_titleReturnTimer++;
 
+            // 長押し中はSEをループ再生する
+            m_gameContext.soundManager.LoopSe(SoundManager::Se::Se_ResultBar);
+
+            // シーンを切り替える
             if (m_titleReturnTimer >= TITLE_RETURN_HOLD_TIME)
             {
                 m_sceneManager.RequestNextSceneID(SceneManager::SceneID::SelectScene);
             }
         }
-        else { m_titleReturnTimer = 0; }// キーを離したらタイマーをリセットする
+        // キーを離したら
+        else { 
+            // タイマーをリセットする
+            m_titleReturnTimer = 0; 
+            // SEを止める
+            m_gameContext.soundManager.StopSe(SoundManager::Se::Se_ResultBar);
+        }
     }
 }    
 //  -----------------------------------------------------------------
@@ -168,6 +178,7 @@ void PlayScene::Render()
 /// -----------------------------------------------------------------
 void PlayScene::Finalize()
 {
+    m_gameContext.soundManager.StopSe(SoundManager::Se::Se_ResultBar);
 }
 
 

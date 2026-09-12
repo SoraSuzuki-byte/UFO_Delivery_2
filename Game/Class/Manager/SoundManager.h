@@ -14,6 +14,7 @@ public:
         Se_TakeDamage, // 被ダメージ音（1）
         Se_Falling,    // 落下音（2）
         Se_Delivery,   // 宅配音（3）
+        Se_ResultBar,
         
         Max    // SEの合計数
     };
@@ -58,8 +59,10 @@ public:
     // 操作
 public:
     void StartSe(Se se)const;
+    void LoopSe(Se se)const;   // ループ再生（すでに鳴っていれば何もしない）
+    void StopSe(Se se)const;   
     void StartBgm(Bgm bgm)const;
-    void EndBgm(Bgm bgm)const;
+    void StopBgm(Bgm bgm)const;
 
     void BgmInitialize();
 
