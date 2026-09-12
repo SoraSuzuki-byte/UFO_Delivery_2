@@ -27,6 +27,7 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_isStageSelected{false}
     , m_isConfirming{false}
     , m_selectionBlinkCounter{}
+    , m_confirmFadeAlpha{ 0 }
 {
 }
 
@@ -110,11 +111,25 @@ void SelectScene::Update()
     // シーン変更の処理
     if (!m_isStageSelected)
     {
-        if (keyTrigger & PAD_INPUT_10) { m_isStageSelected = true; }
+        if (keyTrigger & PAD_INPUT_10) 
+        { 
+            m_isStageSelected = true; 
+            m_confirmFadeAlpha = 0;
+        }
     }
     else
     {
         ChangeScene(keyTrigger);
+    }
+
+
+    // 確認ダイアログのフェード
+    if (m_isStageSelected)
+    {
+        if (m_confirmFadeAlpha < CONFIRM_FADE_MAX_ALPHA)
+        {
+            m_confirmFadeAlpha += CONFIRM_FADE_ALPHA_STEP;
+        }
     }
 }
 
@@ -298,9 +313,18 @@ void SelectScene::RenderConfirmingUi()
 
 
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
+
+        {// 黒い四角の描画
+            const int dialogBackgroundAlpha = m_confirmFadeAlpha * CONFIRM_DIALOG_BACKGROUND_MAX_ALPHA / CONFIRM_FADE_MAX_ALPHA; // 黒い四角のアルファ値を計算
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, dialogBackgroundAlpha);
+            DrawDialogBackground();
+        }
+
+        // ダイアログ全体の透明度を設定
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_confirmFadeAlpha);
+
         SetFontSize(80);
         DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先が決まりましたか？", Colors::WHITE, TRUE);
-        DrawDialogBackground();
         DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::GRAY, TRUE);
         DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::GRAY, TRUE);
 
@@ -321,6 +345,9 @@ void SelectScene::RenderConfirmingUi()
             }
         }
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
+
+        // 描画モードを通常に戻す
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 
@@ -333,10 +360,10 @@ void SelectScene::DrawDialogBackground()
 {
     // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
     //SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 40);
+    //SetDrawBlendMode(DX_BLENDMODE_ALPHA, 60);
 
     DrawBox(100, 40, 1200, 600, GetColor(0, 0, 0), TRUE);
 
     // 描画モードを通常に戻す 
-    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+    //SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }

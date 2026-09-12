@@ -50,6 +50,14 @@ private:
     static constexpr const float MESSAGE_DIALOG_BOX_POS_X = 180.0f;
     static constexpr const float MESSAGE_DIALOG_BOX_POS_Y = 100.0f;
 
+    // 「確認ダイアログ」のフェードの最大アルファ値
+    static constexpr const int CONFIRM_FADE_MAX_ALPHA = 235;
+    // 「確認ダイアログ」のフェードのアルファ値の増加量
+    static constexpr const int CONFIRM_FADE_ALPHA_STEP = 5;
+    // 「確認ダイアログ背景」の最大アルファ値
+    static constexpr const int CONFIRM_DIALOG_BACKGROUND_MAX_ALPHA = 60;
+
+
     // StageId::Max を利用して配列サイズを固定
     // （描画・移動用の目標座標テーブル）   
     const std::array<Vector2D, static_cast<size_t>(StageId::Max)> STAGE_POSITIONS = // std::array は「サイズが固定された配列」を扱うための標準コンテナ
@@ -77,6 +85,8 @@ private:
     bool m_isConfirming;
     // 選択項目を点滅させる時のカウンター
     int m_selectionBlinkCounter;
+    // ステージ選択の確認ダイアログ の"フェード用"
+    int m_confirmFadeAlpha;
 
 
 public:
