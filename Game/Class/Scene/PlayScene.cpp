@@ -112,8 +112,8 @@ void PlayScene::Update()
         // HPが0になったら、ゲームオーバー状態に切り替える
         if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; } 
 
-        // すべての家に届け終わったら、クリア状態に切り替える
-        if (m_stage.IsAllHousesFulfilled()) 
+        // すべての家に届け終わり、敵が出現したことがあり、敵を全滅させるとクリア状態に切り替える
+        if ((m_stage.IsAllHousesFulfilled()) && (m_stage.HasAnyEnemy()) && (m_stage.IsAllEnemiesDefeated()))
         { 
             // 現在のステージをクリア済みにする
             m_gameContext.SetStageCleared(m_gameContext.GetSelectedStageId());
@@ -301,14 +301,43 @@ void PlayScene::UpdateStage1(int keyCondition)
         {
             m_stepTimer++;
         }
-        if (m_stepTimer > 300) { m_step1 = true; }
+        if (m_stepTimer > 300) { 
+            m_step1 = true; 
+            m_stepTimer = 0;
+        }
     }
 
     if (!m_step1) { return; }
 
     if (!m_step2)
     {
-        
+        if (m_stage.IsAnyFoodPulled())
+        {
+            m_stepTimer++;
+        }
+
+        if (m_stepTimer > 300)
+        {
+            m_step2 = true;
+            m_stepTimer = 0;
+        }
+    }
+
+    if (!m_step2) { return; }
+
+    if (!m_step3)
+    {
+        if (m_stage.IsAllHousesFulfilled())//全ての家に配達できたら
+        {
+            m_step3 = true;
+
+            // step3に切り替わった瞬間に、敵を1体だけ出現させる
+            m_stage.AddEnemy1(Vector2D{ 640.0f, 360.0f }); // 座標は出現させたい位置に調整
+
+            チュートリアルを良い感じにつくる
+                ↓
+                レベルデザインを進めてく
+        }
     }
 }
 
@@ -333,8 +362,13 @@ void PlayScene::RenderStage1()
     }
     else if (!m_step3)
     {
-        DrawString(950, 550, L"食べ物を家に届け、", Colors::WHITE, TRUE);
-        DrawString(950, 650, L"敵に爆弾を当てると、配達完了です", Colors::WHITE, TRUE);
+        DrawString(950, 550, L"食べ物を家に届けてください", Colors::WHITE, TRUE);
+        DrawString(950, 650, L"（吸引中は、速く動くと落としてしまいます）", Colors::WHITE, TRUE);
+    }
+    else
+    {
+        DrawString(950, 550, L"全ての家に届け、", Colors::WHITE, TRUE);
+        DrawString(950, 600, L"敵に爆弾を当て、全滅させると配達完了です", Colors::WHITE, TRUE);
     }
 }
 
@@ -343,7 +377,9 @@ void PlayScene::RenderStage1()
 
 
 
+// ------------------------------------------------------------------
 // ステージごとに家を配置する
+// ------------------------------------------------------------------
 void PlayScene::PlaceHouses(StageId stageId)
 {
     switch (stageId)

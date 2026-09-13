@@ -94,6 +94,8 @@ public:
     // 種類を取得する
     FoodType GetFoodType() const { return m_foodType; }
 
+    // 吸引されて付いてきているかどうかを取得する
+    bool IsPulled() const { return m_isPulled; }
 
 
     // 落とされた時の処理

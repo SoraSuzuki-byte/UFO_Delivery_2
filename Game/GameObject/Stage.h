@@ -150,6 +150,41 @@ public:
         }
         return true;   // 全部届いていれば true
     }
+    // すべての敵(タイプ1〜3)を倒したかどうかを判定する
+    bool IsAllEnemiesDefeated() const
+    {
+        for (const auto& enemy : m_enemies_1)
+        {
+            if (enemy.GetActiveFlag())
+            {
+                return false;   // 1体でも生きていれば false
+            }
+        }
+        for (const auto& enemy : m_enemies_2)
+        {
+            if (enemy.GetActiveFlag())
+            {
+                return false;
+            }
+        }
+        for (const auto& enemy : m_enemies_3)
+        {
+            if (enemy.GetActiveFlag())
+            {
+                return false;
+            }
+        }
+        return true;   // 全部倒していれば true
+    }
+    // 敵が1体以上存在するか（出現済みかどうかの判定に使う）
+    bool HasAnyEnemy() const
+    {
+        // どれか1種類でも、空"じゃなかったら"trueを返す
+        return 
+            (!m_enemies_1.empty()) || 
+            (!m_enemies_2.empty()) || 
+            (!m_enemies_3.empty());
+    }
 
     // 食べ物と、家との当たり判定
     void CheckFoodHouseCollision();
@@ -164,7 +199,11 @@ public:
     int GetChipSize()  const { return CHIP_SIZE; }
 
 
+    // いずれかの食べ物がプレイヤーに吸引されているかを判定する
+    bool IsAnyFoodPulled() const;
 
+    // 敵(タイプ1)を1体、指定位置に生成する
+    void AddEnemy1(const Vector2D& position);
 
 
     // 内部処理-----------------------------------------------------------------------------------------------

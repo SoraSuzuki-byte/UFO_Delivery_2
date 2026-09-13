@@ -298,12 +298,34 @@ void Stage::CheckBombEnemy2Collision()
 
 
 
+// 何かしらの食べ物が、吸引されているか
+bool Stage::IsAnyFoodPulled() const
+{
+    for (const auto& food : m_itemFood)
+    {
+        if (food.IsPulled())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+// 敵1を1体、指定位置に生成
+void Stage::AddEnemy1(const Vector2D& position)
+{
+    // SetPlayer()が呼ばれていることを保証する（LoadStageDataと同じ考え方）
+    assert(m_player != nullptr && L"AddEnemy1の前にSetPlayer()を呼んでください");
+
+    m_enemies_1.emplace_back(m_gameContext, *this, *m_player, position);
+}
 
 
 
 
+//// 内部処理 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// 内部処理-----------------------------------------------------------------------------------------------
 
 
 // ------------------------------------------------------------------
