@@ -414,12 +414,6 @@
     <Media Include="Resources\Sounds\Bgm_Stage1.mp3">
       <Filter>Resources\Sounds\Bgm</Filter>
     </Media>
-    <Media Include="Resources\Sounds\Bgm_Stage2.mp3">
-      <Filter>Resources\Sounds\Bgm</Filter>
-    </Media>
-    <Media Include="Resources\Sounds\Bgm_Stage3.mp3">
-      <Filter>Resources\Sounds\Bgm</Filter>
-    </Media>
     <Media Include="Resources\Sounds\Bgm_TitleScene.mp3">
       <Filter>Resources\Sounds\Bgm</Filter>
     </Media>

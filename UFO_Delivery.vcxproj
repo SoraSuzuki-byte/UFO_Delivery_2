@@ -248,8 +248,6 @@
   <ItemGroup>
     <Media Include="Resources\Sounds\Bgm_SelectScene.mp3" />
     <Media Include="Resources\Sounds\Bgm_Stage1.mp3" />
-    <Media Include="Resources\Sounds\Bgm_Stage2.mp3" />
-    <Media Include="Resources\Sounds\Bgm_Stage3.mp3" />
     <Media Include="Resources\Sounds\Bgm_TitleScene.mp3" />
     <Media Include="Resources\Sounds\Se_Delivery.mp3" />
     <Media Include="Resources\Sounds\Se_Explosion.mp3" />

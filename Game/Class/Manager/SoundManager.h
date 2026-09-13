@@ -23,8 +23,6 @@ public:
         Bgm_TitleScene,  // タイトルシーンのBGM (0)
         Bgm_SelectScene, // セレクトシーンのBGM（1）
         Bgm_Stage1,      //（2）
-        Bgm_Stage2,      //（3）
-        Bgm_Stage3,      //（4）
         
         Max    // BGMの合計数
     };

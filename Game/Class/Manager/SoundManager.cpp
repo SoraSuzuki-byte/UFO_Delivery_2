@@ -60,8 +60,6 @@ void SoundManager::Initialize()//-----------------------------------------------
         L"Resources/Sounds/Bgm_TitleScene.mp3", // (0)
         L"Resources/Sounds/Bgm_SelectScene.mp3", // (1)
         L"Resources/Sounds/Bgm_Stage1.mp3", // (2)
-        L"Resources/Sounds/Bgm_Stage2.mp3", // (3)
-        L"Resources/Sounds/Bgm_Stage3.mp3", // (4)
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 

@@ -49,6 +49,14 @@ private:
     int m_titleReturnTimer;   // スペースキーを押し続けている時間
 
 
+    // チュートリアル用のタイマー
+    int m_stepTimer;
+    // 移動方法を教える
+    bool m_step1;
+    // 吸引方法を教える
+    bool m_step2;
+    // 配達方法を教える
+    bool m_step3;
 
 public:
     PlayScene(SceneManager& sceneManager, GameContext& gameContext);
@@ -77,9 +85,12 @@ private:
     void DrawClearResultBackground();
 
 
+    // ステージ1(チュートリアル)の説明文の更新
+    void UpdateStage1(int keyCondition);
+    // ステージ1(チュートリアル)の説明文の描画
+    void RenderStage1();
+
+
     // ステージごとに家を配置する
     void PlaceHouses(StageId stageId);
-
-    // ステージごとに敵を配置する
-    void PlaceEnemies(StageId stageId);
 };

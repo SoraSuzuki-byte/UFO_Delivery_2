@@ -25,6 +25,10 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_player{ gameContext, &m_stage }
     , m_gameState{ GameState::Play }
     , m_titleReturnTimer{}
+    , m_stepTimer{}
+    , m_step1{false}
+    , m_step2{false}
+    , m_step3{false}
 {
 }
 
@@ -46,6 +50,10 @@ void PlayScene::Initialize()
 {
     m_gameState = GameState::Play;
     m_titleReturnTimer = 0;
+    m_stepTimer = 0;
+    m_step1 = false;
+    m_step2 = false;
+    m_step3 = false;
 
     // Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
     m_stage.SetPlayer(m_player);
@@ -87,25 +95,32 @@ void PlayScene::Update()
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
 
-    // プレイ中のときのみ、プレイヤーや敵を 更新
+    // プレイ状態中に行う処理
     if (m_gameState == GameState::Play)
     {
-        m_stage.Update(); // Stage.cppで「Enemy」「Food」「Bomb」などをUpdateしている
-        m_player.Update();        
-       
-        if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; } // HPが0になったら、ゲームオーバー状態に切り替える
+        // チュートリアルを更新
+        if (StageId::Stage1 == m_gameContext.GetSelectedStageId()) 
+        { 
+            UpdateStage1(keyCondition); 
+        }
+
+        // Stage.cppで「Enemy」「Food」「Bomb」などをUpdateしている
+        m_stage.Update(); 
+        m_player.Update();      
+
+
+        // HPが0になったら、ゲームオーバー状態に切り替える
+        if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; } 
 
         // すべての家に届け終わったら、クリア状態に切り替える
         if (m_stage.IsAllHousesFulfilled()) 
         { 
-            m_gameState = GameState::Clear;
-
             // 現在のステージをクリア済みにする
-            m_gameContext.SetStageCleared(
-                m_gameContext.GetSelectedStageId()
-            );
+            m_gameContext.SetStageCleared(m_gameContext.GetSelectedStageId());
+            m_gameState = GameState::Clear;
         }
     }
+    // リザルト表示の処理
     else if (m_gameState == GameState::GameOver || m_gameState == GameState::Clear)
     {
         // スペースキーの長押しで戻る
@@ -142,28 +157,33 @@ void PlayScene::Render()
     m_stage.Render();
     m_player.Render();
 
+    // チュートリアル表示
+    if (StageId::Stage1 == m_gameContext.GetSelectedStageId())
+    {
+        RenderStage1();
+    }
+
    
 
-    // ゲームオーバー中なら、画面に重ねて表示する
+    // リザルト表示
     if (m_gameState == GameState::GameOver)
     {
-        // 半透明の四角を描画
         DrawClearResultBackground();
-
+        int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(100);
         DrawString(280, 300, L"GAME OVER", GetColor(255, 0, 0));
+        SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 長押しの進捗を 描画
         DrawTitleReturnGauge();
     }
-    //　クリア中の表示
     else if (m_gameState == GameState::Clear)
     {
-        // 半透明の黒い四角を描画
         DrawClearResultBackground();
-
+        int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(100);
         DrawString(320, 300, L"CLEAR!", GetColor(0, 255, 0));
+        SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 長押しの進捗を 描画
         DrawTitleReturnGauge();
@@ -184,7 +204,7 @@ void PlayScene::Finalize()
 
 
 // ------------------------------------------------------------------
-// 背景を描画
+// 背景の描画
 // ------------------------------------------------------------------
 void PlayScene::BackgroundRender() const
 {    
@@ -233,7 +253,7 @@ void PlayScene::DrawTitleReturnGauge() const
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(50);
-    DrawString(offset.x, offset.y - 30, L"スペースキー長押しでタイトルへ", Colors::WHITE);
+    DrawString(offset.x, offset.y - 30, L"Spaceキーを長押し", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
     // ゲージの色（黄色で表現）
@@ -261,6 +281,61 @@ void PlayScene::DrawClearResultBackground()
 
     // 描画モードを通常に戻す 
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+
+
+
+
+// ------------------------------------------------------------------
+// ステージ1(チュートリアル)の説明文の更新
+// ------------------------------------------------------------------
+void PlayScene::UpdateStage1(int keyCondition)
+{
+    if (!m_step1)
+    {
+        if (keyCondition & PAD_INPUT_UP ||
+            keyCondition & PAD_INPUT_DOWN ||
+            keyCondition & PAD_INPUT_LEFT ||
+            keyCondition & PAD_INPUT_RIGHT)
+        {
+            m_stepTimer++;
+        }
+        if (m_stepTimer > 300) { m_step1 = true; }
+    }
+
+    if (!m_step1) { return; }
+
+    if (!m_step2)
+    {
+        
+    }
+}
+
+// ------------------------------------------------------------------
+// ステージ1(チュートリアル)の説明文の描画
+// ------------------------------------------------------------------
+void PlayScene::RenderStage1()
+{
+    // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
+    DrawBox(900, 500, 1280, 720, GetColor(0, 0, 0), TRUE);    
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);// 描画モードを通常に戻す 
+
+    if (!m_step1)
+    {
+        DrawString(950, 550, L"矢印キーで移動します",Colors::WHITE, TRUE);
+    }
+    else if (!m_step2)
+    {
+        DrawString(950, 550, L"アイテムの真上でSpaceキーを押すと、", Colors::WHITE, TRUE);
+        DrawString(950, 650, L"UFOに向かって吸引されます", Colors::WHITE, TRUE);
+    }
+    else if (!m_step3)
+    {
+        DrawString(950, 550, L"食べ物を家に届け、", Colors::WHITE, TRUE);
+        DrawString(950, 650, L"敵に爆弾を当てると、配達完了です", Colors::WHITE, TRUE);
+    }
 }
 
 
