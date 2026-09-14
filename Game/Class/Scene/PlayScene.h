@@ -44,7 +44,6 @@ private:
     // プレイヤークラスのインスタンス
     Player m_player;
 
-
     static constexpr int TITLE_RETURN_HOLD_TIME = 60;  // タイトルに戻るまでの長押し時間（フレーム数）
     int m_titleReturnTimer;   // スペースキーを押し続けている時間
 

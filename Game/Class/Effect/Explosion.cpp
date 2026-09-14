@@ -74,7 +74,7 @@ void Explosion::Render(int explosion) const
 
     // 爆発の描画
     DrawRectExtendGraph(
-        static_cast<int>(m_enemyPositionX) - OFFSET, static_cast<int>(m_enemyPositionY) - OFFSET,   // 描画位置の始点
+        static_cast<int>(m_enemyPositionX + ENEMY_HALF_SIZE) - OFFSET, static_cast<int>(m_enemyPositionY + ENEMY_HALF_SIZE) - OFFSET,   // 描画位置の始点
         static_cast<int>(m_enemyPositionX) + OFFSET, static_cast<int>(m_enemyPositionY) + OFFSET,   // 描画位置の終点
         x, y, SPRITE_SIZE, SPRITE_SIZE,                 // テクスチャーの切り抜き位置
         explosion, TRUE

@@ -415,7 +415,7 @@ void PlayScene::PlaceHouses(StageId stageId)
         }
         case StageId::Stage5:
         {
-            m_stage.AddHouse(Vector2D{ 1000.0f, 680.0f }, Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 1000.0f, 660.0f }, Item_Food::FoodType::Food5);
             break;
         }
         default:

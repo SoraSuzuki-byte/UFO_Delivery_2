@@ -19,6 +19,10 @@ class Explosion
 {
 // 定数や列挙型の宣言 ---------------------------------------
 private:
+    // 敵の大きさ（半分）
+    static constexpr int ENEMY_HALF_SIZE = 32;  
+
+
     // 爆発アニメーションの状態
     enum class AnimationState
     {
