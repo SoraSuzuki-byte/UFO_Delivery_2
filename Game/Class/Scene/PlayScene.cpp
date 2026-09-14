@@ -120,7 +120,7 @@ void PlayScene::Update()
             m_gameState = GameState::Clear;
         }
     }
-    // リザルト表示の処理
+    // リザルト中の更新処理
     else if (m_gameState == GameState::GameOver || m_gameState == GameState::Clear)
     {
         // スペースキーの長押しで戻る
@@ -165,13 +165,13 @@ void PlayScene::Render()
 
    
 
-    // リザルト表示
+    // リザルトを描画
     if (m_gameState == GameState::GameOver)
     {
         DrawClearResultBackground();
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(100);
-        DrawString(280, 300, L"GAME OVER", GetColor(255, 0, 0));
+        DrawString(360, 220, L"GAME OVER", GetColor(255, 0, 0));
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 長押しの進捗を 描画
@@ -182,7 +182,7 @@ void PlayScene::Render()
         DrawClearResultBackground();
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(100);
-        DrawString(320, 300, L"CLEAR!", GetColor(0, 255, 0));
+        DrawString(420, 220, L"CLEAR!", GetColor(0, 255, 0));
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 長押しの進捗を 描画
@@ -253,7 +253,7 @@ void PlayScene::DrawTitleReturnGauge() const
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(50);
-    DrawString(offset.x, offset.y - 30, L"Spaceキーを長押し", Colors::WHITE);
+    DrawString(offset.x, offset.y - 60, L"Spaceキーを長押し", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
     // ゲージの色（黄色で表現）
@@ -366,7 +366,7 @@ void PlayScene::RenderStage1()
     else if (!m_step3)
     {
         DrawString(text_X, text_Y_1, L"アイテムの真上で Spaceキーを押して下さい", Colors::WHITE, TRUE);
-        DrawString(text_X, text_Y_2, L"食べ物を家に届けてください！", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_2, L"食べ物を家に運んで下さい", Colors::WHITE, TRUE);
     }
     else
     {
