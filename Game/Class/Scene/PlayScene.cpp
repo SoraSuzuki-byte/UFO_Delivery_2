@@ -301,7 +301,7 @@ void PlayScene::UpdateStage1(int keyCondition)
         {
             m_stepTimer++;
         }
-        if (m_stepTimer > 300) { 
+        if (m_stepTimer > 240) { 
             m_step1 = true; 
             m_stepTimer = 0;
         }
@@ -316,7 +316,7 @@ void PlayScene::UpdateStage1(int keyCondition)
             m_stepTimer++;
         }
 
-        if ((m_stepTimer > 300) || (m_stage.IsAllHousesFulfilled()))
+        if ((m_stepTimer > 60) || (m_stage.IsAllHousesFulfilled()))
         {
             m_step2 = true;
             m_stepTimer = 0;
@@ -362,12 +362,11 @@ void PlayScene::RenderStage1()
     else if (!m_step2)
     {
         DrawString(text_X, text_Y_1, L"アイテムの真上で Spaceキーを押して下さい", Colors::WHITE, TRUE);
-        DrawString(text_X, text_Y_2, L"(UFOに向かって吸引されます)", Colors::WHITE, TRUE);
     }
     else if (!m_step3)
     {
-        DrawString(text_X, text_Y_1, L"食べ物を家に届けてください", Colors::WHITE, TRUE);
-        DrawString(text_X, text_Y_2, L"(移動が速いと、落とす場合があります)", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_1, L"アイテムの真上で Spaceキーを押して下さい", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_2, L"食べ物を家に届けてください！", Colors::WHITE, TRUE);
     }
     else
     {
@@ -399,7 +398,7 @@ void PlayScene::PlaceHouses(StageId stageId)
         case StageId::Stage2:
         {
             m_stage.AddHouse(Vector2D{ 100.0f, 600.0f },Item_Food::FoodType::Food1);
-            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f },Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f },Item_Food::FoodType::Food3);
             break;
         }
         case StageId::Stage3:
