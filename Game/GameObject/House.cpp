@@ -53,6 +53,18 @@ void House::RenderWantedItemIcon() const
     {
         texture = GhManager::Textures::Item_Food_2;
     }
+    else if (m_wantedFoodType == Item_Food::FoodType::Food3)
+    {
+        texture = GhManager::Textures::Item_Food_3;
+    }
+    else if (m_wantedFoodType == Item_Food::FoodType::Food4)
+    {
+        texture = GhManager::Textures::Item_Food_4;
+    }
+    else if (m_wantedFoodType == Item_Food::FoodType::Food5)
+    {
+        texture = GhManager::Textures::Item_Food_5;
+    }
 
     // 表示位置を計算してアイコンを描画する
     const int iconX = static_cast<int>(m_boundingBox.maxPosition.x) + 4; // 家の右横に少し余白
