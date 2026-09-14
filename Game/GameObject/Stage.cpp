@@ -322,6 +322,20 @@ void Stage::AddEnemy1(const Vector2D& position)
 }
 
 
+// 爆弾が、吸引されているか
+bool Stage::IsAnyBombPulled() const
+{
+    for (const auto& bomb : m_itemBomb)
+    {
+        if (bomb.IsPulled())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 
 
 //// 内部処理 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

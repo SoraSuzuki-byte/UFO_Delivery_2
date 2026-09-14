@@ -48,6 +48,8 @@ private:
     float m_restitution;
     // 摩擦係数
     float m_friction;
+    // 吸引できる条件を満たしているか
+    bool m_canPull;
     // 吸引されているか
     bool m_isPulled;
 
@@ -71,10 +73,10 @@ public:
 
     Vector2D GetPosition() const { return m_position; }
 
+    const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
 
-
-
-
+    // 吸引されて付いてきているかどうかを取得する
+    bool IsPulled() const { return m_isPulled; }
 
     // 落とされた時の処理
     void Drop(const Vector2D& dropPosition)
@@ -88,5 +90,4 @@ public:
 
     }
 
-    const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
 };

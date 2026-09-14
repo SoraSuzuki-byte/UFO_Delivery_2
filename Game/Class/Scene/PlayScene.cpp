@@ -311,12 +311,12 @@ void PlayScene::UpdateStage1(int keyCondition)
 
     if (!m_step2)
     {
-        if (m_stage.IsAnyFoodPulled())
+        if (m_stage.IsAnyFoodPulled() || m_stage.IsAnyBombPulled())
         {
             m_stepTimer++;
         }
 
-        if (m_stepTimer > 300)
+        if ((m_stepTimer > 300) || (m_stage.IsAllHousesFulfilled()))
         {
             m_step2 = true;
             m_stepTimer = 0;
@@ -332,11 +332,8 @@ void PlayScene::UpdateStage1(int keyCondition)
             m_step3 = true;
 
             // step3に切り替わった瞬間に、敵を1体だけ出現させる
-            m_stage.AddEnemy1(Vector2D{ 640.0f, 360.0f }); // 座標は出現させたい位置に調整
+            m_stage.AddEnemy1(Vector2D{ 0.0f, 0.0f }); // 座標は出現させたい位置に調整
 
-            チュートリアルを良い感じにつくる
-                ↓
-                レベルデザインを進めてく
         }
     }
 }
@@ -348,28 +345,37 @@ void PlayScene::RenderStage1()
 {
     // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-    DrawBox(900, 500, 1280, 720, GetColor(0, 0, 0), TRUE);    
+    DrawBox(0,0, 860, 200, GetColor(0, 0, 0), TRUE);    
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);// 描画モードを通常に戻す 
+
+    int text_X = 20;
+    int text_Y_1 = 20;
+    int text_Y_2 = 100;
+    int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
+    SetFontSize(40);
+
 
     if (!m_step1)
     {
-        DrawString(950, 550, L"矢印キーで移動します",Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_1, L"矢印キーで移動します",Colors::WHITE, TRUE);
     }
     else if (!m_step2)
     {
-        DrawString(950, 550, L"アイテムの真上でSpaceキーを押すと、", Colors::WHITE, TRUE);
-        DrawString(950, 650, L"UFOに向かって吸引されます", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_1, L"アイテムの真上で Spaceキーを押して下さい", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_2, L"(UFOに向かって吸引されます)", Colors::WHITE, TRUE);
     }
     else if (!m_step3)
     {
-        DrawString(950, 550, L"食べ物を家に届けてください", Colors::WHITE, TRUE);
-        DrawString(950, 650, L"（吸引中は、速く動くと落としてしまいます）", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_1, L"食べ物を家に届けてください", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_2, L"(移動が速いと、落とす場合があります)", Colors::WHITE, TRUE);
     }
     else
     {
-        DrawString(950, 550, L"全ての家に届け、", Colors::WHITE, TRUE);
-        DrawString(950, 600, L"敵に爆弾を当て、全滅させると配達完了です", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_1, L"爆弾を 敵に当てて倒し、", Colors::WHITE, TRUE);
+        DrawString(text_X, text_Y_2, L"全ての家に食べ物を届けると、配達完了です", Colors::WHITE, TRUE);
     }
+
+    SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 }
 
 
@@ -386,8 +392,8 @@ void PlayScene::PlaceHouses(StageId stageId)
     {
         case StageId::Stage1:
         {
-            m_stage.AddHouse(Vector2D{ 200.0f, 670.0f },Item_Food::FoodType::Food1);
-            m_stage.AddHouse(Vector2D{ 1100.0f, 65.0f },Item_Food::FoodType::Food2);
+            m_stage.AddHouse(Vector2D{ 200.0f, 660.0f },Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 1050.0f, 480.0f },Item_Food::FoodType::Food2);
             break;
         }
         case StageId::Stage2:

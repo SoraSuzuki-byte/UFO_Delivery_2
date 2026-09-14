@@ -23,6 +23,7 @@ Item_Bomb::Item_Bomb(GameContext& gameContext, Stage& stage, Player* player, con
     , m_gravity{}
     , m_restitution{}
     , m_friction{}
+    , m_canPull{ false }
     , m_isPulled{ false }
     , m_width{ SIZE }
     , m_height{ SIZE }
@@ -48,6 +49,7 @@ void Item_Bomb::Initialize()
     m_restitution = 0.5f;
 
     m_isActive = true;
+    m_canPull = false;
     m_isPulled = false;
 
     m_width = SIZE;
@@ -77,16 +79,18 @@ void Item_Bomb::Update()
         const bool isNearX = (diffX > -ABOVE_X_RANGE) && (diffX < ABOVE_X_RANGE);
 
         // 両方の条件を満たした時だけ「真上にいる」とみなす
-        m_isPulled = isAboveY && isNearX;
+        m_canPull = isAboveY && isNearX;
 
     }
-    else { m_isPulled = false; }
+    else { m_canPull = false; }
 
     // ------------------------------------------------------------------
     // 吸引中 かつ スペースキーを押していれば：プレイヤーへ向かって直進する
     // ------------------------------------------------------------------
-    if (m_isPulled && (keyCondition & PAD_INPUT_10))
+    if (m_canPull && (keyCondition & PAD_INPUT_10))
     {
+        m_isPulled = true;
+
         const Vector2D playerPos = m_player->GetPosition();
         const Vector2D diff = playerPos - m_position;
         const float distance = Length(diff);
@@ -97,7 +101,7 @@ void Item_Bomb::Update()
         {
             // 近づいた時の処理を、ここに書く
         }
-        else { m_isPulled = false; }
+        else { m_canPull = false; }
 
         const Vector2D direction = Normalize(diff);
 
@@ -108,9 +112,11 @@ void Item_Bomb::Update()
     }
     else // 吸引されていないとき：重力の影響を受ける
     {
+        m_isPulled = false ;
+
         m_velocity.y += m_gravity;
         m_position += m_velocity;
-
+       
 
         // 足元が壁（草）かどうかを調べる
         const float centerX = m_position.x + m_width * 0.5f;
@@ -150,10 +156,9 @@ void Item_Bomb::Update()
 
 
 
+// 爆弾オブジェクトの描画
 void Item_Bomb::Render() const
 {
-
-
     if (!m_isActive) { return; }
 
 
