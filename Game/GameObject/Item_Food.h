@@ -120,6 +120,10 @@ public:
     void Launch(const Vector2D& launchPosition);
 
 
+    // 食べ物が 画面外へ出ないように位置を修正する
+    void ClampPositionToScreen();
+
+
 
     // タイトル画面などStageがない場面で「ここまで落ちたら止まる」地面のY座標を設定する
         void SetDemoGroundY(float groundY)

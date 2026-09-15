@@ -8,11 +8,13 @@
 
 #include "pch.h"
 #include "Item_Food.h"
+#include "Game/Screen.h"
 #include "Game/GameContext.h"
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
 #include <random> //乱数に使う
+
 
 // 放物線の初速レンジ
 namespace
@@ -172,9 +174,11 @@ void Item_Food::Update()
                 m_velocity.y *= -m_restitution;
             }
         }
-        
-
     }
+
+    // 食べ物が 画面外へ出ないように位置を修正する
+    ClampPositionToScreen();
+
     // ------------------------------------------------------------------
    // 境界ボックスを、現在位置に合わせて更新する
    // ------------------------------------------------------------------
@@ -184,7 +188,7 @@ void Item_Food::Update()
 }
 
 
-void Item_Food::Render() const//-----------------------------------------------------
+void Item_Food::Render() const
 {
 
     if (!m_isActive) { return; }
@@ -216,7 +220,7 @@ void Item_Food::Render() const//------------------------------------------------
 
 
 
-// 飛ばす方角の設定と、飛ばす処理 ////////////////////////////////////////////////////////////////////////////////////////////
+// 放物線を描いて飛んでいく 
 void Item_Food::LaunchInRandomDiagonalDirection()
 {
     // 乱数生成器（関数が呼ばれるたびに再構築しないよう static に）
@@ -240,7 +244,7 @@ void Item_Food::LaunchInRandomDiagonalDirection()
 
 
 
-// 飛んでいく向きを ランダムに再設定 ////////////////////////////////////////////////////////////////////////////////
+// 飛んでいく向きを ランダムに決める
 void Item_Food::Launch(const Vector2D& launchPosition)
 {
     m_position = launchPosition;
@@ -252,3 +256,20 @@ void Item_Food::Launch(const Vector2D& launchPosition)
     m_boundingBox.minPosition = m_position;
     m_boundingBox.maxPosition = Vector2D{ m_position.x + m_width, m_position.y + m_height };
 }
+
+
+
+
+
+
+
+
+// 食べ物が 画面外へ出ないように位置を修正する
+void Item_Food::ClampPositionToScreen()
+{
+    if (m_position.x < 0.0f) { m_position.x = 0.0f; }
+    if (m_position.x + m_width > Screen::WIDTH) { m_position.x = Screen::WIDTH - m_width; }
+    if (m_position.y < 0.0f) { m_position.y = 0.0f; }
+    if (m_position.y + m_height > Screen::HEIGHT) { m_position.y = Screen::HEIGHT - m_height; }
+}
+

@@ -222,35 +222,35 @@ void Stage::CheckFoodHouseCollision()
 // ------------------------------------------------------------------
 void Stage::CheckBombHouseCollision()
 {
-    //for (auto& bomb : m_itemBomb)
-    //{
-    //    if (!bomb.GetActiveFlag()) continue;
+    for (auto& bomb : m_itemBomb)
+    {
+        if (!bomb.GetActiveFlag()) continue;
 
-    //    for (auto& house : m_houses)
-    //    {
-    //        if (!house.GetIsFulfilled()) continue;
+        for (auto& house : m_houses)
+        {
+            //if (!house.GetIsFulfilled()) continue;
 
-    //        // 当たり判定チェック
-    //        if (CheckHitAABB(bomb.GetBoundingBox(), house.GetBoundingBox()))
-    //        {
-    //            // 空いている爆発枠を探して再生を開始する
-    //            for (int i = 0; i < MAX_EXPLOSION; i++)
-    //            {
-    //                // 使われていない（アニメーションが終わっている）爆発枠を見つける
-    //                if (!m_explosions[i].IsActive())
-    //                {
-    //                    m_explosions[i].SetEnemyPosition(house.GetBoundingBox().minPosition);
-    //                    m_explosions[i].StartExplosion();
-    //                    break; // 1つ設定したらループを抜ける
-    //                }
-    //            }
+            // 当たり判定チェック
+            if (CheckHitAABB(bomb.GetBoundingBox(), house.GetBoundingBox()))
+            {
+                // 空いている爆発枠を探して再生を開始する
+                for (int i = 0; i < MAX_EXPLOSION; i++)
+                {
+                    // 使われていない（アニメーションが終わっている）爆発枠を見つける
+                    if (!m_explosions[i].IsActive())
+                    {
+                        m_explosions[i].SetEnemyPosition(house.GetBoundingBox().minPosition);
+                        m_explosions[i].StartExplosion();
+                        break; // 1つ設定したらループを抜ける
+                    }
+                }
 
-    //            bomb.SetActiveFlag(false);   // 爆弾消去
-    //            m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
-    //            break; // 敵探索のループを抜ける
-    //        }
-    //    }
-    //}
+                bomb.SetActiveFlag(false);   // 爆弾消去
+                m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
+                break; // 敵探索のループを抜ける
+            }
+        }
+    }
 
 }
 
