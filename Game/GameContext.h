@@ -18,6 +18,8 @@ enum class StageId {
     Stage4, // 3
     Stage5, // 4
     Stage6, // 5
+    Stage7, // 6
+    Stage8, // 7
     Max     // 5 (ステージの合計数)
 };
 

@@ -198,6 +198,8 @@ void Item_Food::Render() const
     case FoodType::Food4: texture = GhManager::Textures::Item_Food_4; break;
     case FoodType::Food5: texture = GhManager::Textures::Item_Food_5; break;
     case FoodType::Food6: texture = GhManager::Textures::Item_Food_6; break;
+    case FoodType::Food7: texture = GhManager::Textures::Item_Food_7; break;
+    case FoodType::Food8: texture = GhManager::Textures::Item_Food_8; break;
     default:
         // 想定外のタイプに対するエラーハンドリング
         break;

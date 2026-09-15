@@ -41,6 +41,15 @@ private:
     static constexpr const float STAGE5_POS_X = 1120.0f;
     static constexpr const float STAGE5_POS_Y = 150.0f;
 
+    static constexpr const float STAGE6_POS_X = 600.0f;
+    static constexpr const float STAGE6_POS_Y = 400.0f;
+    
+    static constexpr const float STAGE7_POS_X = 600.0f;
+    static constexpr const float STAGE7_POS_Y = 200.0f;
+
+    static constexpr const float STAGE8_POS_X = 1120.0f;
+    static constexpr const float STAGE8_POS_Y = 200.0f;
+
 
     static constexpr const float MESSAGE_YES_POS_X = 350.0f;
     static constexpr const float MESSAGE_YES_POS_Y = 450.0f;
@@ -69,6 +78,9 @@ private:
         { STAGE3_POS_X, STAGE3_POS_Y }, // Stage3 (2)
         { STAGE4_POS_X, STAGE4_POS_Y }, // Stage4 (3)
         { STAGE5_POS_X, STAGE5_POS_Y }, // Stage5 (4)
+        { STAGE6_POS_X, STAGE6_POS_Y }, // Stage6 (5)
+        { STAGE7_POS_X, STAGE7_POS_Y }, // Stage7 (6)
+        { STAGE8_POS_X, STAGE8_POS_Y }, // Stage8 (7)
     } };
 
     // 「星系」を変える時に使う キャプチャ用画像とレンダーターゲットの準備
@@ -78,6 +90,7 @@ private:
     int m_changeStarSystemCounter;
 
     // 「星系」を変える時の、最大カウンター
+    static constexpr const int STAR_SYSTEM_CHANGE_THRESHOLD = 100;
     static constexpr const int MAX_CHANGE_STAR_SYSTEM_FRAME = 120;
 
     // 画面エフェクトの進行具合
@@ -85,6 +98,14 @@ private:
 
     // 「星系」移動キーを押している時間のカウンター
     int m_effectTimer = 0;
+
+    // 「星系」をもう一つの方に変更しているのか
+    bool m_isOtherStarSystem;
+
+
+     int m_starSystemChangeCooldown = 0; // 「星系」切り替えのクールダウン残りフレーム数
+     static const int STAR_SYSTEM_CHANGE_COOLDOWN_FRAME = 120; // 切り替えのクールタイム
+
 
     
 
@@ -121,7 +142,8 @@ private:
     void ChangeScene(int keyTrigger);
     void MovePlayer();
     void RenderPlayer();
-    void RenderStageImage();
+    void RenderFirstStarSystem();
+    void RenderSecondStarSystem();
     void RenderArrowUi();
     void RenderConfirmingUi();
     void DrawDialogBackground();

@@ -24,6 +24,7 @@ class SceneManager
 {
 	// 公開する定数や列挙型の宣言 ---------------------------------------
 public:
+
 	enum class SceneID // シーンID
 	{
 		None,

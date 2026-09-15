@@ -138,9 +138,6 @@
       <Filter>EmbeddedResources\Icon</Filter>
     </Image>
     <!-- リソースファイル -->
-    <ClCompile Include="Game\Class\Scene\SceneChange.cpp">
-      <Filter>Game\Class\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Class\Manager\SceneManager.cpp">
       <Filter>Game\Class\Manager</Filter>
     </ClCompile>
@@ -217,9 +214,6 @@
     </ClInclude>
     <ClInclude Include="Game\GameContext.h">
       <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Class\Scene\SceneChange.h">
-      <Filter>Game\Class\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\Class\Manager\SceneManager.h">
       <Filter>Game\Class\Manager</Filter>
@@ -414,6 +408,36 @@
     </Image>
     <Image Include="Resources\Textures\DownArrow_Push.png">
       <Filter>Resources\Textures\UI</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_7.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_8.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage6_a.png">
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage6_b.png">
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage7_a.png">
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage7_b.png">
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage8_a.png">
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Stage8_b.png">
+      <Filter>Resources\Textures\StageImage_inSelectScene</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_7.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_8.png">
+      <Filter>Resources\Textures\Item</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

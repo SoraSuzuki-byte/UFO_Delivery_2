@@ -30,6 +30,8 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_changeStarSystemCounter{}
     , m_progress{}
     , m_effectTimer{}
+    , m_isOtherStarSystem{ false }
+    , m_starSystemChangeCooldown{}
 {
 }
 
@@ -64,6 +66,8 @@ void SelectScene::Initialize()
     m_changeStarSystemCounter = 0;
     m_progress = 0;
     m_effectTimer = 0;
+    m_isOtherStarSystem = false;
+    m_starSystemChangeCooldown = 0;
 }
 
 //  -----------------------------------------------------------------
@@ -78,89 +82,157 @@ void SelectScene::Update()
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
 
-    // ステージの合計の数を取得
-    const int maxStages = static_cast<int>(StageId::Max);
 
     //if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {デバッグデバッグデバッグデバッグデバッグデバッグデバッグデバッグ変更変更変更変更変更変更変更
     if ((!m_isStageSelected))
     {
-        // みぎ矢印キーが押されたら
-        if (keyTrigger & PAD_INPUT_RIGHT)
-        {
-            // 選択中のステージIDを、増加
-            m_gameContext.selectedStageIndex++;
+        // ステージの合計の数を取得
+        //const int maxStages = static_cast<int>(StageId::Max);
+        const int maxStages = 5;
 
-            if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
+        if (!m_isOtherStarSystem)// 星系を変えていなければ
+        {
+            // みぎ矢印キーが押されたら
+            if (keyTrigger & PAD_INPUT_RIGHT)
             {
-                m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
+                // 選択中のステージIDを、増加
+                m_gameContext.selectedStageIndex++;
+
+                if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
+                {
+                    m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
+                }
+            }
+
+            // ひだり矢印キーが押されたら
+            if (keyTrigger & PAD_INPUT_LEFT)
+            {
+                // 選択中のステージIDを、減少
+                m_gameContext.selectedStageIndex--;
+
+                if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
+                {
+                    m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
+                }
             }
         }
-
-        // ひだり矢印キーが押されたら
-        if (keyTrigger & PAD_INPUT_LEFT)
+        else// 星系を変えていたならば
         {
-            // 選択中のステージIDを、減少
-            m_gameContext.selectedStageIndex--;
+            const int maxStages = static_cast<int>(StageId::Max);
 
-            if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
+            if (keyTrigger & PAD_INPUT_RIGHT)
             {
-                m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
+                // 選択中のステージIDを、増加
+                m_gameContext.selectedStageIndex++;
+
+                if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
+                {
+                    m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
+                }
             }
+
+            // ひだり矢印キーが押されたら
+            if (keyTrigger & PAD_INPUT_LEFT)
+            {
+                // 選択中のステージIDを、減少
+                m_gameContext.selectedStageIndex--;
+
+                if (m_gameContext.selectedStageIndex < 5)// 5より小さいステージを選択することになった場合
+                {
+                    m_gameContext.selectedStageIndex = 5; // [一番小さな ステージID]に変える
+                }
+            }
+
         }
 
 
-
-
-        // 下矢印キーが押されている場合
+        // 下矢印キーが押されている場合（星系を変える処理）
         if (keyCondition & PAD_INPUT_DOWN)
         {
-            // エフェクトの進行度を増加
-            if (m_changeStarSystemCounter < MAX_CHANGE_STAR_SYSTEM_FRAME)
+            // クールダウン中は増加させない
+            if (m_starSystemChangeCooldown <= 0)
             {
-                m_changeStarSystemCounter++;
-            }
-            // エフェクトの進行度を計算（0.0f ～ 1.0f）
-            m_progress = static_cast<float>(m_changeStarSystemCounter)
-                / MAX_CHANGE_STAR_SYSTEM_FRAME;
+                // エフェクトの進行度を増加
+                if (m_changeStarSystemCounter < MAX_CHANGE_STAR_SYSTEM_FRAME)
+                {
+                    m_changeStarSystemCounter++;
+                }
 
+                // 閾値を越えると、「星系」フラグを反転し、エフェクトを止める
+                if (m_changeStarSystemCounter >= STAR_SYSTEM_CHANGE_THRESHOLD)
+                {
+                    m_isOtherStarSystem = !m_isOtherStarSystem;// 星系変更フラグを反転させる
+                    m_changeStarSystemCounter = 0;               // カウンターをリセット
+                    m_starSystemChangeCooldown = STAR_SYSTEM_CHANGE_COOLDOWN_FRAME;// にクールダウンを開始
+
+                    // trueに切り替わった時だけ、ステージ6にする
+                    if (m_isOtherStarSystem)
+                    {
+                        m_gameContext.selectedStageIndex = 5;
+                    }
+                    // falseになったら、ステージ1に設定
+                    if (!m_isOtherStarSystem)
+                    {
+                        m_gameContext.selectedStageIndex = 0;
+                    }
+                }
+            }
             // エフェクトの時間を進める
             m_effectTimer++;
+
         }
         // 離している間は、元に戻っていく
         else
         {
             if (m_changeStarSystemCounter > 0) { m_changeStarSystemCounter -= 3; }
         }
+
+        // クールダウンはキー入力に関係なく毎フレーム減らす
+        if (m_starSystemChangeCooldown > 0)
+        {
+            m_starSystemChangeCooldown--;
+        }
+
         // エフェクトの進行度を計算
         m_progress = static_cast<float>(m_changeStarSystemCounter)
             / MAX_CHANGE_STAR_SYSTEM_FRAME;
+
+
     }
 
+
+
+
+
+
+
+
+
+
     // ステージに行く処理
+    if (!m_isStageSelected)
+    {
+        if (keyTrigger & PAD_INPUT_10)
         {
-            if (!m_isStageSelected)
-            {
-                if (keyTrigger & PAD_INPUT_10)
-                {
-                    m_isStageSelected = true;
-                    m_confirmFadeAlpha = 0;
-                }
-            }
-            else
-            {
-                ChangeScene(keyTrigger);
-            }
-
-
-            // 確認ダイアログのフェード
-            if (m_isStageSelected)
-            {
-                if (m_confirmFadeAlpha < CONFIRM_FADE_MAX_ALPHA)
-                {
-                    m_confirmFadeAlpha += CONFIRM_FADE_ALPHA_STEP;
-                }
-            }
+            m_isStageSelected = true;
+            m_confirmFadeAlpha = 0;
         }
+    }
+    else
+    {
+        ChangeScene(keyTrigger);
+    }
+
+
+
+    // 確認ダイアログのフェード
+    if (m_isStageSelected)
+    {
+        if (m_confirmFadeAlpha < CONFIRM_FADE_MAX_ALPHA)
+        {
+            m_confirmFadeAlpha += CONFIRM_FADE_ALPHA_STEP;
+        }
+    }
 
 
     MovePlayer();
@@ -173,11 +245,18 @@ void SelectScene::Update()
 /// -----------------------------------------------------------------
 void SelectScene::Render()
 {
-    DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene), TRUE);
-    RenderStageImage();
-    RenderPlayer();
+    if (!m_isOtherStarSystem)// 星系が最初のものであれば
+    {
+        RenderFirstStarSystem();
+    }
+    else// 星系が変わったら
+    {
+        RenderSecondStarSystem();
+    }
+
     RenderArrowUi();
     RenderConfirmingUi();
+    RenderPlayer();
 
 
 
@@ -214,9 +293,9 @@ void SelectScene::Render()
         SetDrawBright(255, 255, 255);
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
     }
-    
-
 }
+
+
 
 //  -----------------------------------------------------------------
 /// <summary>
@@ -288,10 +367,12 @@ void SelectScene::RenderPlayer()
 
 
 //  -----------------------------------------------------------------
-// ステージの星の画像を描画
+// 1つ目の星系を描画
 //  -----------------------------------------------------------------
-void SelectScene::RenderStageImage()
+void SelectScene::RenderFirstStarSystem()
 {
+    DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene), TRUE);
+
     if (m_gameContext.IsStageCleared(StageId::Stage1)) {
         DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage1_a), TRUE);
     }
@@ -325,6 +406,47 @@ void SelectScene::RenderStageImage()
     else {
         DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage5_b), TRUE);
     }
+}
+
+
+
+//  -----------------------------------------------------------------
+// 2つ目の星系を描画
+//  -----------------------------------------------------------------
+void SelectScene::RenderSecondStarSystem()
+{
+    if (m_gameContext.IsStageCleared(StageId::Stage6) &&
+        m_gameContext.IsStageCleared(StageId::Stage7) &&
+        m_gameContext.IsStageCleared(StageId::Stage8))
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene2_after), TRUE);
+    }
+    else
+    {
+    DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene2_before), TRUE);
+    }
+
+
+    if (m_gameContext.IsStageCleared(StageId::Stage6)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage6_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage6_b), TRUE);
+    }
+    if (m_gameContext.IsStageCleared(StageId::Stage7)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage7_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage7_b), TRUE);
+    }
+
+    if (m_gameContext.IsStageCleared(StageId::Stage8)) {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage8_a), TRUE);
+    }
+    else {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Stage8_b), TRUE);
+    }
+
 }
 
 

@@ -112,7 +112,7 @@ void PlayScene::Update()
 
         // HPが0になったら、ゲームオーバー状態に切り替える
         if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; } 
-        // ステージクラスで ゲームオーバー判定になると
+        // ステージクラス内で ゲームオーバー判定になると
         if (m_stage.IsGameOver()) { m_gameState = GameState::GameOver; }
 
 
@@ -429,6 +429,16 @@ void PlayScene::PlaceHouses(StageId stageId)
         {
             m_stage.AddHouse(Vector2D{ 100.0f, 220.0f }, Item_Food::FoodType::Food6);
             m_stage.AddHouse(Vector2D{ 1200.0f, 660.0f }, Item_Food::FoodType::Food6);
+            break;
+        }
+        case StageId::Stage7:
+        {
+            m_stage.AddHouse(Vector2D{ 0.0f, 0.0f }, Item_Food::FoodType::Food7);
+            break;
+        }
+        case StageId::Stage8:
+        {
+            m_stage.AddHouse(Vector2D{ 0.0f, 0.0f }, Item_Food::FoodType::Food8);
             break;
         }
         default:

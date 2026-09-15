@@ -145,7 +145,6 @@
     <ClCompile Include="Game\Class\Manager\SceneManager.cpp" />
     <ClCompile Include="Game\Class\Manager\SoundManager.cpp" />
     <ClCompile Include="Game\Class\Scene\PlayScene.cpp" />
-    <ClCompile Include="Game\Class\Scene\SceneChange.cpp" />
     <ClCompile Include="Game\Class\Scene\SelectScene.cpp" />
     <ClCompile Include="Game\Class\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\GameObject\Enemy.cpp" />
@@ -165,7 +164,6 @@
     <ClInclude Include="Game\Class\Manager\SceneManager.h" />
     <ClInclude Include="Game\Class\Manager\SoundManager.h" />
     <ClInclude Include="Game\Class\Scene\PlayScene.h" />
-    <ClInclude Include="Game\Class\Scene\SceneChange.h" />
     <ClInclude Include="Game\Class\Scene\SelectScene.h" />
     <ClInclude Include="Game\Class\Scene\TitleScene.h" />
     <ClInclude Include="Game\GameContext.h" />
@@ -199,6 +197,8 @@
     <Image Include="Resources\Textures\Background_4.png" />
     <Image Include="Resources\Textures\Background_5.jpg" />
     <Image Include="Resources\Textures\Background_6.png" />
+    <Image Include="Resources\Textures\Background_7.png" />
+    <Image Include="Resources\Textures\Background_8.png" />
     <Image Include="Resources\Textures\Background_SelectScene.png" />
     <Image Include="Resources\Textures\Background_SelectScene2_after.png" />
     <Image Include="Resources\Textures\Background_SelectScene2_before.png" />
@@ -219,6 +219,8 @@
     <Image Include="Resources\Textures\Item_Food_4.png" />
     <Image Include="Resources\Textures\Item_Food_5.png" />
     <Image Include="Resources\Textures\Item_Food_6.png" />
+    <Image Include="Resources\Textures\Item_Food_7.png" />
+    <Image Include="Resources\Textures\Item_Food_8.png" />
     <Image Include="Resources\Textures\LeftArrow_None.png" />
     <Image Include="Resources\Textures\LeftArrow_Push.png" />
     <Image Include="Resources\Textures\logo.png" />
@@ -234,6 +236,12 @@
     <Image Include="Resources\Textures\Stage4_b.png" />
     <Image Include="Resources\Textures\Stage5_a.png" />
     <Image Include="Resources\Textures\Stage5_b.png" />
+    <Image Include="Resources\Textures\Stage6_a.png" />
+    <Image Include="Resources\Textures\Stage6_b.png" />
+    <Image Include="Resources\Textures\Stage7_a.png" />
+    <Image Include="Resources\Textures\Stage7_b.png" />
+    <Image Include="Resources\Textures\Stage8_a.png" />
+    <Image Include="Resources\Textures\Stage8_b.png" />
     <Image Include="Resources\Textures\UFO_Bass.png" />
     <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
     <Image Include="Resources\Textures\UFO_Orange_All.png" />
