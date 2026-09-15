@@ -200,7 +200,10 @@
     <Image Include="Resources\Textures\Background_5.jpg" />
     <Image Include="Resources\Textures\Background_6.png" />
     <Image Include="Resources\Textures\Background_SelectScene.png" />
-    <Image Include="Resources\Textures\Background_SelectScene2.png" />
+    <Image Include="Resources\Textures\Background_SelectScene2_after.png" />
+    <Image Include="Resources\Textures\Background_SelectScene2_before.png" />
+    <Image Include="Resources\Textures\DownArrow_None.png" />
+    <Image Include="Resources\Textures\DownArrow_Push.png" />
     <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\Enemy_1_1.png" />
     <Image Include="Resources\Textures\Enemy_2.png" />

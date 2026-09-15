@@ -10,7 +10,6 @@
 #include "pch.h"
 #include "SelectScene.h"
 #include "Game/Class/Manager/SceneManager.h"
-#include "Game/Screen.h"
 #include <cassert>
 
 //  -----------------------------------------------------------------
@@ -28,6 +27,9 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_isConfirming{false}
     , m_selectionBlinkCounter{}
     , m_confirmFadeAlpha{ 0 }
+    , m_changeStarSystemCounter{}
+    , m_progress{}
+    , m_effectTimer{}
 {
 }
 
@@ -59,6 +61,9 @@ void SelectScene::Initialize()
     m_isStageSelected = false;
     m_isConfirming = false;
     m_selectionBlinkCounter = 0;
+    m_changeStarSystemCounter = 0;
+    m_progress = 0;
+    m_effectTimer = 0;
 }
 
 //  -----------------------------------------------------------------
@@ -73,64 +78,92 @@ void SelectScene::Update()
     const int keyTrigger = m_gameContext.inputManager.GetKeyTrigger();
 
 
+    // ステージの合計の数を取得
+    const int maxStages = static_cast<int>(StageId::Max);
+
+    //if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {デバッグデバッグデバッグデバッグデバッグデバッグデバッグデバッグ変更変更変更変更変更変更変更
+    if ((!m_isStageSelected))
     {
-        // ステージの合計の数を取得
-        const int maxStages = static_cast<int>(StageId::Max);
+        // みぎ矢印キーが押されたら
+        if (keyTrigger & PAD_INPUT_RIGHT)
+        {
+            // 選択中のステージIDを、増加
+            m_gameContext.selectedStageIndex++;
 
-        //if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {デバッグデバッグデバッグデバッグデバッグデバッグデバッグデバッグ変更変更変更変更変更変更変更
-        if ((!m_isStageSelected)){
-            // みぎ矢印キーが押されたら
-            if (keyTrigger & PAD_INPUT_RIGHT)
+            if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
             {
-                // 選択中のステージIDを、増加
-                m_gameContext.selectedStageIndex++;
+                m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
+            }
+        }
 
-                if (m_gameContext.selectedStageIndex >= maxStages)// ステージの合計数より大きくなったら
+        // ひだり矢印キーが押されたら
+        if (keyTrigger & PAD_INPUT_LEFT)
+        {
+            // 選択中のステージIDを、減少
+            m_gameContext.selectedStageIndex--;
+
+            if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
+            {
+                m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
+            }
+        }
+
+
+
+
+        // 下矢印キーが押されている場合
+        if (keyCondition & PAD_INPUT_DOWN)
+        {
+            // エフェクトの進行度を増加
+            if (m_changeStarSystemCounter < MAX_CHANGE_STAR_SYSTEM_FRAME)
+            {
+                m_changeStarSystemCounter++;
+            }
+            // エフェクトの進行度を計算（0.0f ～ 1.0f）
+            m_progress = static_cast<float>(m_changeStarSystemCounter)
+                / MAX_CHANGE_STAR_SYSTEM_FRAME;
+
+            // エフェクトの時間を進める
+            m_effectTimer++;
+        }
+        // 離している間は、元に戻っていく
+        else
+        {
+            if (m_changeStarSystemCounter > 0) { m_changeStarSystemCounter -= 3; }
+        }
+        // エフェクトの進行度を計算
+        m_progress = static_cast<float>(m_changeStarSystemCounter)
+            / MAX_CHANGE_STAR_SYSTEM_FRAME;
+    }
+
+    // ステージに行く処理
+        {
+            if (!m_isStageSelected)
+            {
+                if (keyTrigger & PAD_INPUT_10)
                 {
-                    m_gameContext.selectedStageIndex = maxStages - 1; // 合計数から1を引くことで、[一番大きい ステージID]に変える
+                    m_isStageSelected = true;
+                    m_confirmFadeAlpha = 0;
                 }
             }
-
-            // ひだり矢印キーが押されたら
-            if (keyTrigger & PAD_INPUT_LEFT)
+            else
             {
-                // 選択中のステージIDを、減少
-                m_gameContext.selectedStageIndex--;
+                ChangeScene(keyTrigger);
+            }
 
-                if (m_gameContext.selectedStageIndex < 0)// 0より小さいステージを選択することになった場合
+
+            // 確認ダイアログのフェード
+            if (m_isStageSelected)
+            {
+                if (m_confirmFadeAlpha < CONFIRM_FADE_MAX_ALPHA)
                 {
-                    m_gameContext.selectedStageIndex = 0; // [一番小さな ステージID]に変える
+                    m_confirmFadeAlpha += CONFIRM_FADE_ALPHA_STEP;
                 }
             }
         }
-    }
+
 
     MovePlayer();
-
-
-    // シーン変更の処理
-    if (!m_isStageSelected)
-    {
-        if (keyTrigger & PAD_INPUT_10) 
-        { 
-            m_isStageSelected = true; 
-            m_confirmFadeAlpha = 0;
-        }
-    }
-    else
-    {
-        ChangeScene(keyTrigger);
-    }
-
-
-    // 確認ダイアログのフェード
-    if (m_isStageSelected)
-    {
-        if (m_confirmFadeAlpha < CONFIRM_FADE_MAX_ALPHA)
-        {
-            m_confirmFadeAlpha += CONFIRM_FADE_ALPHA_STEP;
-        }
-    }
 }
 
 //  -----------------------------------------------------------------
@@ -143,10 +176,6 @@ void SelectScene::Render()
     DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene), TRUE);
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
-    //SetFontSize(80);
-    //if (!m_isStageSelected) {
-    //    DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先を選びましょう", Colors::WHITE);
-    //}
     SetFontSize(25);
     DrawString(MESSAGE_UI_POS_X, MESSAGE_UI_POS_Y, L"Spaceキーで決定", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
@@ -157,6 +186,42 @@ void SelectScene::Render()
     RenderArrowUi();
     RenderConfirmingUi();
 
+
+
+    // 「星系」移動時に、画面エフェクトを描画する
+    if (m_progress > 0.0f)
+    {
+        // 時間経過によるウネウネとした揺らぎ（波）
+        float wave1 = sinf(m_effectTimer * 0.1f);
+        float wave2 = cosf(m_effectTimer * 0.1f);
+
+        int shiftX = (int)(m_progress * 20.0f + wave1 * 10.0f * m_progress);
+        int shiftY = (int)(wave2 * 5.0f * m_progress);
+        const float scale = 1.0f + (m_progress * 0.1f);
+        double angle = (double)(m_progress * 0.03f + wave2 * 0.02f * m_progress);
+
+        // 背景などのメイン画像を直接「色ズレ加算描画」する（超軽量）
+        int bgHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene);
+
+        SetDrawBlendMode(DX_BLENDMODE_PMA_ADD, (int)(m_progress * 255));
+
+        // R (右・上)
+        SetDrawBright(255, 0, 0);
+        DrawRotaGraph(Screen::WIDTH / 2 + shiftX, Screen::HEIGHT / 2 + shiftY, scale, angle, bgHandle, TRUE);
+
+        // G (中央)
+        SetDrawBright(0, 255, 0);
+        DrawRotaGraph(Screen::WIDTH / 2, Screen::HEIGHT / 2, scale, 0.0, bgHandle, TRUE);
+
+        // B (左・下)
+        SetDrawBright(0, 0, 255);
+        DrawRotaGraph(Screen::WIDTH / 2 - shiftX, Screen::HEIGHT / 2 - shiftY, scale, -angle, bgHandle, TRUE);
+
+        // 描画状態をリセット
+        SetDrawBright(255, 255, 255);
+        SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+    }
+    
 
 }
 

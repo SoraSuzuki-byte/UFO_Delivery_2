@@ -75,7 +75,12 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Background_5.jpg", // (40)
         L"Resources/Textures/logo.png", // (41)
         L"Resources/Textures/Background_6.png", // (42)
-        L"Resources/Textures/Item_Food_6.png" // (43)
+        L"Resources/Textures/Background_7.png", // (43)
+        L"Resources/Textures/Background_8.png", // (44)
+        L"Resources/Textures/Background_SelectScene2_before.png", // (45)
+        L"Resources/Textures/Background_SelectScene2_after.png", // (46)
+        L"Resources/Textures/Item_Food_6.png" // (47)
+
 
 
     };

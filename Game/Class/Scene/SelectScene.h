@@ -10,6 +10,8 @@
 #pragma once
 #include "Library/GameMath.h"
 #include "Game/GameContext.h"
+#include "Game/Screen.h"
+
 
 #include <array>
 
@@ -69,6 +71,22 @@ private:
         { STAGE5_POS_X, STAGE5_POS_Y }, // Stage5 (4)
     } };
 
+    // 「星系」を変える時に使う キャプチャ用画像とレンダーターゲットの準備
+    int capturedGraph = MakeGraph(Screen::WIDTH, Screen::HEIGHT);
+
+    // 「星系」を変える時の、カウンター
+    int m_changeStarSystemCounter;
+
+    // 「星系」を変える時の、最大カウンター
+    static constexpr const int MAX_CHANGE_STAR_SYSTEM_FRAME = 120;
+
+    // 画面エフェクトの進行具合
+    float m_progress;
+
+    // 「星系」移動キーを押している時間のカウンター
+    int m_effectTimer = 0;
+
+    
 
     // シーンマネジャー
     SceneManager& m_sceneManager;

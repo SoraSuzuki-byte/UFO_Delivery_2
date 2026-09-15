@@ -53,7 +53,11 @@ public:
         Background_5, // 背景画像 (40)
         Logo, // タイトル画面のロゴ(41)
         Background_6, // 背景画像 (42)
-        Item_Food_6, // (43)
+        Background_7, // 背景画像 (43)
+        Background_8, // 背景画像 (44)
+        Background_SelectScene2_before,// セレクトシーンの背景画像 (45)
+        Background_SelectScene2_after,// セレクトシーンの背景画像 (46)
+        Item_Food_6, // (47)
 
 
 

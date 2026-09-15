@@ -397,14 +397,23 @@
     <Image Include="Resources\Textures\logo.png">
       <Filter>Resources\Textures</Filter>
     </Image>
-    <Image Include="Resources\Textures\Background_SelectScene2.png">
-      <Filter>Resources\Textures\Background</Filter>
-    </Image>
     <Image Include="Resources\Textures\Background_6.png">
       <Filter>Resources\Textures\Background</Filter>
     </Image>
     <Image Include="Resources\Textures\Item_Food_6.png">
       <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_SelectScene2_before.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_SelectScene2_after.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\DownArrow_None.png">
+      <Filter>Resources\Textures\UI</Filter>
+    </Image>
+    <Image Include="Resources\Textures\DownArrow_Push.png">
+      <Filter>Resources\Textures\UI</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
