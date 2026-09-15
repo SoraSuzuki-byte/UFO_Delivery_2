@@ -66,7 +66,8 @@ public:
     void Render();
     void Finalize();
 
- 
+    // ゲームオーバー状態にする
+    void SetGameOver() { m_gameState = GameState::GameOver; }
 
     Stage& GetStage() { return m_stage; }
 

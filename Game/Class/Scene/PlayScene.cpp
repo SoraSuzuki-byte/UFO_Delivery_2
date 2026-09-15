@@ -111,6 +111,9 @@ void PlayScene::Update()
 
         // HPが0になったら、ゲームオーバー状態に切り替える
         if (m_player.GetHp() <= 0) { m_gameState = GameState::GameOver; } 
+        // ステージクラスで ゲームオーバー判定になると
+        if (m_stage.IsGameOver()) { m_gameState = GameState::GameOver; }
+
 
         // すべての家に届け終わり、敵が出現したことがあり、敵を全滅させるとクリア状態に切り替える
         if ((m_stage.IsAllHousesFulfilled()) && (m_stage.HasAnyEnemy()) && (m_stage.IsAllEnemiesDefeated()))

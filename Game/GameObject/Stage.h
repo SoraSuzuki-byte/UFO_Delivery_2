@@ -68,6 +68,9 @@ private:
     int m_mapWidth;
     int m_mapHeight;
 
+    // ゲームオーバーになったか
+    bool m_isGameOver;
+
     // マップの２次元配列を動的に確保するためのダブルポインタ型変数// 画面上の見た目 用の
     Type** m_mapArray;
 
@@ -209,6 +212,9 @@ public:
 
     // いずれかの爆弾が、プレイヤーに吸引されているかを判定する
     bool IsAnyBombPulled() const;
+
+    // ゲームオーバーフラグを取得
+    bool IsGameOver() const { return m_isGameOver; }
 
 
 

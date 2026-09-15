@@ -25,6 +25,7 @@ Stage::Stage(GameContext& gameContext)
     , m_boundingBoxArray{}
     , m_playerStartPosition{}
     , m_player{ nullptr }
+    , m_isGameOver{false}
 {
 }
 
@@ -64,6 +65,8 @@ void Stage::Initialize(const wchar_t* stageNumber)
    
     CreateBoundingBoxArray();
     for (int i = 0; i < MAX_EXPLOSION; i++) { m_explosions[i].Initialize(); }
+
+    m_isGameOver = false;
 }
 
 // ------------------------------------------------------------------
@@ -247,7 +250,8 @@ void Stage::CheckBombHouseCollision()
 
                 bomb.SetActiveFlag(false);   // 爆弾消去
                 m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
-                break; // 敵探索のループを抜ける
+                m_isGameOver = true;// ゲームオーバー
+                break;
             }
         }
     }
