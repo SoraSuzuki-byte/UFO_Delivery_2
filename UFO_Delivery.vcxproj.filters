@@ -207,6 +207,9 @@
     <None Include="Resources\MapData\stage_05.csv">
       <Filter>Resources\MapDate</Filter>
     </None>
+    <None Include="Resources\MapData\stage_06.csv">
+      <Filter>Resources\MapDate</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\GameMath.h">
@@ -394,6 +397,15 @@
     <Image Include="Resources\Textures\logo.png">
       <Filter>Resources\Textures</Filter>
     </Image>
+    <Image Include="Resources\Textures\Background_SelectScene2.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Background_6.png">
+      <Filter>Resources\Textures\Background</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Item_Food_6.png">
+      <Filter>Resources\Textures\Item</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Se_Delivery.mp3">
@@ -409,9 +421,6 @@
       <Filter>Resources\Sounds\Se</Filter>
     </Media>
     <Media Include="Resources\Sounds\Bgm_SelectScene.mp3">
-      <Filter>Resources\Sounds\Bgm</Filter>
-    </Media>
-    <Media Include="Resources\Sounds\Bgm_Stage1.mp3">
       <Filter>Resources\Sounds\Bgm</Filter>
     </Media>
     <Media Include="Resources\Sounds\Bgm_TitleScene.mp3">

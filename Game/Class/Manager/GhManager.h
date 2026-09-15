@@ -52,6 +52,8 @@ public:
         Background_4, // 背景画像 (39)
         Background_5, // 背景画像 (40)
         Logo, // タイトル画面のロゴ(41)
+        Background_6, // 背景画像 (42)
+        Item_Food_6, // (43)
 
 
 

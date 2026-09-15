@@ -65,6 +65,7 @@ void PlayScene::Initialize()
         L"stage_03",   // StageId::Stage3 用
         L"stage_04",   // StageId::Stage4 用
         L"stage_05",   // StageId::Stage5 用
+        L"stage_06",   // StageId::Stage6 用
     };
 
     // 現在選択されているステージIDを取得する
@@ -227,6 +228,10 @@ void PlayScene::BackgroundRender() const
     else if (m_gameContext.GetSelectedStageId() == StageId::Stage4)
     {
         DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_4), TRUE);
+    }
+    else if (m_gameContext.GetSelectedStageId() == StageId::Stage6)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_6), TRUE);
     }
 
     // ステージ５をクリアすると、背景が描画されるようになる
@@ -418,6 +423,12 @@ void PlayScene::PlaceHouses(StageId stageId)
         case StageId::Stage5:
         {
             m_stage.AddHouse(Vector2D{ 1000.0f, 660.0f }, Item_Food::FoodType::Food5);
+            break;
+        }
+        case StageId::Stage6:
+        {
+            m_stage.AddHouse(Vector2D{ 100.0f, 220.0f }, Item_Food::FoodType::Food6);
+            m_stage.AddHouse(Vector2D{ 1200.0f, 660.0f }, Item_Food::FoodType::Food6);
             break;
         }
         default:

@@ -73,7 +73,10 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/RightArrow_Push.png", // (38)
         L"Resources/Textures/Background_4.png", // (39)
         L"Resources/Textures/Background_5.jpg", // (40)
-        L"Resources/Textures/logo.png" // (41)
+        L"Resources/Textures/logo.png", // (41)
+        L"Resources/Textures/Background_6.png", // (42)
+        L"Resources/Textures/Item_Food_6.png" // (43)
+
 
     };
 

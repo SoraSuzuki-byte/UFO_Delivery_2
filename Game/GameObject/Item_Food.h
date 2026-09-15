@@ -23,7 +23,8 @@ public:
         Food2,
         Food3,
         Food4,
-        Food5
+        Food5,
+        Food6
     };
 private:
     // 重力

@@ -59,7 +59,6 @@ void SoundManager::Initialize()//-----------------------------------------------
     const wchar_t* bgmPaths[] = {
         L"Resources/Sounds/Bgm_TitleScene.mp3", // (0)
         L"Resources/Sounds/Bgm_SelectScene.mp3", // (1)
-        L"Resources/Sounds/Bgm_Stage1.mp3", // (2)
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 素材を増やすたび,順番が対応するパスをここに追記!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 

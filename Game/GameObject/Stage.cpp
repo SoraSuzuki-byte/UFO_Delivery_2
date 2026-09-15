@@ -589,6 +589,19 @@ void Stage::LoadStageData(const wchar_t* stageName)
                     m_enemies_3.emplace_back(m_gameContext, *this, *m_player, startPos); // 敵を生成
                     break;
                 }
+                // 食べ物6
+                case 12:
+                {
+                    m_mapArray[y][x] = Type::ItemFood;   // Type自体は共通のままでOK（表示上の種類は別管理のため）
+
+                    const Vector2D minVec2D{ static_cast<float>(x) * CHIP_SIZE, static_cast<float>(y) * CHIP_SIZE };
+                    const Vector2D maxVec2D{ minVec2D.x + CHIP_SIZE, minVec2D.y + CHIP_SIZE };
+                    BoundingBox bb{ minVec2D, maxVec2D };
+
+                    m_itemFood.emplace_back(m_gameContext, this, m_player, bb, Item_Food::FoodType::Food6);
+                    m_itemFood.back().Initialize();
+                    break;
+                }
 
                 default:
                     assert(!"不正なタイル番号が検知されました");

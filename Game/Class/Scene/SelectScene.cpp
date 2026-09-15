@@ -77,8 +77,8 @@ void SelectScene::Update()
         // ステージの合計の数を取得
         const int maxStages = static_cast<int>(StageId::Max);
 
-        if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {
-
+        //if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {デバッグデバッグデバッグデバッグデバッグデバッグデバッグデバッグ変更変更変更変更変更変更変更
+        if ((!m_isStageSelected)){
             // みぎ矢印キーが押されたら
             if (keyTrigger & PAD_INPUT_RIGHT)
             {

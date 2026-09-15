@@ -150,13 +150,6 @@ void Item_Food::Update()
             const float centerX = m_position.x + m_width * 0.5f;
             const float footY = m_position.y + m_height;
 
-            // マップ外への落下対策
-            const float mapBottom = static_cast<float>(m_stage->GetMapHeight() * m_stage->GetChipSize());
-            if (footY > mapBottom)
-            {
-                m_isActive = false;
-                return;
-            }
 
             const Stage::Type footType = m_stage->GetChipType(Vector2D{ centerX, footY });
 
@@ -204,6 +197,7 @@ void Item_Food::Render() const
     case FoodType::Food3: texture = GhManager::Textures::Item_Food_3; break;
     case FoodType::Food4: texture = GhManager::Textures::Item_Food_4; break;
     case FoodType::Food5: texture = GhManager::Textures::Item_Food_5; break;
+    case FoodType::Food6: texture = GhManager::Textures::Item_Food_6; break;
     default:
         // 想定外のタイプに対するエラーハンドリング
         break;

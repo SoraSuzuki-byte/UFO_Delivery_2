@@ -22,7 +22,6 @@ public:
     enum class Bgm {
         Bgm_TitleScene,  // タイトルシーンのBGM (0)
         Bgm_SelectScene, // セレクトシーンのBGM（1）
-        Bgm_Stage1,      //（2）
         
         Max    // BGMの合計数
     };
