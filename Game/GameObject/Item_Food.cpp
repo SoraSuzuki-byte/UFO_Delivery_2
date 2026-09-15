@@ -12,6 +12,17 @@
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
+#include <random> //乱数に使う
+
+// 放物線の初速レンジ
+namespace
+{
+    constexpr float MIN_LAUNCH_SPEED_X = 4.0f;   // 横方向の最小初速
+    constexpr float MAX_LAUNCH_SPEED_X = 7.0f;   // 横方向の最大初速
+    constexpr float MIN_LAUNCH_SPEED_Y = 10.0f;  // 上方向の最小初速（絶対値）
+    constexpr float MAX_LAUNCH_SPEED_Y = 14.0f;  // 上方向の最大初速（絶対値）
+}
+
 Item_Food::Item_Food(GameContext& gameContext, Stage* stage, Player* player, const BoundingBox& boundingBox, FoodType foodType)
     : m_gameContext{ gameContext }
     , m_stage{ stage }
@@ -199,4 +210,45 @@ void Item_Food::Render() const//------------------------------------------------
         static_cast<int>(m_boundingBox.minPosition.y),
         m_gameContext.ghManager.GetGraphicHandle(texture),
         TRUE);
+}
+
+
+
+
+
+// 飛ばす方角の設定と、飛ばす処理 ////////////////////////////////////////////////////////////////////////////////////////////
+void Item_Food::LaunchInRandomDiagonalDirection()
+{
+    // 乱数生成器（関数が呼ばれるたびに再構築しないよう static に）
+    static std::mt19937 rng{ std::random_device{}() };
+    static std::uniform_int_distribution<int> dirDist(0, 1);              // 0:左上 1:右上
+    static std::uniform_real_distribution<float> speedXDist(MIN_LAUNCH_SPEED_X, MAX_LAUNCH_SPEED_X);
+    static std::uniform_real_distribution<float> speedYDist(MIN_LAUNCH_SPEED_Y, MAX_LAUNCH_SPEED_Y);
+
+    const int direction = dirDist(rng);
+    const float speedX = speedXDist(rng);
+    const float speedY = speedYDist(rng);
+
+    // 左上なら-x、右上なら+x
+    m_velocity.x = (direction == 0) ? -speedX : speedX;
+    // 上方向は-yなのでマイナスを付ける
+    m_velocity.y = -speedY;
+
+    // 吸引状態や重力での挙動と競合しないようリセットしておく
+    m_isPulled = false;
+}
+
+
+
+// 飛んでいく向きを ランダムに再設定 ////////////////////////////////////////////////////////////////////////////////
+void Item_Food::Launch(const Vector2D& launchPosition)
+{
+    m_position = launchPosition;
+    m_isActive = true;
+    m_isPulled = false;
+
+    LaunchInRandomDiagonalDirection(); // ここで毎回ランダムに再設定される
+
+    m_boundingBox.minPosition = m_position;
+    m_boundingBox.maxPosition = Vector2D{ m_position.x + m_width, m_position.y + m_height };
 }

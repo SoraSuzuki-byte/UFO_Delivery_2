@@ -37,6 +37,7 @@ public:
     void RenderWantedItemIcon() const;
 
 
+    // 当たり判定の範囲を 取得
     const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
     //「欲しがっている食べ物の種類」を取得する
     Item_Food::FoodType GetWantedFoodType() const { return m_wantedFoodType; }

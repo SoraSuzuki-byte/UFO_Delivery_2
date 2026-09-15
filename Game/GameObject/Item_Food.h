@@ -110,8 +110,14 @@ public:
 
     }
 
+    // 当たり判定ボックスを取得
     const BoundingBox& GetBoundingBox() const { return m_boundingBox; }
 
+
+    // 放物線を描いて飛んでいく
+    void LaunchInRandomDiagonalDirection();
+    // 飛んでいく向きを ランダムに再設定
+    void Launch(const Vector2D& launchPosition);
 
 
 

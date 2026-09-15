@@ -188,6 +188,8 @@ public:
 
     // 食べ物と、家との当たり判定
     void CheckFoodHouseCollision();
+    // 爆弾と、家との当たり判定
+    void CheckBombHouseCollision();
     // 爆弾と、敵1の当たり判定
     void CheckBombEnemyCollision(); 
     // 爆弾と、敵2の当たり判定

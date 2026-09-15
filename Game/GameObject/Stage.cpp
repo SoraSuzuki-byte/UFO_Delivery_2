@@ -100,6 +100,7 @@ void Stage::Update()
 
     // 当たり判定
     CheckFoodHouseCollision(); // 食べ物と,家
+    CheckBombHouseCollision(); // 爆弾と、家
     CheckBombEnemyCollision();  // 爆弾と, 敵
     CheckBombEnemy2Collision();  // 爆弾と, 敵2
 
@@ -187,27 +188,69 @@ void Stage::CheckFoodHouseCollision()
 {
     for (auto& house : m_houses)
     {
-        if (house.GetIsFulfilled()) continue;
+        //if (house.GetIsFulfilled()) continue;
 
         for (auto& item : m_itemFood)
         {
             if (!item.GetActiveFlag()) continue;
 
-            // 当たり判定をチェック
+            // 当たり判定のチェック
             if (CheckHitAABB(item.GetBoundingBox(), house.GetBoundingBox())) {
 
-                // 食べ物の種類と 家が求める種類を照合
-                if (item.GetFoodType() == house.GetWantedFoodType())
+                // 配達済みじゃない、かつ食べ物の種類が合っている場合のみ納品成功
+                if ((!house.GetIsFulfilled()) && (item.GetFoodType() == house.GetWantedFoodType()))
                 {
-                    // 納品成功
                     item.SetActiveFlag(false);
                     house.SetIsFulfilled(true);
                     m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Delivery);
+                }
+                // 違う食べ物だったら
+                else
+                {
+                    // ランダムに飛んでいく
+                    item.Launch(item.GetBoundingBox().minPosition);
                 }
                 break;
             }
         }
     }
+}
+
+
+// ------------------------------------------------------------------
+// 爆弾と、家との当たり判定
+// ------------------------------------------------------------------
+void Stage::CheckBombHouseCollision()
+{
+    //for (auto& bomb : m_itemBomb)
+    //{
+    //    if (!bomb.GetActiveFlag()) continue;
+
+    //    for (auto& house : m_houses)
+    //    {
+    //        if (!house.GetIsFulfilled()) continue;
+
+    //        // 当たり判定チェック
+    //        if (CheckHitAABB(bomb.GetBoundingBox(), house.GetBoundingBox()))
+    //        {
+    //            // 空いている爆発枠を探して再生を開始する
+    //            for (int i = 0; i < MAX_EXPLOSION; i++)
+    //            {
+    //                // 使われていない（アニメーションが終わっている）爆発枠を見つける
+    //                if (!m_explosions[i].IsActive())
+    //                {
+    //                    m_explosions[i].SetEnemyPosition(house.GetBoundingBox().minPosition);
+    //                    m_explosions[i].StartExplosion();
+    //                    break; // 1つ設定したらループを抜ける
+    //                }
+    //            }
+
+    //            bomb.SetActiveFlag(false);   // 爆弾消去
+    //            m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
+    //            break; // 敵探索のループを抜ける
+    //        }
+    //    }
+    //}
 
 }
 
