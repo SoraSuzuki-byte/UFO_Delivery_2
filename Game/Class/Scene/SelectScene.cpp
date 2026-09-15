@@ -174,13 +174,6 @@ void SelectScene::Update()
 void SelectScene::Render()
 {
     DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_SelectScene), TRUE);
-
-    int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
-    SetFontSize(25);
-    DrawString(MESSAGE_UI_POS_X, MESSAGE_UI_POS_Y, L"Spaceキーで決定", Colors::WHITE);
-    SetFontSize(defaultFontSize);// フォントサイズを元に戻す
-
-
     RenderStageImage();
     RenderPlayer();
     RenderArrowUi();
@@ -343,28 +336,49 @@ void SelectScene::RenderArrowUi()
 {
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
 
-    if (keyCondition & PAD_INPUT_LEFT)
+    // Stage1～5をクリアしている場合
+    if (m_gameContext.IsStageCleared(StageId::Stage1) &&
+        m_gameContext.IsStageCleared(StageId::Stage2) &&
+        m_gameContext.IsStageCleared(StageId::Stage3) &&
+        m_gameContext.IsStageCleared(StageId::Stage4) &&
+        m_gameContext.IsStageCleared(StageId::Stage5))
     {
-        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::LeftArrow_Push), TRUE);
+        if (keyCondition & PAD_INPUT_DOWN)
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::DownArrow_Push), TRUE);
+        }
+        else
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::DownArrow_None), TRUE);
+        }
+        
     }
+    // まだ、Stage1～5をクリアしていなければ ↓
     else
     {
-        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::LeftArrow_None), TRUE);
-    }
+        int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
+        SetFontSize(25);
+        DrawString(MESSAGE_UI_POS_X, MESSAGE_UI_POS_Y, L"Spaceキーで決定", Colors::WHITE);
+        SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
-    if (keyCondition & PAD_INPUT_RIGHT)
-    {
-        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::RightArrow_Push), TRUE);
-    }
-    else
-    {
-        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::RightArrow_None), TRUE);
-    }
+        if (keyCondition & PAD_INPUT_LEFT)
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::LeftArrow_Push), TRUE);
+        }
+        else
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::LeftArrow_None), TRUE);
+        }
 
-    //押してる時は、「Push」の画像を表示して、、押していない時「None」の画像を描画する
-    //    ↑
-    //    設計をAIに効く
-
+        if (keyCondition & PAD_INPUT_RIGHT)
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::RightArrow_Push), TRUE);
+        }
+        else
+        {
+            DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::RightArrow_None), TRUE);
+        }
+    }
 }
 
 
