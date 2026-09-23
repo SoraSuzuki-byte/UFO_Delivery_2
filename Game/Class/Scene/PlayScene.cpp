@@ -66,6 +66,8 @@ void PlayScene::Initialize()
         L"stage_04",   // StageId::Stage4 用
         L"stage_05",   // StageId::Stage5 用
         L"stage_06",   // StageId::Stage6 用
+        L"stage_07",   // StageId::Stage7 用
+        L"stage_08",   // StageId::Stage8 用
     };
 
     // 現在選択されているステージIDを取得する
@@ -232,6 +234,14 @@ void PlayScene::BackgroundRender() const
     else if (m_gameContext.GetSelectedStageId() == StageId::Stage6)
     {
         DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_6), TRUE);
+    }
+    else if (m_gameContext.GetSelectedStageId() == StageId::Stage7)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_7), TRUE);
+    }
+    else if (m_gameContext.GetSelectedStageId() == StageId::Stage8)
+    {
+        DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Background_8), TRUE);
     }
 
     // ステージ５をクリアすると、背景が描画されるようになる

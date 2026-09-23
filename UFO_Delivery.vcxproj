@@ -252,6 +252,8 @@
     <None Include="Resources\MapData\stage_04.csv" />
     <None Include="Resources\MapData\stage_05.csv" />
     <None Include="Resources\MapData\stage_06.csv" />
+    <None Include="Resources\MapData\stage_07.csv" />
+    <None Include="Resources\MapData\stage_08.csv" />
     <ResourceCompile Include="EmbeddedResources\Resource.rc" />
     <Image Include="EmbeddedResources\Icon\Game.ico" />
     <!-- リソースファイル -->

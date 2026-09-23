@@ -207,6 +207,12 @@
     <None Include="Resources\MapData\stage_06.csv">
       <Filter>Resources\MapDate</Filter>
     </None>
+    <None Include="Resources\MapData\stage_07.csv">
+      <Filter>Resources\MapDate</Filter>
+    </None>
+    <None Include="Resources\MapData\stage_08.csv">
+      <Filter>Resources\MapDate</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Library\GameMath.h">

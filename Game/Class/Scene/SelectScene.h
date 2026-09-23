@@ -41,14 +41,14 @@ private:
     static constexpr const float STAGE5_POS_X = 1120.0f;
     static constexpr const float STAGE5_POS_Y = 150.0f;
 
-    static constexpr const float STAGE6_POS_X = 600.0f;
-    static constexpr const float STAGE6_POS_Y = 400.0f;
+    static constexpr const float STAGE6_POS_X = 560.0f;
+    static constexpr const float STAGE6_POS_Y = 500.0f;
     
-    static constexpr const float STAGE7_POS_X = 600.0f;
+    static constexpr const float STAGE7_POS_X = 520.0f;
     static constexpr const float STAGE7_POS_Y = 200.0f;
 
-    static constexpr const float STAGE8_POS_X = 1120.0f;
-    static constexpr const float STAGE8_POS_Y = 200.0f;
+    static constexpr const float STAGE8_POS_X = 1080.0f;
+    static constexpr const float STAGE8_POS_Y = 150.0f;
 
 
     static constexpr const float MESSAGE_YES_POS_X = 350.0f;
