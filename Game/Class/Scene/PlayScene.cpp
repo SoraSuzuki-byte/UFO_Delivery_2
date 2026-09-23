@@ -444,11 +444,16 @@ void PlayScene::PlaceHouses(StageId stageId)
         case StageId::Stage7:
         {
             m_stage.AddHouse(Vector2D{ 0.0f, 0.0f }, Item_Food::FoodType::Food7);
+            m_stage.AddHouse(Vector2D{ 800.0f, 660.0f }, Item_Food::FoodType::Food7);
+            m_stage.AddHouse(Vector2D{ 1200.0f, 660.0f }, Item_Food::FoodType::Food8);
             break;
         }
         case StageId::Stage8:
         {
-            m_stage.AddHouse(Vector2D{ 0.0f, 0.0f }, Item_Food::FoodType::Food8);
+            m_stage.AddHouse(Vector2D{ 0.0f, 0.0f }, Item_Food::FoodType::Food7);
+            m_stage.AddHouse(Vector2D{ 500.0f, 0.0f }, Item_Food::FoodType::Food8);
+            m_stage.AddHouse(Vector2D{ 800.0f, 0.0f }, Item_Food::FoodType::Food8);
+            m_stage.AddHouse(Vector2D{ 1200.0f, 0.0f }, Item_Food::FoodType::Food8);
             break;
         }
         default:
