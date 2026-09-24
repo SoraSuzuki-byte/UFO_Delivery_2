@@ -457,6 +457,9 @@
     <Image Include="Resources\Textures\BrokenHouse.png">
       <Filter>Resources</Filter>
     </Image>
+    <Image Include="Resources\Textures\UFO_Dead.png">
+      <Filter>Resources\Textures\UFO</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Se_Delivery.mp3">

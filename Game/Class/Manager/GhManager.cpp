@@ -91,7 +91,8 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Item_Food_7.png", // (56)
         L"Resources/Textures/Item_Food_8.png", // (57)
         L"Resources/Textures/SpawnEffect.png", // (58)
-        L"Resources/Textures/BrokenHouse.png" // (59)
+        L"Resources/Textures/BrokenHouse.png", // (59)
+        L"Resources/Textures/UFO_Dead.png" // (60)
 
 
 

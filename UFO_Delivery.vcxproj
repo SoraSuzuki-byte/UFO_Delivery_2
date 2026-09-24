@@ -248,6 +248,7 @@
     <Image Include="Resources\Textures\Stage8_b.png" />
     <Image Include="Resources\Textures\UFO_Bass.png" />
     <Image Include="Resources\Textures\UFO_Damage_Overlay.png" />
+    <Image Include="Resources\Textures\UFO_Dead.png" />
     <Image Include="Resources\Textures\UFO_Orange_All.png" />
     <Image Include="Resources\Textures\UFO_Orange_Left.png" />
     <Image Include="Resources\Textures\UFO_Orange_Middle.png" />
