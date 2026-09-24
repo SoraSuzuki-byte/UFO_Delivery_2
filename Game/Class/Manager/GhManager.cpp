@@ -89,7 +89,9 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/Background_SelectScene2_after.png", // (54)
         L"Resources/Textures/Item_Food_6.png", // (55)
         L"Resources/Textures/Item_Food_7.png", // (56)
-        L"Resources/Textures/Item_Food_8.png" // (57)
+        L"Resources/Textures/Item_Food_8.png", // (57)
+        L"Resources/Textures/SpawnEffect.png" // (58)
+
 
 
 

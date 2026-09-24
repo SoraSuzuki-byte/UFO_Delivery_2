@@ -228,6 +228,7 @@
     <Image Include="Resources\Textures\logo.png" />
     <Image Include="Resources\Textures\RightArrow_None.png" />
     <Image Include="Resources\Textures\RightArrow_Push.png" />
+    <Image Include="Resources\Textures\SpawnEffect.png" />
     <Image Include="Resources\Textures\Stage1_a.png" />
     <Image Include="Resources\Textures\Stage1_b.png" />
     <Image Include="Resources\Textures\Stage2_a.png" />

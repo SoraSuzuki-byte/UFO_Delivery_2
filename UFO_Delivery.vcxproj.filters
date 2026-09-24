@@ -93,6 +93,9 @@
     <Filter Include="Resources\Textures\StageImage_inSelectScene">
       <UniqueIdentifier>{2e8b466a-6b8e-476b-be5a-c7485cdae951}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Textures\Effect">
+      <UniqueIdentifier>{dc0517c6-cee3-4613-b91d-6002d5406b85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <!-- ファイル -->
   <ItemGroup>
@@ -325,9 +328,6 @@
     <Image Include="Resources\Textures\Item_Bomb.png">
       <Filter>Resources\Textures\Item</Filter>
     </Image>
-    <Image Include="Resources\Textures\Explosion.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
     <Image Include="Resources\Textures\Enemy_2.png">
       <Filter>Resources\Textures\Enemy</Filter>
     </Image>
@@ -450,6 +450,12 @@
     </Image>
     <Image Include="Resources\Textures\Item_Food_8.png">
       <Filter>Resources\Textures\Item</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Explosion.png">
+      <Filter>Resources\Textures\Effect</Filter>
+    </Image>
+    <Image Include="Resources\Textures\SpawnEffect.png">
+      <Filter>Resources\Textures\Effect</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

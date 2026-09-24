@@ -76,15 +76,19 @@ void SpawnEffect::Render(int spawnEffect) const
     const int y = EXPLOSION_SPRITES[static_cast<int>(m_animationState)].y;
 
     const int centerX = static_cast<int>(m_playerPositionX) + PLAYER_HALF_SIZE_X;
-    const int centerY = static_cast<int>(m_playerPositionY) + PLAYER_HALF_SIZE_Y;
+    const int centerY = static_cast<int>(m_playerPositionY) ;
+
+    const int effectHalfSize = SPRITE_SIZE / 2;
 
     DrawRectExtendGraph(
-        centerX - OFFSET,
-        centerY - OFFSET,
-        centerX + OFFSET,
-        centerY + OFFSET,
-        x, y,
-        SPRITE_SIZE, SPRITE_SIZE,
+        centerX - effectHalfSize,
+        centerY - effectHalfSize,
+        centerX + effectHalfSize,
+        centerY + effectHalfSize,
+        x,
+        0,
+        SPRITE_SIZE,
+        SPRITE_SIZE,
         spawnEffect,
         TRUE
     );

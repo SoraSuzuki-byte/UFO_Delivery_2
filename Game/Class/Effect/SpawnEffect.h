@@ -20,7 +20,7 @@ class SpawnEffect
 // 定数や列挙型の宣言 ---------------------------------------
 private:
     // UFOの大きさ（半分）
-    static constexpr int PLAYER_HALF_SIZE_Y = 50;
+    static constexpr int PLAYER_HALF_SIZE_Y = 25;
     static constexpr int PLAYER_HALF_SIZE_X = 25;
 
 
@@ -29,20 +29,20 @@ private:
     enum class AnimationState
     {
         None = (-1),
-        Anim0, Anim1, Anim2, Anim3, Anim4, Anim5, Anim6, Anim7, Anim8, Anim9
+        Anim0, Anim1, Anim2, Anim3, Anim4, Anim5, Anim6, Anim7, Anim8, Anim9, Anim10, Anim11, Anim12, Anim13
     };
 
     // アニメーションの切り替え間隔
-    static constexpr int ANIMATION_INTERVAL = 2;
+    static constexpr int ANIMATION_INTERVAL = 4;
 
     // 爆発スプライトのテクスチャ上の大きさ
-    static constexpr int SPRITE_SIZE = 180;
+    static constexpr int SPRITE_SIZE = 240;
 
     // 描画のオフセット値
-    static constexpr int OFFSET = 140;
+    static constexpr int OFFSET = 100;
 
     // 爆発スプライトの切り抜き位置
-    static constexpr POINT EXPLOSION_SPRITES[10]{
+    static constexpr POINT EXPLOSION_SPRITES[14]{
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim0), 32 },
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim1), 32 },
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim2), 32 },
@@ -53,6 +53,10 @@ private:
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim7), 32 },
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim8), 32 },
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim9), 32 },
+        {SPRITE_SIZE * static_cast<int>(AnimationState::Anim10), 32 },
+        {SPRITE_SIZE * static_cast<int>(AnimationState::Anim11), 32 },
+        {SPRITE_SIZE * static_cast<int>(AnimationState::Anim12), 32 },
+        {SPRITE_SIZE * static_cast<int>(AnimationState::Anim13), 32 },
     };
 
 // データメンバの宣言 -----------------------------------------------

@@ -169,7 +169,7 @@ void PlayScene::Render()
     BackgroundRender();
     m_stage.Render();
     m_player.Render();
-    const int spawnEffectHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Explosion);
+    const int spawnEffectHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::SpawnEffect);
     m_spawnEffect.Render(spawnEffectHandle);
 
     // チュートリアル表示
