@@ -477,7 +477,7 @@ void SelectScene::RenderArrowUi()
 
 
     // Stage1～5をクリアしている場合
-    if (!m_canChangeStarSystem)
+    if (m_canChangeStarSystem)
     {
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(25);

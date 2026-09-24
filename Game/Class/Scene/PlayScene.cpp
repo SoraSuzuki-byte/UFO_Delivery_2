@@ -188,7 +188,7 @@ void PlayScene::Render()
         DrawClearResultBackground();
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(100);
-        DrawString(420, 220, L"CLEAR!", GetColor(0, 255, 0));
+        DrawString(480, 220, L"CLEAR!", GetColor(0, 255, 0));
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 長押しの進捗を 描画
