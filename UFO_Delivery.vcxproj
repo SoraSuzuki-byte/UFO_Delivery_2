@@ -140,6 +140,7 @@
   <ItemGroup>
     <!-- プリコンパイル済みヘッダー -->
     <ClCompile Include="Game\Class\Effect\Explosion.cpp" />
+    <ClCompile Include="Game\Class\Effect\SpawnEffect.cpp" />
     <ClCompile Include="Game\Class\Manager\GhManager.cpp" />
     <ClCompile Include="Game\Class\Manager\InputManager.cpp" />
     <ClCompile Include="Game\Class\Manager\SceneManager.cpp" />
@@ -159,6 +160,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="Game\Class\Effect\Explosion.h" />
+    <ClInclude Include="Game\Class\Effect\SpawnEffect.h" />
     <ClInclude Include="Game\Class\Manager\GhManager.h" />
     <ClInclude Include="Game\Class\Manager\InputManager.h" />
     <ClInclude Include="Game\Class\Manager\SceneManager.h" />

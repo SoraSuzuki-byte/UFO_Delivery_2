@@ -11,6 +11,7 @@
 #include <cassert>
 #include "Game/Class/Manager/SceneManager.h"
 
+
 //  -----------------------------------------------------------------
 /// <summary>
 /// コンストラクタ
@@ -23,6 +24,7 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_gameContext{ gameContext }
     , m_stage{ gameContext }
     , m_player{ gameContext, &m_stage }
+    , m_spawnEffect{}
     , m_gameState{ GameState::Play }
     , m_titleReturnTimer{}
     , m_stepTimer{}
@@ -84,6 +86,10 @@ void PlayScene::Initialize()
     PlaceHouses(selectedStage);
 
     m_player.Initialize();
+    m_spawnEffect.Initialize();
+    m_spawnEffect.SetPlayerPosition(m_player.GetPosition());
+    m_spawnEffect.StartExplosion();
+    
 }
 
 //  -----------------------------------------------------------------
@@ -109,7 +115,8 @@ void PlayScene::Update()
 
         // Stage.cppで「Enemy」「Food」「Bomb」などをUpdateしている
         m_stage.Update(); 
-        m_player.Update();      
+        m_player.Update();
+        m_spawnEffect.Update();
 
 
         // HPが0になったら、ゲームオーバー状態に切り替える
@@ -162,6 +169,8 @@ void PlayScene::Render()
     BackgroundRender();
     m_stage.Render();
     m_player.Render();
+    const int spawnEffectHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Explosion);
+    m_spawnEffect.Render(spawnEffectHandle);
 
     // チュートリアル表示
     if (StageId::Stage1 == m_gameContext.GetSelectedStageId())

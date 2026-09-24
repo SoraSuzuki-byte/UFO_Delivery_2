@@ -10,6 +10,7 @@
 #pragma once
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
+#include "Game/Class/Effect/SpawnEffect.h"
 #include "Game/GameContext.h"
 
  // クラスの前方宣言 ===============================================================
@@ -43,6 +44,10 @@ private:
 
     // プレイヤークラスのインスタンス
     Player m_player;
+
+    // SpawnEffectのインスタンス
+    SpawnEffect m_spawnEffect;
+
 
     static constexpr int TITLE_RETURN_HOLD_TIME = 60;  // タイトルに戻るまでの長押し時間（フレーム数）
     int m_titleReturnTimer;   // スペースキーを押し続けている時間
