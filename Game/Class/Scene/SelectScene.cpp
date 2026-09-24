@@ -32,6 +32,8 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_effectTimer{}
     , m_isOtherStarSystem{ false }
     , m_starSystemChangeCooldown{}
+    , m_canChangeStarSystem{false}
+    , m_floatCount{}
 {
 }
 
@@ -66,8 +68,18 @@ void SelectScene::Initialize()
     m_changeStarSystemCounter = 0;
     m_progress = 0;
     m_effectTimer = 0;
-    m_isOtherStarSystem = false;
     m_starSystemChangeCooldown = 0;
+    m_floatCount = 0;
+    m_canChangeStarSystem = false;
+    // Stage1～5をクリアしている場合
+    if (m_gameContext.IsStageCleared(StageId::Stage1) &&
+        m_gameContext.IsStageCleared(StageId::Stage2) &&
+        m_gameContext.IsStageCleared(StageId::Stage3) &&
+        m_gameContext.IsStageCleared(StageId::Stage4) &&
+        m_gameContext.IsStageCleared(StageId::Stage5))
+    {
+        m_canChangeStarSystem = true;
+    }
 }
 
 //  -----------------------------------------------------------------
@@ -83,8 +95,8 @@ void SelectScene::Update()
 
 
 
-    //if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) {デバッグデバッグデバッグデバッグデバッグデバッグデバッグデバッグ変更変更変更変更変更変更変更
-    if ((!m_isStageSelected))
+    //if ((!m_isStageSelected))
+    if ((!m_isStageSelected) && (m_gameContext.IsStageCleared(StageId::Stage1))) //{デバッグデバッグデバッグデバッグデバッグデバッグデバッグデバッグ変更変更変更変更変更変更変更
     {
         // ステージの合計の数を取得
         //const int maxStages = static_cast<int>(StageId::Max);
@@ -145,64 +157,61 @@ void SelectScene::Update()
 
         }
 
-
-        // 下矢印キーが押されている場合（星系を変える処理）
-        if (keyCondition & PAD_INPUT_DOWN)
+        // 1～5をクリアし、星系を変えられるなら
+        if (m_canChangeStarSystem)
         {
-            // クールダウン中は増加させない
-            if (m_starSystemChangeCooldown <= 0)
+            // 下矢印キーが押されている場合（星系を変える処理）
+            if (keyCondition & PAD_INPUT_DOWN)
             {
-                // エフェクトの進行度を増加
-                if (m_changeStarSystemCounter < MAX_CHANGE_STAR_SYSTEM_FRAME)
+                // クールダウン中は増加させない
+                if (m_starSystemChangeCooldown <= 0)
                 {
-                    m_changeStarSystemCounter++;
-                }
-
-                // 閾値を越えると、「星系」フラグを反転し、エフェクトを止める
-                if (m_changeStarSystemCounter >= STAR_SYSTEM_CHANGE_THRESHOLD)
-                {
-                    m_isOtherStarSystem = !m_isOtherStarSystem;// 星系変更フラグを反転させる
-                    m_changeStarSystemCounter = 0;               // カウンターをリセット
-                    m_starSystemChangeCooldown = STAR_SYSTEM_CHANGE_COOLDOWN_FRAME;// にクールダウンを開始
-
-                    // trueに切り替わった時だけ、ステージ6にする
-                    if (m_isOtherStarSystem)
+                    // エフェクトの進行度を増加
+                    if (m_changeStarSystemCounter < MAX_CHANGE_STAR_SYSTEM_FRAME)
                     {
-                        m_gameContext.selectedStageIndex = 5;
+                        m_changeStarSystemCounter++;
                     }
-                    // falseになったら、ステージ1に設定
-                    if (!m_isOtherStarSystem)
+
+                    // 閾値を越えると、「星系」フラグを反転し、エフェクトを止める
+                    if (m_changeStarSystemCounter >= STAR_SYSTEM_CHANGE_THRESHOLD)
                     {
-                        m_gameContext.selectedStageIndex = 0;
+                        m_isOtherStarSystem = !m_isOtherStarSystem;// 星系変更フラグを反転させる
+                        m_changeStarSystemCounter = 0;               // カウンターをリセット
+                        m_starSystemChangeCooldown = STAR_SYSTEM_CHANGE_COOLDOWN_FRAME;// にクールダウンを開始
+
+                        // trueに切り替わった時だけ、ステージ6にする
+                        if (m_isOtherStarSystem)
+                        {
+                            m_gameContext.selectedStageIndex = 5;
+                        }
+                        // falseになったら、ステージ1に設定
+                        if (!m_isOtherStarSystem)
+                        {
+                            m_gameContext.selectedStageIndex = 0;
+                        }
                     }
                 }
+                // エフェクトの時間を進める
+                m_effectTimer++;
+
             }
-            // エフェクトの時間を進める
-            m_effectTimer++;
+            // 離している間は、元に戻っていく
+            else
+            {
+                if (m_changeStarSystemCounter > 0) { m_changeStarSystemCounter -= 3; }
+            }
 
+            // クールダウンはキー入力に関係なく毎フレーム減らす
+            if (m_starSystemChangeCooldown > 0)
+            {
+                m_starSystemChangeCooldown--;
+            }
+
+            // エフェクトの進行度を計算
+            m_progress = static_cast<float>(m_changeStarSystemCounter)
+                / MAX_CHANGE_STAR_SYSTEM_FRAME;
         }
-        // 離している間は、元に戻っていく
-        else
-        {
-            if (m_changeStarSystemCounter > 0) { m_changeStarSystemCounter -= 3; }
-        }
-
-        // クールダウンはキー入力に関係なく毎フレーム減らす
-        if (m_starSystemChangeCooldown > 0)
-        {
-            m_starSystemChangeCooldown--;
-        }
-
-        // エフェクトの進行度を計算
-        m_progress = static_cast<float>(m_changeStarSystemCounter)
-            / MAX_CHANGE_STAR_SYSTEM_FRAME;
-
-
     }
-
-
-
-
 
 
 
@@ -223,8 +232,6 @@ void SelectScene::Update()
         ChangeScene(keyTrigger);
     }
 
-
-
     // 確認ダイアログのフェード
     if (m_isStageSelected)
     {
@@ -233,8 +240,7 @@ void SelectScene::Update()
             m_confirmFadeAlpha += CONFIRM_FADE_ALPHA_STEP;
         }
     }
-
-
+    
     MovePlayer();
 }
 
@@ -458,13 +464,26 @@ void SelectScene::RenderArrowUi()
 {
     const int keyCondition = m_gameContext.inputManager.GetKeyCondition();
 
+    // 1. カウントを少しずつ進める（速度の調整）
+    m_floatCount += 0.02f;
+
+    // 2. ふわふわの振幅（上下に何ピクセル動かすか）を設定してY座標のオフセットを計算
+    //    sin(m_floatCount) は -1.0 〜 1.0 を往復するため、5.0f を掛けると上下 5ピクセル（計10px間）動きます
+    float offsetY = sinf(m_floatCount) * 5.0f;
+
+    // 3. 計算したオフセットを DOWN_ARROW_POSITION_Y に加えて描画
+    int drawY = static_cast<int>(DOWN_ARROW_POSITION_Y + offsetY);
+
+
+
     // Stage1～5をクリアしている場合
-    if (m_gameContext.IsStageCleared(StageId::Stage1) &&
-        m_gameContext.IsStageCleared(StageId::Stage2) &&
-        m_gameContext.IsStageCleared(StageId::Stage3) &&
-        m_gameContext.IsStageCleared(StageId::Stage4) &&
-        m_gameContext.IsStageCleared(StageId::Stage5))
+    if (!m_canChangeStarSystem)
     {
+        int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
+        SetFontSize(25);
+        DrawString(50, drawY, L"長押し", Colors::WHITE);
+        SetFontSize(defaultFontSize);// フォントサイズを元に戻す
+
         if (keyCondition & PAD_INPUT_DOWN)
         {
             DrawGraph(0, 0, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::DownArrow_Push), TRUE);

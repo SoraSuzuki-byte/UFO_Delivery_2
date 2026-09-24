@@ -319,7 +319,7 @@ void PlayScene::UpdateStage1(int keyCondition)
         {
             m_stepTimer++;
         }
-        if (m_stepTimer > 240) { 
+        if (m_stepTimer > 180) { 
             m_step1 = true; 
             m_stepTimer = 0;
         }
@@ -350,7 +350,7 @@ void PlayScene::UpdateStage1(int keyCondition)
             m_step3 = true;
 
             // step3に切り替わった瞬間に、敵を1体だけ出現させる
-            m_stage.AddEnemy1(Vector2D{ 0.0f, 0.0f }); // 座標は出現させたい位置に調整
+            m_stage.AddEnemy1(Vector2D{ 50.0f, 640.0f }); // 座標は出現させたい位置に調整
 
         }
     }
@@ -363,7 +363,7 @@ void PlayScene::RenderStage1()
 {
     // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
-    DrawBox(0,0, 860, 200, GetColor(0, 0, 0), TRUE);    
+    DrawBox(0,0, 860, 160, GetColor(0, 0, 0), TRUE);    
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);// 描画モードを通常に戻す 
 
     int text_X = 20;

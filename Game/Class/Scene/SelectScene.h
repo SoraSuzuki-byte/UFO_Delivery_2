@@ -68,6 +68,10 @@ private:
     // 「確認ダイアログ背景」の最大アルファ値
     static constexpr const int CONFIRM_DIALOG_BACKGROUND_MAX_ALPHA = 60;
 
+    // 「↓」キーのY座標
+    static constexpr const int DOWN_ARROW_POSITION_Y = 600;
+
+
 
     // StageId::Max を利用して配列サイズを固定
     // （描画・移動用の目標座標テーブル）   
@@ -102,9 +106,12 @@ private:
     // 「星系」をもう一つの方に変更しているのか
     bool m_isOtherStarSystem;
 
+    // ステージ1～5をクリアしたか
+    bool m_canChangeStarSystem;
 
      int m_starSystemChangeCooldown = 0; // 「星系」切り替えのクールダウン残りフレーム数
      static const int STAR_SYSTEM_CHANGE_COOLDOWN_FRAME = 120; // 切り替えのクールタイム
+
 
 
     
@@ -126,6 +133,8 @@ private:
     int m_selectionBlinkCounter;
     // ステージ選択の確認ダイアログ の"フェード用"
     int m_confirmFadeAlpha;
+    // 「↓」キーの、ふわふわアニメーション用のカウンタ
+    float m_floatCount = 0.0f; 
 
 
 public:
