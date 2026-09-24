@@ -15,11 +15,17 @@ House::House(GameContext& gameContext, const BoundingBox& boundingBox, Item_Food
     , m_boundingBox{ boundingBox }
     , m_wantedFoodType{ wantedFoodType }
     , m_isFulfilled{ false }
+    , m_isDestroyed{false}
 {
 }
 
 House::~House()
 {
+}
+
+void House::Initialize()
+{
+    m_isDestroyed = false;
 }
 
 void House::Render() const

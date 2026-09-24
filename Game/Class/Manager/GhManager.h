@@ -69,6 +69,7 @@ public:
         Item_Food_7, // (56)
         Item_Food_8, // (57)
         SpawnEffect, // (58)
+        BrokenHouse, // (59)
 
 
         Max    // テクスチャの合計数

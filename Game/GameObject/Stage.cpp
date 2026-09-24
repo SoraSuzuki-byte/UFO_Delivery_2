@@ -231,8 +231,6 @@ void Stage::CheckBombHouseCollision()
 
         for (auto& house : m_houses)
         {
-            //if (!house.GetIsFulfilled()) continue;
-
             // 当たり判定チェック
             if (CheckHitAABB(bomb.GetBoundingBox(), house.GetBoundingBox()))
             {
@@ -249,6 +247,7 @@ void Stage::CheckBombHouseCollision()
                 }
 
                 bomb.SetActiveFlag(false);   // 爆弾消去
+                house.SetIsDestroyed(true); // 壊されたフラグを設定
                 m_gameContext.soundManager.StartSe(SoundManager::Se::Se_Explosion);
                 m_isGameOver = true;// ゲームオーバー
                 break;
@@ -811,7 +810,16 @@ void Stage::HouseRender() const
 {
     for (const auto& house : m_houses)
     {
+        if (house.GetIsDestroyed())
+        {
+            // 壊れた家を描画
+            Vector2D minPosition = house.GetBoundingBox().minPosition;
+            DrawGraph(minPosition.x, minPosition.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::BrokenHouse), TRUE);
+        }
+        else
+        {
             house.Render();
+        }      
     }
 }
 

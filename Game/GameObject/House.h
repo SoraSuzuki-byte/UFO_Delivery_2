@@ -27,9 +27,15 @@ private:
     // すでに届け終わったかどうか（true = アイコン非表示）
     bool m_isFulfilled;
 
+    // 壊されたかどうか
+    bool m_isDestroyed;
+
 public:
     House(GameContext& gameContext, const BoundingBox& boundingBox, Item_Food::FoodType wantedFoodType);
     ~House();
+
+    void Initialize();
+
 
     void Render() const;
 
@@ -46,5 +52,10 @@ public:
     bool GetIsFulfilled() const { return m_isFulfilled; }
     // 届けたら、フラグを更新
     void SetIsFulfilled(bool isFulfilled) { m_isFulfilled = isFulfilled; }
+
+    // 壊されたかどうか
+    bool GetIsDestroyed() const { return m_isDestroyed; }
+    // 壊された状態に設定
+    void SetIsDestroyed(bool isDestroyed) { m_isDestroyed = isDestroyed; }
 };
 
