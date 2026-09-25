@@ -1,8 +1,8 @@
 ﻿/*
-    @file   Explosion.h
-    @brief  爆発アニメーションクラス
+    @file   SpawnEffect.h
+    @brief  スポーンアニメーションクラス
     @author 鈴木蒼良
-    @date   2026年8月27日
+    @date   2026年9月24日
 */
 // 多重インクルードの防止 =====================================================
 #pragma once
@@ -25,7 +25,7 @@ private:
 
 
 
-    // 爆発アニメーションの状態
+    // アニメーションの状態
     enum class AnimationState
     {
         None = (-1),
@@ -35,14 +35,14 @@ private:
     // アニメーションの切り替え間隔
     static constexpr int ANIMATION_INTERVAL = 4;
 
-    // 爆発スプライトのテクスチャ上の大きさ
+    // スプライトのテクスチャ上の大きさ
     static constexpr int SPRITE_SIZE = 240;
 
     // 描画のオフセット値
     static constexpr int OFFSET = 100;
 
-    // 爆発スプライトの切り抜き位置
-    static constexpr POINT EXPLOSION_SPRITES[14]{
+    // スプライトの切り抜き位置
+    static constexpr POINT SPAWN_EFFECT_SPRITES[14]{
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim0), 32 },
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim1), 32 },
         {SPRITE_SIZE * static_cast<int>(AnimationState::Anim2), 32 },
@@ -87,13 +87,13 @@ public:
     void Update();
 
     // 描画処理
-    void Render(int ghSTG) const;
+    void Render(int spawnEffect) const;
 
     // 終了処理
     void Finalize();
 
-    // 爆発開始処理
-    void StartExplosion();
+    // アニメーションの開始処理
+    void StartAnimation();
 
     // このオブジェクトを使用中か確認する処理
     bool IsActive() const;

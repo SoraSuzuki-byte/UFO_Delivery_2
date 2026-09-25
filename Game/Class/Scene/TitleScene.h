@@ -8,6 +8,7 @@
 #include "Game/GameObject/Player.h"
 #include "Game/GameObject/Item_Food.h"
 #include "Game/GameObject/House.h"
+#include "Game/Class/Effect/ShootingStar.h"
 #include <vector>
 #include <memory>
 
@@ -42,6 +43,9 @@ private:
 
     // タイトルシーンの家
     House m_demoHouse;
+
+    // 流れ星のインスタンス
+    ShootingStar m_shootingStar;
 
 
 public:

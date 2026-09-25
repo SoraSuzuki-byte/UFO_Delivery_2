@@ -140,6 +140,7 @@
   <ItemGroup>
     <!-- プリコンパイル済みヘッダー -->
     <ClCompile Include="Game\Class\Effect\Explosion.cpp" />
+    <ClCompile Include="Game\Class\Effect\ShootingStar.cpp" />
     <ClCompile Include="Game\Class\Effect\SpawnEffect.cpp" />
     <ClCompile Include="Game\Class\Manager\GhManager.cpp" />
     <ClCompile Include="Game\Class\Manager\InputManager.cpp" />
@@ -160,6 +161,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="Game\Class\Effect\Explosion.h" />
+    <ClInclude Include="Game\Class\Effect\ShootingStar.h" />
     <ClInclude Include="Game\Class\Effect\SpawnEffect.h" />
     <ClInclude Include="Game\Class\Manager\GhManager.h" />
     <ClInclude Include="Game\Class\Manager\InputManager.h" />
@@ -229,6 +231,7 @@
     <Image Include="Resources\Textures\logo.png" />
     <Image Include="Resources\Textures\RightArrow_None.png" />
     <Image Include="Resources\Textures\RightArrow_Push.png" />
+    <Image Include="Resources\Textures\ShootingStar.png" />
     <Image Include="Resources\Textures\SpawnEffect.png" />
     <Image Include="Resources\Textures\Stage1_a.png" />
     <Image Include="Resources\Textures\Stage1_b.png" />

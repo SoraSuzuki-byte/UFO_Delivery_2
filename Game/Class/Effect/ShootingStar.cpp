@@ -1,19 +1,21 @@
 ﻿/*
-    @file   SpawnEffect.cpp
-    @brief  スポーンアニメーションクラス
+    @file   ShootingStar.cpp
+    @brief  流れ星アニメーションクラス
     @author 鈴木蒼良
-    @date   2026年9月24日
+    @date   2026年9月25日
 */
-#include "SpawnEffect.h"
+#include "ShootingStar.h"
 
 //  -----------------------------------------------------------------
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// -----------------------------------------------------------------
-SpawnEffect::SpawnEffect()
+ShootingStar::ShootingStar()
     : m_animationState{}
     , m_animationCounter{}
+    , m_position{}
+    , m_spawnCounter{}
 {
 }
 
@@ -22,10 +24,13 @@ SpawnEffect::SpawnEffect()
 /// 初期化処理
 /// </summary>
 /// -----------------------------------------------------------------
-void SpawnEffect::Initialize()
+void ShootingStar::Initialize()
 {
     m_animationCounter = 0;
     m_animationState = AnimationState::None;
+    m_position.x = START_POS_X;
+    m_position.y = START_POS_Y;
+    m_spawnCounter = 0;
 }
 
 //  -----------------------------------------------------------------
@@ -33,31 +38,39 @@ void SpawnEffect::Initialize()
 /// 更新処理
 /// </summary>
 /// -----------------------------------------------------------------
-void SpawnEffect::Update()
+void ShootingStar::Update()
 {
-    // 非アクティブなら何もしない
-    if (!IsActive()) return;
-   
-    /*
-        ・「m_animationCounter」「ANIMATION_INTERVAL」「m_animationState」
-        　を使用して、アニメーションの切り替え部分を実装している
-    */
-
-    m_animationCounter++; // アニメーションカウンターを更新している
-
-    if (m_animationCounter > ANIMATION_INTERVAL)
+    if (IsActive())
     {
-        m_animationCounter = 0; //アニメーションカウンターを0にする
+        // 移動
+        m_position.x += MOVE_SPEED_X;
+        m_position.y += MOVE_SPEED_Y;
 
-        if (m_animationState == AnimationState::Anim13)// 最後のイラストだったら
+        m_animationCounter++; // アニメーションカウンター
+        if (m_animationCounter > ANIMATION_INTERVAL)
         {
-            m_animationState = AnimationState::None;// アニメーションを終了
+            m_animationCounter = 0;
+
+            if (m_animationState == AnimationState::Anim19)
+            {
+                m_animationState = AnimationState::None;// アニメーションを終了
+            }
+            else
+            {
+                //アニメーションを更新させる
+                m_animationState = static_cast<AnimationState>(static_cast<int>(m_animationState) + 1);
+            }
         }
-        else {
-            //アニメーションを更新させる
-            m_animationState = static_cast<AnimationState>(static_cast<int>(m_animationState) + 1);
-        }
-     }
+        return;
+    }
+    // 非アクティブであれば出現までの時間を数える
+    m_spawnCounter++;
+
+    if (m_spawnCounter >= SPAWN_INTERVAL)
+    {
+        m_spawnCounter = 0;
+        StartAnimation();
+    }
 }
 
 //  -----------------------------------------------------------------
@@ -66,30 +79,30 @@ void SpawnEffect::Update()
 /// </summary>
 /// <param name="ghSTG">グラフィクスハンドル</param>
 /// -----------------------------------------------------------------
-void SpawnEffect::Render(int spawnEffect) const
+void ShootingStar::Render(int ShootingStar) const
 {
     // 非アクティブなら描画しない
     if (!IsActive()) return;
 
     // スプライトシート上の座標を計算する
-    const int x = SPAWN_EFFECT_SPRITES[static_cast<int>(m_animationState)].x;
-    const int y = SPAWN_EFFECT_SPRITES[static_cast<int>(m_animationState)].y;
+    const int x = SHOOTING_STAR_SPRITES[static_cast<int>(m_animationState)].x;
+    const int y = SHOOTING_STAR_SPRITES[static_cast<int>(m_animationState)].y;
 
-    const int centerX = static_cast<int>(m_playerPositionX) + PLAYER_HALF_SIZE_X;
-    const int centerY = static_cast<int>(m_playerPositionY) ;
+    // 描画の位置
+    const int centerX = static_cast<int>(m_position.x) ;
+    const int centerY = static_cast<int>(m_position.y) ;
 
-    const int effectHalfSize = SPRITE_SIZE / 2;
 
     DrawRectExtendGraph(
-        centerX - effectHalfSize,
-        centerY - effectHalfSize,
-        centerX + effectHalfSize,
-        centerY + effectHalfSize,
+        centerX - drawHalfSize,
+        centerY - drawHalfSize,
+        centerX + drawHalfSize,
+        centerY + drawHalfSize,
         x,
-        0,
+        y,
         SPRITE_SIZE,
         SPRITE_SIZE,
-        spawnEffect,
+        ShootingStar,
         TRUE
     );
 }
@@ -99,18 +112,22 @@ void SpawnEffect::Render(int spawnEffect) const
 /// 終了処理
 /// </summary>
 /// -----------------------------------------------------------------
-void SpawnEffect::Finalize()
+void ShootingStar::Finalize()
 {
 }
 
 //  -----------------------------------------------------------------
 /// <summary>
-/// アニメーショの開始処理
+/// アニメーションの開始処理
 /// </summary>
 /// <param name="position">アニメーションの位置</param>
 /// -----------------------------------------------------------------
-void SpawnEffect::StartAnimation()
+void ShootingStar::StartAnimation()
 {
+    // 開始位置に戻す
+    m_position.x = START_POS_X;
+    m_position.y = START_POS_Y;
+
     // アニメーション用パラメータを初期化する
     m_animationCounter = 0;
     m_animationState = AnimationState::Anim0;
@@ -122,14 +139,8 @@ void SpawnEffect::StartAnimation()
 /// 
 /// <returns>true：使用中、false：待機中</returns>
 /// -----------------------------------------------------------------
-bool SpawnEffect::IsActive() const
+bool ShootingStar::IsActive() const
 {
     // Nonnじゃなければ true が返る　（Noneだったら、falseを 返す）
     return m_animationState != AnimationState::None;
-}
-
-void SpawnEffect::SetPlayerPosition(Vector2D playerPosition)
-{
-    m_playerPositionX = playerPosition.x;
-    m_playerPositionY = playerPosition.y;
 }

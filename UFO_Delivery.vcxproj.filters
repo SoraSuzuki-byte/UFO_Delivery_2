@@ -189,6 +189,9 @@
     <ClCompile Include="Game\Class\Effect\SpawnEffect.cpp">
       <Filter>Game\Class\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Class\Effect\ShootingStar.cpp">
+      <Filter>Game\Class\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -273,6 +276,9 @@
       <Filter>Game\Class\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Game\Class\Effect\SpawnEffect.h">
+      <Filter>Game\Class\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Class\Effect\ShootingStar.h">
       <Filter>Game\Class\Effect</Filter>
     </ClInclude>
   </ItemGroup>
@@ -459,6 +465,9 @@
     </Image>
     <Image Include="Resources\Textures\UFO_Dead.png">
       <Filter>Resources\Textures\UFO</Filter>
+    </Image>
+    <Image Include="Resources\Textures\ShootingStar.png">
+      <Filter>Resources\Textures\Effect</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

@@ -29,6 +29,7 @@ TitleScene::TitleScene(SceneManager& sceneManager, GameContext& gameContext)
         BoundingBox{ Vector2D{ HOUSE_POS_X, HOUSE_POS_Y }, Vector2D{ HOUSE_POS_X + 60.0f, HOUSE_POS_Y + 80.0f } },
         Item_Food::FoodType::Food1
     }
+    , m_shootingStar{}
 {
 }
 
@@ -87,6 +88,7 @@ void TitleScene::Initialize()
     item->SetDemoGroundY(700.0f);
 
     m_demoItems.push_back(std::move(item));
+    m_shootingStar.Initialize();
 }
 //  -----------------------------------------------------------------
 /// <summary>
@@ -113,6 +115,7 @@ void TitleScene::Update()
 
     m_player.Update();
     CheckDemoFoodHouseCollision();
+    m_shootingStar.Update();
 }
 
 //  -----------------------------------------------------------------
@@ -127,7 +130,7 @@ void TitleScene::Render()
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(70);
-    DrawString(300, 500, L"Spaceキーで 配達開始", Colors::WHITE);
+    DrawString(300, 500, L"Spaceキー：配達開始", Colors::WHITE);
     //DrawString(300, 500, L"Spaceキーで始める", Colors::WHITE);
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
@@ -141,6 +144,9 @@ void TitleScene::Render()
     m_demoHouse.Render();
     DrawGraph(200, 100, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Logo), TRUE);
 
+    // 流れ星の描画
+    const int shootingStarHandle = m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::ShootingStar);
+    m_shootingStar.Render(shootingStarHandle);
 }
 
 //  -----------------------------------------------------------------

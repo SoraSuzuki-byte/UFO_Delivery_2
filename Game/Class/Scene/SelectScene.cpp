@@ -509,7 +509,7 @@ void SelectScene::RenderArrowUi()
     {
         int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
         SetFontSize(25);
-        DrawString(MESSAGE_UI_POS_X, MESSAGE_UI_POS_Y, L"Spaceキーで決定", Colors::WHITE);
+        DrawString(MESSAGE_UI_POS_X, MESSAGE_UI_POS_Y, L"Spaceキー：決定", Colors::WHITE);
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         if (keyCondition & PAD_INPUT_LEFT)

@@ -88,7 +88,7 @@ void PlayScene::Initialize()
     m_player.Initialize();
     m_spawnEffect.Initialize();
     m_spawnEffect.SetPlayerPosition(m_player.GetPosition());
-    m_spawnEffect.StartExplosion();
+    m_spawnEffect.StartAnimation();
     
 }
 

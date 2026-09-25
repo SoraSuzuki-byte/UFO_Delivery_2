@@ -71,7 +71,8 @@ public:
         SpawnEffect, // (58)
         BrokenHouse, // (59)
         UFO_Dead, // (60)
-
+        ShootingStar, // (61) 流れ星
+        
 
         Max    // テクスチャの合計数
     };
