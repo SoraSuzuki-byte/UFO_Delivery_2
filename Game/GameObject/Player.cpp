@@ -122,10 +122,10 @@ void Player::Render()
 		{
 			// 素体の画像
 			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
-			// 移動時のアニメーション
-			MoveAnimation();
 			// ダメージ表現のオーバーレイ
 			DrawDamageOverlay();
+			// 移動時のアニメーション
+			MoveAnimation();
 		}
 	}
 
