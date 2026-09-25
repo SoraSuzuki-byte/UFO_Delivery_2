@@ -28,6 +28,7 @@ Player::Player(GameContext& gameContext, Stage* stage)
 	, m_demoState {DemoState::MoveLeft}
 	, m_demoTimer {}
 	, m_isPullingInput{false}
+	, m_floatCount{}
 {
 }
 
@@ -59,6 +60,7 @@ void Player::Initialize(const Vector2D& startPosition)
 	m_demoState = DemoState::MoveLeft;
 	m_demoTimer = 0;
 	m_isPullingInput = false;
+	m_floatCount = 0;
 }
 
 void Player::Update()
@@ -118,7 +120,6 @@ void Player::Render()
 		}
 		else
 		{
-
 			// 素体の画像
 			DrawGraph(m_position.x, m_position.y, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
 			// 移動時のアニメーション
@@ -126,8 +127,6 @@ void Player::Render()
 			// ダメージ表現のオーバーレイ
 			DrawDamageOverlay();
 		}
-
-
 	}
 
 

@@ -59,7 +59,7 @@ void TitleScene::Initialize()
     m_gameContext.soundManager.StartBgm(SoundManager::Bgm::Bgm_TitleScene);
 
     // Stageがないので、開始位置を直接指定する
-    m_player.Initialize(Vector2D{ 800.0f, 300.0f });
+    m_player.Initialize(Vector2D{ 800.0f, 100.0f });
     // デモ動作に切り替える
     m_player.SetControlMode(Player::ControlMode::AutoDemo);
 

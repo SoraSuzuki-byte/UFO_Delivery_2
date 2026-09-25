@@ -70,6 +70,8 @@ private:
 
     // 「↓」キーのY座標
     static constexpr const int DOWN_ARROW_POSITION_Y = 600;
+    // プレイヤーの上下移動の 高さ
+    static constexpr const int Player_FLOAT_HEIGHT = 20;
 
 
 
@@ -135,6 +137,8 @@ private:
     int m_confirmFadeAlpha;
     // 「↓」キーの、ふわふわアニメーション用のカウンタ
     float m_floatCount = 0.0f; 
+    // プレイヤーの、ふわふわアニメーション用のカウンタ
+    float m_playerFloatCount;
 
 
 public:

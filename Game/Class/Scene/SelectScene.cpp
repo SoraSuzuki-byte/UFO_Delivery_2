@@ -34,6 +34,7 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_starSystemChangeCooldown{}
     , m_canChangeStarSystem{false}
     , m_floatCount{}
+    , m_playerFloatCount{}
 {
 }
 
@@ -71,6 +72,7 @@ void SelectScene::Initialize()
     m_starSystemChangeCooldown = 0;
     m_floatCount = 0;
     m_canChangeStarSystem = false;
+    m_playerFloatCount = 0;
     // Stage1～5をクリアしている場合
     if (m_gameContext.IsStageCleared(StageId::Stage1) &&
         m_gameContext.IsStageCleared(StageId::Stage2) &&
@@ -340,6 +342,8 @@ void SelectScene::ChangeScene(int keyTrigger)
     }
 }
 
+
+
 //  -----------------------------------------------------------------
 // プレイヤーの移動
 //  -----------------------------------------------------------------
@@ -363,8 +367,14 @@ void SelectScene::MovePlayer()
 //  -----------------------------------------------------------------
 void SelectScene::RenderPlayer()
 {
+    // ふわふわ移動
+    m_playerFloatCount += 0.02f;
+    const float offsetY = sinf(m_playerFloatCount) * Player_FLOAT_HEIGHT;
+
+    const int drawY = static_cast<int>(m_playerPosition.y + offsetY);
     const int drawX = static_cast<int>(m_playerPosition.x);
-    const int drawY = static_cast<int>(m_playerPosition.y);
+
+
 
     DrawGraph(drawX, drawY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Bass), TRUE);
     DrawGraph(drawX, drawY, m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::UFO_Damage_Overlay), TRUE);
@@ -458,7 +468,7 @@ void SelectScene::RenderSecondStarSystem()
 
 
 //  -----------------------------------------------------------------
-// UI(左右キー)を描画
+// UI(矢印キー)を描画
 //  -----------------------------------------------------------------
 void SelectScene::RenderArrowUi()
 {

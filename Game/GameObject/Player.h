@@ -59,6 +59,11 @@ private:
     bool m_isPullingInput;
 
 
+    // セレクトシーン中の、ふわふわアニメーション用のカウンタ
+    int m_floatCount;
+
+
+
 
 
 
