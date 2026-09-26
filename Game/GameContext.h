@@ -35,11 +35,8 @@ struct GameContext
     // サウンドマネージャー
     SoundManager& soundManager;
 
-
-
-
-
-
+    // 「星系」をもう一つの方に変更しているのか
+    bool isOtherStarSystem = false;
 
 
     //---------------------------------------------------------------------------------------------
@@ -66,4 +63,5 @@ struct GameContext
     {
         return stageCleared[static_cast<int>(stageId)];
     }
+    //---------------------------------------------------------------------------------------------
 };

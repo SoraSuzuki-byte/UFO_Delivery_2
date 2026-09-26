@@ -72,6 +72,11 @@ public:
         BrokenHouse, // (59)
         UFO_Dead, // (60)
         ShootingStar, // (61) 流れ星
+        Enemy1_OtherStarSystem, // (62)
+        Enemy1_1_OtherStarSystem, // (63)
+        Enemy2_OtherStarSystem, // (64)
+        Enemy2_1_OtherStarSystem, // (65)
+
         
 
         Max    // テクスチャの合計数

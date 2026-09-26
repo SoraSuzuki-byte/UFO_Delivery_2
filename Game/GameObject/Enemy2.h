@@ -8,6 +8,7 @@
 #include "Library/GameMath.h"
 #include "Game/CollisionAABB.h"
 
+
 struct GameContext;
 class Stage;
 class Player;
@@ -23,10 +24,11 @@ private:
     static constexpr const float HEIGHT = 64.0f;
 
 
-
+    // それぞれの参照
     GameContext& m_gameContext;
     Stage& m_stage;
     Player& m_player;
+
 
     Vector2D m_position;
     bool m_isActive;

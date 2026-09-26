@@ -209,6 +209,10 @@
     <Image Include="Resources\Textures\BrokenHouse.png" />
     <Image Include="Resources\Textures\DownArrow_None.png" />
     <Image Include="Resources\Textures\DownArrow_Push.png" />
+    <Image Include="Resources\Textures\Enemy1_1_OtherStarSystem.png" />
+    <Image Include="Resources\Textures\Enemy1_OtherStarSystem.png" />
+    <Image Include="Resources\Textures\Enemy2_1_OtherStarSystem.png" />
+    <Image Include="Resources\Textures\Enemy2_OtherStarSystem.png" />
     <Image Include="Resources\Textures\Enemy_1.png" />
     <Image Include="Resources\Textures\Enemy_1_1.png" />
     <Image Include="Resources\Textures\Enemy_2.png" />

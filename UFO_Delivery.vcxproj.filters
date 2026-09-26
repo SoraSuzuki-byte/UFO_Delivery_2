@@ -469,6 +469,18 @@
     <Image Include="Resources\Textures\ShootingStar.png">
       <Filter>Resources\Textures\Effect</Filter>
     </Image>
+    <Image Include="Resources\Textures\Enemy1_1_OtherStarSystem.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Enemy1_OtherStarSystem.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Enemy2_1_OtherStarSystem.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
+    <Image Include="Resources\Textures\Enemy2_OtherStarSystem.png">
+      <Filter>Resources\Textures\Enemy</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\Sounds\Se_Delivery.mp3">

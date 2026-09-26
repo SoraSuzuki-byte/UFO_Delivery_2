@@ -105,9 +105,6 @@ private:
     // 「星系」移動キーを押している時間のカウンター
     int m_effectTimer = 0;
 
-    // 「星系」をもう一つの方に変更しているのか
-    bool m_isOtherStarSystem;
-
     // ステージ1～5をクリアしたか
     bool m_canChangeStarSystem;
 

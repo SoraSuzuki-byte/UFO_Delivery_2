@@ -10,6 +10,7 @@
 #include "Game/GameObject/Stage.h"
 #include "Game/GameObject/Player.h"
 
+
 Enemy2::Enemy2(GameContext& gameContext, Stage& stage, Player& player, const Vector2D& startPosition)
     : m_gameContext{ gameContext }
     , m_stage{ stage }
@@ -40,22 +41,30 @@ void Enemy2::Render() const
     if (!m_isActive) { return; }
 
     const Vector2D playerPos = m_player.GetPosition();
-    if (m_position.x < playerPos.x)
+
+    GhManager::Textures texture;
+    if (m_gameContext.isOtherStarSystem)
     {
-        DrawGraph(
-            static_cast<int>(m_position.x),
-            static_cast<int>(m_position.y),
-            m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_2_1),
-            TRUE);
+        texture = GhManager::Textures::Enemy2_OtherStarSystem;
+    }
+    else if ((m_gameContext.isOtherStarSystem) && (m_position.x < playerPos.x))
+    {
+        texture = GhManager::Textures::Enemy2_1_OtherStarSystem;
+    }
+    else if (m_position.x < playerPos.x)
+    {
+        texture = GhManager::Textures::Enemy_2_1;
     }
     else
     {
-        DrawGraph(
-            static_cast<int>(m_position.x),
-            static_cast<int>(m_position.y),
-            m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_2),
-            TRUE);
+        texture = GhManager::Textures::Enemy_2;
     }
+
+    DrawGraph(
+        static_cast<int>(m_position.x),
+        static_cast<int>(m_position.y),
+        m_gameContext.ghManager.GetGraphicHandle(texture),
+        TRUE);
 
 
     //// 2. 当たり判定（BoundingBox）の可視化処理（デバッグ用）
@@ -70,7 +79,6 @@ void Enemy2::Render() const
     //// 赤色の枠線を描画 (FALSE = 枠線のみ)
     //DrawBox(left, top, right, bottom, GetColor(255, 0, 0), FALSE);
 }
-
 
 
 // 動きの処理

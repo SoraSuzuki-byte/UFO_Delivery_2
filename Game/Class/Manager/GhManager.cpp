@@ -93,7 +93,12 @@ void GhManager::Initialize()//--------------------------------------------------
         L"Resources/Textures/SpawnEffect.png", // (58)
         L"Resources/Textures/BrokenHouse.png", // (59)
         L"Resources/Textures/UFO_Dead.png", // (60)
-        L"Resources/Textures/ShootingStar.png" // (61)
+        L"Resources/Textures/ShootingStar.png", // (61)
+        L"Resources/Textures/Enemy1_OtherStarSystem.png", // (62)
+        L"Resources/Textures/Enemy1_1_OtherStarSystem.png", // (63)
+        L"Resources/Textures/Enemy2_OtherStarSystem.png", // (64)
+        L"Resources/Textures/Enemy2_1_OtherStarSystem.png" // (65)
+
 
 
 

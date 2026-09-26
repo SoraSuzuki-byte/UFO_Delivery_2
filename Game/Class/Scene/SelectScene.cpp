@@ -30,7 +30,6 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_changeStarSystemCounter{}
     , m_progress{}
     , m_effectTimer{}
-    , m_isOtherStarSystem{ false }
     , m_starSystemChangeCooldown{}
     , m_canChangeStarSystem{false}
     , m_floatCount{}
@@ -104,7 +103,7 @@ void SelectScene::Update()
         //const int maxStages = static_cast<int>(StageId::Max);
         const int maxStages = 5;
 
-        if (!m_isOtherStarSystem)// 星系を変えていなければ
+        if (!m_gameContext.isOtherStarSystem)// 星系を変えていなければ
         {
             // みぎ矢印キーが押されたら
             if (keyTrigger & PAD_INPUT_RIGHT)
@@ -177,17 +176,17 @@ void SelectScene::Update()
                     // 閾値を越えると、「星系」フラグを反転し、エフェクトを止める
                     if (m_changeStarSystemCounter >= STAR_SYSTEM_CHANGE_THRESHOLD)
                     {
-                        m_isOtherStarSystem = !m_isOtherStarSystem;// 星系変更フラグを反転させる
+                        m_gameContext.isOtherStarSystem = !m_gameContext.isOtherStarSystem;// 星系変更フラグを反転させる
                         m_changeStarSystemCounter = 0;               // カウンターをリセット
                         m_starSystemChangeCooldown = STAR_SYSTEM_CHANGE_COOLDOWN_FRAME;// にクールダウンを開始
 
                         // trueに切り替わった時だけ、ステージ6にする
-                        if (m_isOtherStarSystem)
+                        if (m_gameContext.isOtherStarSystem)
                         {
                             m_gameContext.selectedStageIndex = 5;
                         }
                         // falseになったら、ステージ1に設定
-                        if (!m_isOtherStarSystem)
+                        if (!m_gameContext.isOtherStarSystem)
                         {
                             m_gameContext.selectedStageIndex = 0;
                         }
@@ -253,7 +252,7 @@ void SelectScene::Update()
 /// -----------------------------------------------------------------
 void SelectScene::Render()
 {
-    if (!m_isOtherStarSystem)// 星系が最初のものであれば
+    if (!m_gameContext.isOtherStarSystem)// 星系が最初のものであれば
     {
         RenderFirstStarSystem();
     }

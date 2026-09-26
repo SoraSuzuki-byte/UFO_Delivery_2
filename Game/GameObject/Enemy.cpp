@@ -52,22 +52,30 @@ void Enemy::Render() const
     if (!m_isActive) { return; }
 
     const Vector2D playerPos = m_player.GetPosition();
-    if (m_position.x < playerPos.x)
+
+    GhManager::Textures texture;
+    if (m_gameContext.isOtherStarSystem)
     {
-        DrawGraph(
-            static_cast<int>(m_position.x),
-            static_cast<int>(m_position.y),
-            m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_1_1),
-            TRUE);
+        texture = GhManager::Textures::Enemy1_OtherStarSystem;
+    }
+    else if ((m_gameContext.isOtherStarSystem) && (m_position.x < playerPos.x))
+    {
+        texture = GhManager::Textures::Enemy1_1_OtherStarSystem;
+    }
+    else if (m_position.x < playerPos.x)
+    {
+        texture = GhManager::Textures::Enemy_1_1;
     }
     else
     {
-        DrawGraph(
-            static_cast<int>(m_position.x),
-            static_cast<int>(m_position.y),
-            m_gameContext.ghManager.GetGraphicHandle(GhManager::Textures::Enemy_1),
-            TRUE);
+        texture = GhManager::Textures::Enemy_1;
     }
+
+    DrawGraph(
+        static_cast<int>(m_position.x),
+        static_cast<int>(m_position.y),
+        m_gameContext.ghManager.GetGraphicHandle(texture),
+        TRUE);
 
 
     //// 2. 当たり判定（BoundingBox）の可視化処理（デバッグ用）
