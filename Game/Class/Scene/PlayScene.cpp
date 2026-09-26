@@ -373,7 +373,7 @@ void PlayScene::UpdateStage1(int keyCondition)
             m_step3 = true;
 
             // step3に切り替わった瞬間に、敵を1体だけ出現させる
-            m_stage.AddEnemy1(Vector2D{ 50.0f, 640.0f }); // 座標は出現させたい位置に調整
+            m_stage.AddEnemy1(Vector2D{ -50.0f, 440.0f }); // 座標は出現させたい位置に調整
 
         }
     }
