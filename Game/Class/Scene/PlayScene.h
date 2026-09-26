@@ -52,6 +52,11 @@ private:
     static constexpr int TITLE_RETURN_HOLD_TIME = 60;  // タイトルに戻るまでの長押し時間（フレーム数）
     int m_titleReturnTimer;   // スペースキーを押し続けている時間
 
+    static constexpr int RESULT_MESSAGE_TIME = 150;  // 「Spaceキーを長押し」を表示させる時間
+    static constexpr int RESULT_MESSAGE_TO_HIDE_TIME = 20;  // 「Spaceキーを長押し」を隠す時間
+    
+    int m_messageBlinkCounter;// 「Spaceキーを長押し」の、メッセージを点滅させるカウンター
+
 
     // チュートリアル用のタイマー
     int m_stepTimer;
@@ -83,7 +88,7 @@ private:
     // 背景の描画
     void BackgroundRender() const;
 
-    // タイトルへ戻る長押しゲージの描画
+    // リザルト表示（ゲージと「長押し」の文字の描画）
     void DrawTitleReturnGauge() const;
 
     // リザルト表示時の、半透明の黒い四角を描画

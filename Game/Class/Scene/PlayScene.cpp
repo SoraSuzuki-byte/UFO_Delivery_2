@@ -27,6 +27,7 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_spawnEffect{}
     , m_gameState{ GameState::Play }
     , m_titleReturnTimer{}
+    , m_messageBlinkCounter{}
     , m_stepTimer{}
     , m_step1{false}
     , m_step2{false}
@@ -52,10 +53,12 @@ void PlayScene::Initialize()
 {
     m_gameState = GameState::Play;
     m_titleReturnTimer = 0;
+    m_messageBlinkCounter = 0;
     m_stepTimer = 0;
     m_step1 = false;
     m_step2 = false;
     m_step3 = false;
+
 
     // Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
     m_stage.SetPlayer(m_player);
@@ -157,6 +160,14 @@ void PlayScene::Update()
             // SEを止める
             m_gameContext.soundManager.StopSe(SoundManager::Se::Se_ResultBar);
         }
+
+        // 指定の値を越えると、リセット
+        if (m_messageBlinkCounter > RESULT_MESSAGE_TIME + RESULT_MESSAGE_TO_HIDE_TIME)
+        {
+            m_messageBlinkCounter = 0;
+        }
+        // 毎フレーム増やす
+        m_messageBlinkCounter++;
     }
 }    
 //  -----------------------------------------------------------------
@@ -265,7 +276,7 @@ void PlayScene::BackgroundRender() const
 
 
 // ------------------------------------------------------------------
-// タイトルへ戻る長押しゲージの描画
+// リザルト表示（ゲージと「長押し」の文字の描画）
 // ------------------------------------------------------------------
 void PlayScene::DrawTitleReturnGauge() const
 {
@@ -280,7 +291,10 @@ void PlayScene::DrawTitleReturnGauge() const
 
     int defaultFontSize = GetFontSize();	// デフォルトのフォントサイズを記憶しておく
     SetFontSize(50);
-    DrawString(offset.x, offset.y - 60, L"Spaceキーを長押し", Colors::WHITE);
+    if (m_messageBlinkCounter < RESULT_MESSAGE_TIME)
+    {
+        DrawString(offset.x, offset.y - 60, L"Spaceキーを長押し", Colors::WHITE);
+    }
     SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
     // ゲージの色（黄色で表現）
