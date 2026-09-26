@@ -98,7 +98,7 @@ void Player::Render()
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 80);
 		DrawBox(
 			static_cast<int>(m_position.x),
-			static_cast<int>(m_position.y),
+			static_cast<int>(m_position.y + (HEIGHT / 2)),
 			static_cast<int>(m_position.x + WIDTH),
 			720,
 			Colors::BLUE,
