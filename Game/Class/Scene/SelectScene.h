@@ -71,7 +71,7 @@ private:
     // 「↓」キーのY座標
     static constexpr const int DOWN_ARROW_POSITION_Y = 600;
     // プレイヤーの上下移動の 高さ
-    static constexpr const int Player_FLOAT_HEIGHT = 20;
+    static constexpr const int PLAYER_FLOAT_HEIGHT = 20;
 
 
 
@@ -102,7 +102,7 @@ private:
     // 画面エフェクトの進行具合
     float m_progress;
 
-    // 「星系」移動キーを押している時間のカウンター
+    // 「星系」切り替えキーを押している時間のカウンター
     int m_effectTimer = 0;
 
     // ステージ1～5をクリアしたか
@@ -124,12 +124,20 @@ private:
     // セレクト画面でのプレイヤーの位置
     Vector2D m_playerPosition;
 
+
+
     // ステージを選ぶフラグ
     bool m_isStageSelected;
     // 選んだステージでいいかを確認フラグ
     bool m_isConfirming;
-    // 選択項目を点滅させる時のカウンター
-    int m_selectionBlinkCounter;
+    // 「はい」「いいえ」の、フェードさせる速度
+    static constexpr const int CONFIRMING_FADE_SPEED = 3;
+
+    // 確認文字の選択している方を"フェードさせる用"
+    int m_selectionFadeAlpha;
+    // 増減フラグ（true: フェードイン中, false: フェードアウト中）
+    bool m_isFadeIncreasing; 
+
     // ステージ選択の確認ダイアログ の"フェード用"
     int m_confirmFadeAlpha;
     // 「↓」キーの、ふわふわアニメーション用のカウンタ

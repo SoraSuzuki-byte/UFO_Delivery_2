@@ -25,7 +25,8 @@ SelectScene::SelectScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_playerPosition{}
     , m_isStageSelected{false}
     , m_isConfirming{false}
-    , m_selectionBlinkCounter{}
+    , m_selectionFadeAlpha{}
+    , m_isFadeIncreasing{true}
     , m_confirmFadeAlpha{ 0 }
     , m_changeStarSystemCounter{}
     , m_progress{}
@@ -64,7 +65,8 @@ void SelectScene::Initialize()
     }    
     m_isStageSelected = false;
     m_isConfirming = false;
-    m_selectionBlinkCounter = 0;
+    m_selectionFadeAlpha = 0;
+    m_isFadeIncreasing = true;
     m_changeStarSystemCounter = 0;
     m_progress = 0;
     m_effectTimer = 0;
@@ -319,14 +321,32 @@ void SelectScene::Finalize()
 //  -----------------------------------------------------------------
 void SelectScene::ChangeScene(int keyTrigger)
 {
+    if (m_isFadeIncreasing)
+    {
+        m_selectionFadeAlpha += CONFIRMING_FADE_SPEED;
+        if (m_selectionFadeAlpha >= 255)
+        {
+            m_selectionFadeAlpha = 255;
+            m_isFadeIncreasing = false; // 255を超えたら減算へ切替
+        }
+    }
+    else
+    {
+        m_selectionFadeAlpha -= CONFIRMING_FADE_SPEED;
+        if (m_selectionFadeAlpha <= 0)
+        {
+            m_selectionFadeAlpha = 0;
+            m_isFadeIncreasing = true; // 0を下回ったら加算へ切替
+        }
+    }
     // 右キーが押されたら
     if (keyTrigger & PAD_INPUT_RIGHT) { 
-        m_selectionBlinkCounter = 0;// 点滅カウントを0に
+        m_selectionFadeAlpha = 0;// 点滅カウントを0に
         m_isConfirming = false; 
     }
     // 左キーが押されたら
     else if (keyTrigger & PAD_INPUT_LEFT) { 
-        m_selectionBlinkCounter = 0;// 点滅カウントを0に
+        m_selectionFadeAlpha = 0;// 点滅カウントを0に
         m_isConfirming = true; 
     }
 
@@ -336,7 +356,7 @@ void SelectScene::ChangeScene(int keyTrigger)
     }
     else {
         if (keyTrigger & PAD_INPUT_10) {
-            m_selectionBlinkCounter = 0; // カウントを0に
+            m_selectionFadeAlpha = 0; // カウントを0に
             m_isStageSelected = false; }
     }
 }
@@ -368,7 +388,7 @@ void SelectScene::RenderPlayer()
 {
     // ふわふわ移動
     m_playerFloatCount += 0.02f;
-    const float offsetY = sinf(m_playerFloatCount) * Player_FLOAT_HEIGHT;
+    const float offsetY = sinf(m_playerFloatCount) * PLAYER_FLOAT_HEIGHT;
 
     const int drawY = static_cast<int>(m_playerPosition.y + offsetY);
     const int drawX = static_cast<int>(m_playerPosition.x);
@@ -554,25 +574,33 @@ void SelectScene::RenderConfirmingUi()
 
         SetFontSize(80);
         DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先が決まりましたか？", Colors::WHITE, TRUE);
-        DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::GRAY, TRUE);
-        DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::GRAY, TRUE);
 
-        m_selectionBlinkCounter ++;
-        if (m_selectionBlinkCounter >= 180) { 
-            m_selectionBlinkCounter = 0; 
-        }
+        // 透明度を設定
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
+        DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::BLUE, TRUE);
+        DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::BLUE, TRUE);
 
-        if (m_selectionBlinkCounter < 120)
+        // アルファブレンドを有効にし、透明度を設定
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_confirmFadeAlpha);
+
+
+        if (m_isConfirming)
         {
-            if (m_isConfirming) {
-                DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, TRUE);
-                DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, FALSE); // 文字の縁取り
-            }
-            else {
-                DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, TRUE);
-                DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, FALSE); // 文字の縁取り
-            }
+            // ダイアログ全体のフェード(m_confirmFadeAlpha)と、
+            // 選択中の明滅(m_selectionFadeAlpha)を掛け合わせて0〜255に正規化
+            int blinkAlpha = m_confirmFadeAlpha * m_selectionFadeAlpha / CONFIRM_FADE_MAX_ALPHA;
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, blinkAlpha);
+
+            DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, FALSE);
         }
+        else
+        {
+            int blinkAlpha = m_confirmFadeAlpha * m_selectionFadeAlpha / CONFIRM_FADE_MAX_ALPHA;
+            SetDrawBlendMode(DX_BLENDMODE_ALPHA, blinkAlpha);
+
+            DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, FALSE);
+        }
+        
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 描画モードを通常に戻す
