@@ -32,6 +32,7 @@ PlayScene::PlayScene(SceneManager& sceneManager, GameContext& gameContext)
     , m_step1{false}
     , m_step2{false}
     , m_step3{false}
+    , m_skipStage1Counter{}
 {
 }
 
@@ -58,7 +59,7 @@ void PlayScene::Initialize()
     m_step1 = false;
     m_step2 = false;
     m_step3 = false;
-
+    m_skipStage1Counter = 0;
 
     // Stageにプレイヤーの参照を渡す（CSVロードより前に必要）
     m_stage.SetPlayer(m_player);
@@ -329,10 +330,35 @@ void PlayScene::DrawClearResultBackground()
 
 
 // ------------------------------------------------------------------
-// ステージ1(チュートリアル)の説明文の更新
+// ステージ1(チュートリアル)の更新
 // ------------------------------------------------------------------
 void PlayScene::UpdateStage1(int keyCondition)
 {
+    // チュートリアルのスキップ
+    {
+        // Enterキー長押し
+        if (CheckHitKey(KEY_INPUT_RETURN) == 1)
+        {
+            m_skipStage1Counter++;
+        }
+        else
+        {
+            m_skipStage1Counter--;
+        }
+        // 0より小さくしない
+        if (m_skipStage1Counter < 0) { m_skipStage1Counter = 0; }
+
+        // 特定の数値になると、クリア状態にする
+        if (m_skipStage1Counter > SKIP_STAGE_TIME)
+        {
+            // 現在のステージをクリア済みにする
+            m_gameContext.SetStageCleared(m_gameContext.GetSelectedStageId());
+
+            m_gameState = GameState::Clear;
+        }
+    }
+    // ------------------------------------------------------------------
+
     if (!m_step1)
     {
         if (keyCondition & PAD_INPUT_UP ||
@@ -380,10 +406,38 @@ void PlayScene::UpdateStage1(int keyCondition)
 }
 
 // ------------------------------------------------------------------
-// ステージ1(チュートリアル)の説明文の描画
+// ステージ1(チュートリアル)の描画
 // ------------------------------------------------------------------
 void PlayScene::RenderStage1()
 {
+    // チュートリアルのスキップのUI
+    { 
+        DrawString(1050, 620, L"Enterキー長押しで", Colors::WHITE, TRUE);
+        DrawString(1050, 650, L"チュートリアルをスキップ", Colors::WHITE, TRUE);
+
+        // ゲージの左上座標（画面中央下寄りに配置）
+        POINT offset{ 1050, 670 };
+
+        // ゲージの色（黄色で表現）
+        const int color = GetColor(255, 255, 0);
+
+        // ゲージの最大長
+        const int MAX_WIDTH = 200;
+        // 現在の長押し割合（0.0〜1.0）を計算する
+        const float ratio = static_cast<float>(m_skipStage1Counter) / static_cast<float>(SKIP_STAGE_TIME);
+
+        // 棒ゲージ（進捗ぶんだけ塗りつぶす）
+        DrawBox(offset.x, offset.y,
+            offset.x + static_cast<int>(MAX_WIDTH * ratio), offset.y + 10,
+            color, TRUE);
+
+        // 棒ゲージの枠
+        DrawBox(offset.x, offset.y, offset.x + MAX_WIDTH, offset.y + 10, Colors::WHITE, FALSE);
+    }
+
+
+
+
     // 半透明描画モードに設定 (アルファ値を128/255に設定: 約50%の透過度)
     SetDrawBlendMode(DX_BLENDMODE_ALPHA, 128);
     DrawBox(0,0, 860, 160, GetColor(0, 0, 0), TRUE);    
@@ -445,7 +499,7 @@ void PlayScene::PlaceHouses(StageId stageId)
         case StageId::Stage3:
         {
             m_stage.AddHouse(Vector2D{ 400.0f, 380.0f },Item_Food::FoodType::Food2);
-            m_stage.AddHouse(Vector2D{ 100.0f, 660.0f },Item_Food::FoodType::Food1);
+            m_stage.AddHouse(Vector2D{ 100.0f, 640.0f },Item_Food::FoodType::Food1);
             break;
         }
         case StageId::Stage4:

@@ -66,6 +66,9 @@ private:
     bool m_step2;
     // 配達方法を教える
     bool m_step3;
+    // チュートリアルステージのスキップ用のカウンタ
+    int m_skipStage1Counter;
+    static constexpr int SKIP_STAGE_TIME = 90;  // チュートリアルステージをスキップするときにかかる時間
 
 public:
     PlayScene(SceneManager& sceneManager, GameContext& gameContext);
@@ -95,9 +98,9 @@ private:
     void DrawClearResultBackground();
 
 
-    // ステージ1(チュートリアル)の説明文の更新
+    // ステージ1(チュートリアル)の更新
     void UpdateStage1(int keyCondition);
-    // ステージ1(チュートリアル)の説明文の描画
+    // ステージ1(チュートリアル)の描画
     void RenderStage1();
 
 

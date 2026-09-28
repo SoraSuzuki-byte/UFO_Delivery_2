@@ -575,32 +575,21 @@ void SelectScene::RenderConfirmingUi()
         SetFontSize(80);
         DrawString(MESSAGE_DIALOG_BOX_POS_X, MESSAGE_DIALOG_BOX_POS_Y, L"配達先が決まりましたか？", Colors::WHITE, TRUE);
 
-        // 透明度を設定
+        // 透明度を設定（未選択側のベース表示）
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, 50);
         DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::BLUE, TRUE);
         DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::BLUE, TRUE);
 
-        // アルファブレンドを有効にし、透明度を設定
-        SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_confirmFadeAlpha);
+        // 選択中の項目だけ明滅させる
+        const int blinkAlpha = m_confirmFadeAlpha * m_selectionFadeAlpha / CONFIRM_FADE_MAX_ALPHA;
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, blinkAlpha);
 
-
-        if (m_isConfirming)
-        {
-            // ダイアログ全体のフェード(m_confirmFadeAlpha)と、
-            // 選択中の明滅(m_selectionFadeAlpha)を掛け合わせて0〜255に正規化
-            int blinkAlpha = m_confirmFadeAlpha * m_selectionFadeAlpha / CONFIRM_FADE_MAX_ALPHA;
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, blinkAlpha);
-
+        if (m_isConfirming) {
             DrawString(MESSAGE_YES_POS_X, MESSAGE_YES_POS_Y, L"はい", Colors::WHITE, FALSE);
         }
-        else
-        {
-            int blinkAlpha = m_confirmFadeAlpha * m_selectionFadeAlpha / CONFIRM_FADE_MAX_ALPHA;
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, blinkAlpha);
-
+        else {
             DrawString(MESSAGE_NO_POS_X, MESSAGE_NO_POS_Y, L"いいえ", Colors::WHITE, FALSE);
         }
-        
         SetFontSize(defaultFontSize);// フォントサイズを元に戻す
 
         // 描画モードを通常に戻す
